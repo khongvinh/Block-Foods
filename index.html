@@ -38,10 +38,48 @@ button{font:inherit;cursor:pointer;border:0}
 .icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #9a6234}
 
 /* ---------- Home ---------- */
-#home{justify-content:flex-start;gap:0}
+#home{justify-content:flex-start;gap:0;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,248,232,.55),rgba(255,248,232,0) 38%),url("assets/bg-kitchen.webp") center bottom/cover no-repeat,#c9a77c}
+#home>*{position:relative;z-index:1}
+#home .home-float{position:absolute;inset:0;z-index:0;pointer-events:none}
+.home-float img{position:absolute;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25));animation:drift 5s ease-in-out infinite}
+.home-float .f1{width:84px;left:-14px;top:30%;animation-delay:-1s}
+.home-float .f2{width:92px;right:-18px;top:24%;--r:12deg;animation-delay:-2.5s}
+.home-float .f3{width:76px;left:-10px;top:63%;--r:-10deg;animation-delay:-3.2s}
+.home-float .f4{width:58px;right:-4px;top:58%;--r:18deg;animation-delay:-.6s}
+.home-float .f5{width:70px;right:-8px;bottom:6%;animation-delay:-4s}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(var(--r,-6deg))}50%{transform:translateY(-14px) rotate(calc(var(--r,-6deg) * -1))}}
+.logo-img{margin:0;line-height:0}
+.logo-img img{width:min(78vw,320px);height:auto;filter:drop-shadow(0 6px 10px rgba(80,40,10,.35));animation:logoIn .7s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes logoIn{from{transform:translateY(-40px) scale(.85);opacity:0}}
+.tray-img{width:min(84vw,340px);height:auto;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));animation:trayIn .6s .15s both,sway 4s 1s ease-in-out infinite}
+@keyframes trayIn{from{transform:translateY(20px);opacity:0}}
+@keyframes sway{50%{transform:rotate(-1.2deg) translateY(-3px)}}
+.home-btns{display:flex;flex-direction:column;gap:8px;align-items:center}
+.imgbtn{background:none;padding:0;width:min(78vw,310px);line-height:0;transition:transform .1s;animation:btnIn .45s both}
+.imgbtn img{width:100%;height:auto;filter:drop-shadow(0 5px 6px rgba(60,30,10,.35))}
+.imgbtn:active{transform:scale(.95) translateY(2px)}
+.imgbtn:focus-visible,.woodicon:focus-visible{outline:3px solid #fff;outline-offset:2px;border-radius:14px}
+.home-btns .imgbtn:nth-child(1){animation-delay:.25s}.home-btns .imgbtn:nth-child(2){animation-delay:.33s}
+.home-btns .imgbtn:nth-child(3){animation-delay:.41s}.home-btns .imgbtn:nth-child(4){animation-delay:.49s}
+@keyframes btnIn{from{transform:translateY(24px);opacity:0}}
+.imgbtn.pulse img{animation:pulse 1.8s 1s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.04)}}
+.woodicon{width:52px;height:52px;padding:0;background:none;line-height:0;position:relative;transition:transform .1s}
+.woodicon img{width:100%;height:100%;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
+.woodicon:active{transform:scale(.92)}
+.woodicon.off img{filter:grayscale(1) brightness(.85);opacity:.7}
+.woodicon.off::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:5px;margin-top:-2px;background:#c0392b;border-radius:3px;transform:rotate(-40deg);box-shadow:0 0 0 2px #fff}
+@media (prefers-reduced-motion:reduce){#home *{animation:none!important}}
 .home-bar{width:100%;max-width:440px;display:flex;justify-content:flex-end;gap:8px;flex:0 0 auto}
 .icon-btn.off{opacity:.45;filter:grayscale(1)}
-.home-main{flex:1;min-height:0;width:100%;overflow-y:auto;touch-action:pan-y;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding-block:8px}
+.home-main{flex:1;min-height:0;width:100%;overflow-y:auto;touch-action:pan-y;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;padding-block:4px 8px}
+.home-main::before,.home-main::after{content:"";flex:1 1 0}
+@media (max-height:720px){
+  .logo-img img{width:min(66vw,250px)} .tray-img{width:min(74vw,280px)}
+  .imgbtn{width:min(72vw,270px)} .home-main{gap:9px} .home-btns{gap:6px}
+  .home-float .f1,.home-float .f2{top:34%}
+}
 .logo{text-align:center;margin-bottom:10px}
 .logo .tiles{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
 .logo .tiles span{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;font-size:28px;font-weight:900;color:#fff;
@@ -50,7 +88,8 @@ button{font:inherit;cursor:pointer;border:0}
 .logo p{margin:8px 0 0;color:var(--fg);font-weight:600;opacity:.9}
 .floaters{font-size:34px;letter-spacing:6px;margin:4px 0 14px;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
-.bestline{text-align:center;color:var(--fg);font-weight:700;opacity:.9}
+.bestline{text-align:center;color:#5a341c;font-weight:800;font-size:13px;line-height:1.4;width:min(86vw,340px);padding:14px 26px;
+  background:url("assets/panel-light.webp") center/100% 100% no-repeat;filter:drop-shadow(0 3px 4px rgba(0,0,0,.25));animation:btnIn .45s .57s both}
 
 /* ---------- Level select / book ---------- */
 .topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -171,7 +210,8 @@ button{font:inherit;cursor:pointer;border:0}
 #gate .card{animation:none}
 .spin{width:38px;height:38px;border-radius:50%;border:4px solid #e7d3b3;border-top-color:var(--accent);margin:8px auto;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);color:var(--fg);border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;font-size:14px;max-width:100%}
+.acct{display:flex;align-items:center;gap:8px;color:#3b2412;padding:9px 26px;font-weight:800;font-size:14px;max-width:100%;
+  background:url("assets/plank.webp") center/100% 100% no-repeat;filter:drop-shadow(0 3px 4px rgba(0,0,0,.25))}
 .acct img{width:28px;height:28px;border-radius:50%;background:#e7d3b3}
 .acct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .plate{display:inline-block}
@@ -248,22 +288,25 @@ button{font:inherit;cursor:pointer;border:0}
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on">
-  <div class="home-bar"><button class="icon-btn" id="btnMusic" aria-label="Nhạc nền" title="Nhạc nền">🎵</button><button class="icon-btn" id="btnSound" aria-label="Hiệu ứng và rung" title="Hiệu ứng và rung">🔊</button></div>
-  <div class="home-main">
-  <div class="logo">
-    <div class="tiles">
-      <span style="background:#e8322b">B</span><span style="background:#3fae5a">L</span><span style="background:#f4a52a">O</span><span style="background:#4a90d9">C</span><span style="background:#9b6bd1">K</span>
-    </div>
-    <h1>FOODS</h1>
-    <p>Xếp nguyên liệu · Nấu món Việt</p>
+  <div class="home-float" aria-hidden="true">
+    <img src="assets/food-pho.webp" alt="" class="f1"><img src="assets/food-banhmi.webp" alt="" class="f2">
+    <img src="assets/food-tom.webp" alt="" class="f3"><img src="assets/food-ot.webp" alt="" class="f4"><img src="assets/food-com.webp" alt="" class="f5">
   </div>
-  <div class="floaters emoji">🍜🥖🦐🌶️🍚</div>
-  <button class="btn" id="btnCook">🍳 Mở quán</button>
-  <button class="btn green" id="btnEndless">♾️ Chợ vô tận</button>
-  <button class="btn brown" data-go="book">📋 Menu quán</button>
-  <button class="btn" style="background:linear-gradient(#ffd45c,#f0a81c);box-shadow:0 5px 0 #a8700a,0 8px 16px rgba(0,0,0,.25)" data-go="rank">🏆 Bảng xếp hạng</button>
-  <div class="bestline" id="bestLine"></div>
-  <div class="acct" id="acct" hidden><img id="acctAv" alt=""><span id="acctName"></span></div>
+  <div class="home-bar">
+    <button class="woodicon" id="btnMusic" aria-label="Bật/tắt nhạc nền" title="Nhạc nền"><img src="assets/icon-music.webp" alt=""></button>
+    <button class="woodicon" id="btnSound" aria-label="Bật/tắt hiệu ứng và rung" title="Hiệu ứng và rung"><img src="assets/icon-sound.webp" alt=""></button>
+  </div>
+  <div class="home-main">
+    <h1 class="logo-img"><img src="assets/logo.webp" alt="Block Foods – Xếp nguyên liệu · Nấu món Việt"></h1>
+    <img class="tray-img" src="assets/tray.webp" alt="">
+    <div class="home-btns">
+      <button class="imgbtn pulse" id="btnCook"><img src="assets/btn-cook.webp" alt="Mở quán"></button>
+      <button class="imgbtn" id="btnEndless"><img src="assets/btn-endless.webp" alt="Chợ vô tận"></button>
+      <button class="imgbtn" data-go="book"><img src="assets/btn-menu.webp" alt="Menu quán"></button>
+      <button class="imgbtn" data-go="rank"><img src="assets/btn-rank.webp" alt="Bảng xếp hạng"></button>
+    </div>
+    <div class="bestline" id="bestLine"></div>
+    <div class="acct" id="acct" hidden><img id="acctAv" alt=""><span id="acctName"></span></div>
   </div>
 </section>
 
@@ -1130,7 +1173,7 @@ $("#btnBack").addEventListener("click",()=>{
 });
 $("#btnRestart").addEventListener("click",()=>{ G.mode==="endless"?startEndless():startLevel(G.level); });
 function syncSound(){
-  $("#btnSound").textContent=soundOn?"🔊":"🔇";
+  $("#btnSound").classList.toggle("off",!soundOn);
   $("#btnMusic").classList.toggle("off",!musicOn);
 }
 $("#btnSound").addEventListener("click",()=>{ soundOn=!soundOn; store.set("sound",soundOn); syncSound(); if(soundOn){ sfx.pick(); vib(30); } });

@@ -22,6 +22,7 @@ Gom đủ nguyên liệu thì vào bước nấu ngắn, khoảng 8–15 giây. 
 Điểm nấu từ 85 trở lên là ✨ Hoàn hảo, từ 55 là 😋 Ngon, dưới 55 là 😅 Hơi khét. Món bị khét vẫn qua màn, chỉ ít tiền boa hơn.
 
 ## 2. Khách gọi món và tính tiền (🧪 chờ chốt)
+- Bỏ màn chọn món: bấm "Mở quán" thì khách vào gọi món luôn. Món mới mở khóa thì khách gọi món đó trước. Có nút "Mời khách khác" để đổi order. Cùng một vị khách gọi món và trả tiền.
 - Mỗi lần có một khách ngẫu nhiên trong 7 người: cô sinh viên, bác xe ôm, anh văn phòng, bà ngoại, anh Tây du lịch, chú thợ hồ, bé Na. Khách gọi món và nhận xét theo chất lượng món.
 - Mỗi món có giá riêng, từ 20.000đ (bánh mì) đến 60.000đ (cá kho tộ). Khách trả bằng tờ 50.000đ, 100.000đ, 200.000đ hoặc 500.000đ.
 - Người chơi chạm các tờ tiền Việt Nam để đếm đúng tiền thối. Chạm tờ đã đếm để bỏ ra, hoặc bấm "Đếm lại".

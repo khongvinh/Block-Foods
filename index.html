@@ -220,6 +220,15 @@ button{font:inherit;cursor:pointer;border:0}
 .given .bill{min-width:0;height:30px;font-size:11px;padding:0 6px}
 .given .empty{opacity:.5;font-size:13px;font-weight:600}
 .money{font-variant-numeric:tabular-nums}
+.dish-ic{position:relative;display:inline-block;line-height:1}
+.dish-ic i{position:absolute;right:-.15em;bottom:-.05em;font-style:normal;font-size:.5em;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.order-dish{font-size:64px;margin:6px 0}
+.order-ings{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}
+.order-ings span{background:#f3e3c8;border-radius:10px;padding:4px 8px;font-size:14px;font-weight:700}
+.linkbtn{background:none;color:var(--ink);opacity:.7;font-weight:700;font-size:14px;text-decoration:underline;padding:6px}
+.newtag{display:inline-block;background:#e85d2a;color:#fff;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;margin-left:6px;vertical-align:middle}
+.ostars{color:var(--gold);text-shadow:0 1px 0 #8a5a00}
+.ostars .off,.recipe-card .s .off{color:#d8c7ae;text-shadow:none}
 </style>
 </head>
 <body>
@@ -234,7 +243,7 @@ button{font:inherit;cursor:pointer;border:0}
     <p>Xếp nguyên liệu · Nấu món Việt</p>
   </div>
   <div class="floaters emoji">🍜🥖🦐🌶️🍚</div>
-  <button class="btn" data-go="levels">🍳 Vào bếp</button>
+  <button class="btn" id="btnCook">🍳 Mở quán</button>
   <button class="btn green" id="btnEndless">♾️ Chợ vô tận</button>
   <button class="btn brown" data-go="book">📖 Sổ công thức</button>
   <button class="btn" style="background:linear-gradient(#ffd45c,#f0a81c);box-shadow:0 5px 0 #a8700a,0 8px 16px rgba(0,0,0,.25)" data-go="rank">🏆 Bảng xếp hạng</button>
@@ -243,11 +252,6 @@ button{font:inherit;cursor:pointer;border:0}
   <button class="icon-btn" id="btnSound" style="position:absolute;top:max(12px,env(safe-area-inset-top));right:16px" aria-label="Âm thanh">🔊</button>
 </section>
 
-<!-- ============ LEVEL SELECT ============ -->
-<section id="levels" class="screen">
-  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Chọn món</h2><div style="width:44px"></div></div>
-  <div class="scroll"><div class="levels" id="levelGrid"></div></div>
-</section>
 
 <!-- ============ RECIPE BOOK ============ -->
 <section id="book" class="screen">
@@ -332,7 +336,7 @@ const DISHES = [
    d:"Ổ bánh mì giòn rụm kẹp thịt, pa-tê, dưa leo, đồ chua, rau mùi và vài lát ớt."},
   {id:"pho", e:"🍜", n:"Phở bò", need:{pho:24, thit:20, hanh:16, rauThom:16},
    d:"Linh hồn ẩm thực Hà Nội: nước dùng hầm xương trong vắt, bánh phở mềm, thịt bò tái chín."},
-  {id:"bunCha", e:"🥢", n:"Bún chả", need:{bun:24, suon:20, rauSong:16, ot:12},
+  {id:"bunCha", e:"🍢", n:"Bún chả", need:{bun:24, suon:20, rauSong:16, ot:12},
    d:"Chả thịt nướng than hoa thơm lừng, ăn cùng bún, rau sống và bát nước chấm chua ngọt."},
   {id:"goiCuon", e:"🌯", n:"Gỏi cuốn", need:{banhTrang:20, tom:20, bun:16, rauSong:16},
    d:"Bánh tráng cuốn tôm, thịt, bún, rau sống tươi mát, chấm tương đậu hoặc mắm nêm."},
@@ -342,7 +346,7 @@ const DISHES = [
    d:"Bột gạo pha nghệ đổ “xèo xèo” trên chảo nóng, nhân tôm thịt giá, cuốn rau chấm nước mắm."},
   {id:"caKho", e:"🍲", n:"Cá kho tộ", need:{ca:28, nuocMau:20, toi:16, ot:16},
    d:"Cá kho trong niêu đất với nước màu, tỏi, ớt, tiêu — đậm đà, “tốn cơm” nhất bữa."},
-  {id:"bunBo", e:"🌶️", n:"Bún bò Huế", need:{bun:28, thit:24, ot:20, chanh:16, rauSong:16},
+  {id:"bunBo", e:"🍜", badge:"🌶️", n:"Bún bò Huế", need:{bun:28, thit:24, ot:20, chanh:16, rauSong:16},
    d:"Sợi bún to, nước dùng thơm mùi sả và mắm ruốc, cay nồng đặc trưng xứ Huế."},
   {id:"canhNam", e:"🍵", n:"Canh nấm đậu hũ", need:{nam:24, dauHu:24, hanh:20, caChua:16},
    d:"Món canh thanh đạm cho ngày chay hoặc bữa cơm nhẹ nhàng, ngọt tự nhiên từ nấm."},
@@ -367,6 +371,8 @@ const SHAPE_DEFS = [
   ["###|###",0.6],["##|##|##",0.6],
   ["###|###|###",0.35],
 ];
+// Biểu tượng món: emoji chính + emoji nhỏ ở góc (nếu có)
+const dishE = D => D.badge ? `<span class="dish-ic emoji">${D.e}<i>${D.badge}</i></span>` : `<span class="emoji">${D.e}</span>`;
 const SHAPES = SHAPE_DEFS.map(([s,w])=>{
   const cells=[]; s.split("|").forEach((row,r)=>[...row].forEach((ch,c)=>{ if(ch==="#") cells.push([r,c]); }));
   const h=Math.max(...cells.map(x=>x[0]))+1, wd=Math.max(...cells.map(x=>x[1]))+1;
@@ -527,8 +533,8 @@ function renderHUD(){
     sub.innerHTML=`<div class="recipe">${G.pool.map(k=>`<div class="chip" style="min-width:40px;padding:3px 5px"><div class="ce emoji">${ING[k].e}</div></div>`).join("")}</div>`;
   } else {
     const D=DISHES[G.level];
-    center.innerHTML=`<span class="e emoji">${D.e}</span><span>${D.n}</span>`;
-    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">Món ${G.level+1}/${DISHES.length}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
+    center.innerHTML=`${G.customer?`<span class="e emoji" title="${G.customer.n}">${G.customer.e}</span>`:""}<span class="e">${dishE(D)}</span><span>${D.n}</span>`;
+    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">🧾 ${G.customer?G.customer.n:"Order"}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
       <div class="recipe">${Object.keys(G.need).map(k=>{
         const g=Math.min(G.got[k]||0,G.need[k]), pct=g/G.need[k]*100;
         return `<div class="chip ${g>=G.need[k]?"done":""}" data-ing="${k}"><div class="ce emoji">${ING[k].e}</div><div class="cn">${g}/${G.need[k]}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
@@ -710,7 +716,7 @@ function startCooking(D,done){
     const q=quality(Math.max(0,Math.min(100,Math.round(score))));
     const kb=$("#kBody");
     kb.innerHTML=`<div class="kcard"><span class="kstep">BƯỚC 1/2 · NẤU</span><h2>${D.n}</h2>
-      <div class="kpan emoji">${D.e}</div><p><span class="qbadge q-${q.k}">${q.label}</span></p>
+      <div class="kpan">${dishE(D)}</div><p><span class="qbadge q-${q.k}">${q.label}</span></p>
       <p class="khint">Món đã sẵn sàng. Có khách đang chờ!</p>
       <button class="btn green kbig" id="kNext" disabled style="opacity:.6">Mang ra cho khách ›</button></div>`;
     setTimeout(()=>{ const b=$("#kNext"); if(b){ b.disabled=false; b.style.opacity=""; } },700);
@@ -828,14 +834,14 @@ const billColor=v=>(BILLS.find(b=>b.v===v)||{}).c||"#777";
 const billHTML=(v,attr="")=>`<button class="bill" style="--b:${billColor(v)}" ${attr}>${v.toLocaleString("vi-VN")}</button>`;
 
 function startCheckout(D,q,done){
-  const C=rnd(CUSTOMERS), price=PRICE[D.id]||30000;
+  const C=G.customer||rnd(CUSTOMERS), price=PRICE[D.id]||30000;
   const payOpts=[50000,100000,200000,500000].filter(v=>v>price).slice(0,2);
   const paid=rnd(payOpts), change=paid-price;
   const PAT=15; let left=PAT, given=[], wrong=0, over=false, last=performance.now();
   show("kitchen");
   $("#kBody").innerHTML=`<div class="kcard" id="kCard"><span class="kstep">BƯỚC 2/2 · TÍNH TIỀN</span>
     <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="kSay"></span></div></div>
-    <p style="margin:10px 0 4px"><span class="emoji" style="font-size:30px">${D.e}</span> <span class="qbadge q-${q.k}">${q.label}</span></p>
+    <p style="margin:10px 0 4px"><span style="font-size:30px">${dishE(D)}</span> <span class="qbadge q-${q.k}">${q.label}</span></p>
     <div class="billrow"><span>Giá món</span><span>${fmtVND(price)}</span></div>
     <div class="billrow"><span>Khách đưa</span><span>${billHTML(paid,'disabled tabindex="-1"')}</span></div>
     <div class="billrow"><span>Bạn đã đếm</span><span id="kSum">0đ</span></div>
@@ -845,7 +851,7 @@ function startCheckout(D,q,done){
     <div class="kfeed" id="kFeed"></div>
     <div style="display:flex;gap:8px"><button class="btn brown" style="min-width:0;flex:1;font-size:16px;padding:12px" id="kReset">Đếm lại</button>
     <button class="btn green" style="min-width:0;flex:2;font-size:16px;padding:12px" id="kGive">Đưa tiền thối</button></div></div>`;
-  $("#kSay").textContent=C.hi.replace("{d}",D.n)+" "+rnd(REACT[q.k]);
+  $("#kSay").textContent=rnd(REACT[q.k])+" Tính tiền giúp nha!";
   const sum=()=>given.reduce((a,b)=>a+b,0);
   const draw=()=>{ $("#kSum").textContent=fmtVND(sum());
     $("#kGiven").innerHTML=given.length?given.map((v,i)=>billHTML(v,`data-i="${i}" aria-label="Bỏ tờ ${v}"`)).join(""):`<span class="empty">Chạm vào tờ tiền bên dưới để đếm tiền thối</span>`; };
@@ -887,24 +893,25 @@ function win(){
   if(G.over) return; G.over=true;
   const D=DISHES[G.level];
   const stars = G.lost===0?3 : G.lost===1?2 : 1;
-  const prev=progress.stars[D.id]||0;
+  const prev=progress.stars[D.id]||0; G.wasDone=prev>0;
   if(stars>prev){ progress.stars[D.id]=stars; saveLocal(); }
   sfx.win(); syncMyScore();
   floatText("Đủ nguyên liệu rồi!", innerWidth/2, innerHeight*0.4);
   setTimeout(()=>startCooking(D,(q,qs)=>startCheckout(D,q,(pay)=>finishWin(D,stars,q,pay))),900);
 }
 function finishWin(D,stars,q,pay){
+  const wasDone=G.wasDone;
   progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
   sfx.win();
-  const hasNext=G.level+1<DISHES.length;
-  modal(`<h2>Khách đã thanh toán!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
+  modal(`<h2>Khách đã thanh toán!</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="stars">${starsHTML(stars)}</div>
     <p><span class="qbadge q-${q.k}">${q.label}</span></p>
     <p>${G.lost?`Vỡ <b>${G.lost}</b> đĩa · `:"Không vỡ đĩa nào · "}Điểm <b>${G.score}</b></p>
     <p class="money">💰 Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
     <p class="fact">${D.d}</p>
-    <div class="actions">${hasNext?`<button class="btn green" data-act="next">Món tiếp theo ›</button>`:""}
-    <button class="btn" data-act="retry">Nấu lại</button><button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+    ${unlockedCount()>DISHES.indexOf(D)+1&&!wasDone?`<p class="rank-badge">🔓 Mở khóa món mới: ${DISHES[DISHES.indexOf(D)+1].n}</p>`:""}
+    <div class="actions"><button class="btn green" data-act="next">Mời khách tiếp theo ›</button>
+    <button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="home">Về quán</button></div>`);
 }
 function lose(){
   if(G.over) return; G.over=true; sfx.lose(); syncMyScore();
@@ -920,56 +927,77 @@ function lose(){
       modal(`<h2>Thớt đầy rồi!</h2><div class="bigE emoji">💥</div>
         <p>Vỡ 1 đĩa! Còn <span class="emoji">${heartsHTML()}</span></p>
         <p>Nguyên liệu đã gom vẫn được giữ. Còn thiếu:<br><span style="font-size:20px">${left}</span></p>
-        <div class="actions"><button class="btn green" data-act="continue">Dọn thớt, nấu tiếp</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+        <div class="actions"><button class="btn green" data-act="continue">Dọn thớt, nấu tiếp</button><button class="btn brown" data-act="home">Bỏ order, về quán</button></div>`);
     } else {
       modal(`<h2>Vỡ hết đĩa rồi!</h2><div class="bigE emoji">😵‍💫</div>
         <p>Món <b>${D.n}</b> còn thiếu:<br><span style="font-size:20px">${left}</span></p>
-        <div class="actions"><button class="btn green" data-act="retry">Nấu lại từ đầu</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+        <div class="actions"><button class="btn green" data-act="retry">Nấu lại từ đầu</button><button class="btn" data-act="next">Mời khách khác</button><button class="btn brown" data-act="home">Về quán</button></div>`);
     }
   }
 }
 $("#modal").addEventListener("click",e=>{
   const a=e.target.closest("[data-act]")?.dataset.act; if(!a) return;
   closeModal();
-  if(a==="next") startLevel(G.level+1);
+  if(a==="next") newOrder(DISHES[G.level]&&DISHES[G.level].id);
   if(a==="retry") G.mode==="endless"?startEndless():startLevel(G.level);
-  if(a==="menu") show("levels");
   if(a==="home") show("home");
   if(a==="rank"){ LB.tab=G.mode==="endless"?"endless":"chef"; show("rank"); }
   if(a==="resume"){}
   if(a==="continue") continueLevel();
-  if(a==="quit") show(G.mode==="endless"?"home":"levels");
+  if(a==="quit") show("home");
 });
 
 function unlockedCount(){ let n=1; DISHES.forEach((d,i)=>{ if(progress.stars[d.id]) n=Math.max(n,i+2); }); return Math.min(n,DISHES.length); }
 
-function renderLevels(){
-  const u=unlockedCount();
-  $("#levelGrid").innerHTML=DISHES.map((d,i)=>`<button class="lv ${i>=u?"locked":""}" data-lv="${i}">
-    <div class="num">${i+1}</div><div class="e emoji">${d.e}</div><div class="n">${d.n}</div><div class="s">${starsHTML(progress.stars[d.id]||0)}</div></button>`).join("");
+/* ---------- Khách vào quán gọi món (thay cho màn chọn món) ---------- */
+// Món mới mở khóa thì khách gọi món đó trước; còn lại ưu tiên món ít sao
+function pickOrder(avoidId){
+  const u=unlockedCount(), open=DISHES.slice(0,u);
+  const fresh=open.filter(d=>!progress.stars[d.id]);
+  if(fresh.length && !avoidId) return fresh[0];
+  const pool=open.length>1?open.filter(d=>d.id!==avoidId):open;
+  return weighted(pool,d=>4-(progress.stars[d.id]||0));
 }
-$("#levelGrid").addEventListener("click",e=>{
-  const b=e.target.closest("[data-lv]"); if(!b||b.classList.contains("locked")) return;
-  startLevel(+b.dataset.lv);
-});
+function newOrder(avoidId){
+  G.mode="level";
+  const D=pickOrder(avoidId), C=rnd(CUSTOMERS.filter(c=>!G.customer||c.n!==G.customer.n));
+  G.customer=C;
+  const isNew=!progress.stars[D.id];
+  show("kitchen");
+  $("#kBody").innerHTML=`<div class="kcard"><span class="kstep">KHÁCH VÀO QUÁN</span>
+    <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="oSay"></span></div></div>
+    <div class="order-dish">${dishE(D)}</div>
+    <h2>${D.n}${isNew?`<span class="newtag">MÓN MỚI</span>`:""}</h2>
+    <p class="khint" style="margin:2px 0">Giá ${fmtVND(PRICE[D.id]||30000)}${isNew?"":` · <span class="ostars">${starsHTML(progress.stars[D.id])}</span>`}</p>
+    <div class="order-ings">${Object.entries(D.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div>
+    <button class="btn green kbig" id="oTake">Nhận order ›</button>
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <button class="linkbtn" id="oHome">‹ Về quán</button>
+      ${unlockedCount()>1?`<button class="linkbtn" id="oSkip">Mời khách khác</button>`:""}</div></div>`;
+  $("#oSay").textContent=C.hi.replace("{d}",D.n);
+  sfx.pick();
+  $("#oTake").onclick=()=>startLevel(DISHES.indexOf(D));
+  $("#oHome").onclick=()=>show("home");
+  const sk=$("#oSkip"); if(sk) sk.onclick=()=>newOrder(D.id);
+}
 function renderBook(){
   $("#bookList").innerHTML=DISHES.map(d=>{
     const ok=!!progress.stars[d.id];
-    return `<div class="recipe-card ${ok?"":"locked"}"><div class="big emoji">${d.e}</div><div>
-      <h3>${ok?d.n:"???"}</h3>${ok?`<p>${d.d}</p>`:`<p><i>Nấu thành công để mở khóa công thức.</i></p>`}
+    return `<div class="recipe-card ${ok?"":"locked"}"><div class="big">${dishE(d)}</div><div>
+      <h3>${ok?d.n:"???"}</h3>${ok?`<div class="s" style="color:var(--gold);text-shadow:0 1px 0 #8a5a00">${starsHTML(progress.stars[d.id])}</div>`:""}${ok?`<p>${d.d}</p>`:`<p><i>Chưa có khách gọi món này. Phục vụ thêm khách để mở khóa.</i></p>`}
       <div class="ings">${Object.entries(d.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div></div></div>`;
   }).join("");
 }
 function show(id){
   if(id!=="kitchen") stopKitchen();
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
-  if(id==="levels") renderLevels();
   if(id==="book") renderBook();
   if(id==="rank") renderRank();
   if(id==="home"){ $("#bestLine").textContent = `👑 Kỷ lục chợ vô tận: ${best} · ⭐ ${Object.values(progress.stars).reduce((a,b)=>a+b,0)}/${DISHES.length*3} · 💰 ${fmtVND(earned())}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 $("#btnEndless").addEventListener("click",startEndless);
+$("#btnCook").addEventListener("click",()=>newOrder());
 $("#btnBack").addEventListener("click",()=>{
   modal(`<h2>Tạm nghỉ</h2><div class="bigE emoji">🧑‍🍳</div><div class="actions">
    <button class="btn green" data-act="resume">Nấu tiếp</button><button class="btn brown" data-act="quit">Thoát</button></div>`);

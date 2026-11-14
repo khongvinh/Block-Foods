@@ -12,8 +12,8 @@ Cách chơi: mở `index.html` bằng trình duyệt (điện thoại hoặc má
 - Đặt xong cả 3 khối thì có 3 khối mới. Hết chỗ đặt thì thua (khối nào không còn chỗ đặt sẽ bị làm mờ).
 - Khay luôn có ít nhất 1 khối đặt được tại thời điểm sinh ra, để người chơi không bị kẹt oan.
 
-### Chế độ 🍳 Vào bếp (theo màn)
-Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên liệu:
+### Chế độ 🍳 Mở quán
+Không có màn chọn món. Mỗi lượt có một khách vào quán gọi món. Món mới mở khóa thì khách sẽ gọi món đó trước, sau đó khách ưu tiên gọi những món còn ít sao. Có thể bấm "Mời khách khác" để đổi order. Cùng một vị khách sẽ gọi món và trả tiền. Mỗi món cần gom đủ số lượng từng nguyên liệu:
 
 | # | Món | Nguyên liệu cần |
 |---|-----|-----------------|
@@ -21,12 +21,12 @@ Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên li�
 | 2 | Cơm tấm sườn | 🍚20 · 🍖16 · 🥚12 |
 | 3 | Bánh mì thịt | 🥖20 · 🥩16 · 🥒12 · 🌶️10 |
 | 4 | Phở bò | 🍜24 · 🥩20 · 🧅16 · 🌿16 |
-| 5 | Bún chả | 🍝24 · 🍖20 · 🥬16 · 🌶️12 |
+| 5 | Bún chả 🍢 | 🍝24 · 🍖20 · 🥬16 · 🌶️12 |
 | 6 | Gỏi cuốn | 🫓20 · 🦐20 · 🍝16 · 🥬16 |
 | 7 | Canh chua cá | 🐟24 · 🍅20 · 🍍16 · 🌿16 |
 | 8 | Bánh xèo | 🌾24 · 🦐20 · 🥩16 · 🌱20 |
 | 9 | Cá kho tộ | 🐟28 · 🍯20 · 🧄16 · 🌶️16 |
-| 10 | Bún bò Huế | 🍝28 · 🥩24 · 🌶️20 · 🍋16 · 🥬16 |
+| 10 | Bún bò Huế 🍜🌶️ | 🍝28 · 🥩24 · 🌶️20 · 🍋16 · 🥬16 |
 | 11 | Canh nấm đậu hũ | 🍄24 · 🧈24 · 🧅20 · 🍅16 |
 | 12 | Cơm chiên dương châu | 🍚32 · 🥚24 · 🦐20 · 🧅20 · 🥩16 |
 

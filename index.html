@@ -170,6 +170,9 @@ button{font:inherit;cursor:pointer;border:0}
 .acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);color:var(--fg);border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;font-size:14px;max-width:100%}
 .acct img{width:28px;height:28px;border-radius:50%;background:#e7d3b3}
 .acct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plate{display:inline-block}
+.plate.broken{opacity:.3;filter:grayscale(1) brightness(.6)}
+.platebar{display:inline-flex;gap:1px;background:#6b4226;border-radius:10px;padding:2px 6px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
@@ -429,8 +432,8 @@ function startEndless(){
   resetBoard(); show("game");
 }
 const MAX_LIVES=5;
-function heartsHTML(){ return "❤️".repeat(G.lives)+"🤍".repeat(MAX_LIVES-G.lives); }
-// Mất 1 mạng: dọn thớt, giữ nguyên liệu đã gom và điểm
+function heartsHTML(){ return '<span class="platebar">'+'<span class="plate">🍽️</span>'.repeat(G.lives)+'<span class="plate broken">🍽️</span>'.repeat(MAX_LIVES-G.lives)+'</span>'; }
+// Vỡ 1 đĩa: dọn thớt, giữ nguyên liệu đã gom và điểm
 function continueLevel(){
   G.grid=Array.from({length:N},()=>Array(N).fill(null));
   G.combo=0; G.movesSinceClear=0; G.over=false;
@@ -472,7 +475,7 @@ function renderHUD(){
   } else {
     const D=DISHES[G.level];
     center.innerHTML=`<span class="e emoji">${D.e}</span><span>${D.n}</span>`;
-    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">Món ${G.level+1}/${DISHES.length}</span><span class="moves">Điểm: ${G.score}</span><span class="moves emoji" title="Mạng còn lại" aria-label="Còn ${G.lives} mạng">${heartsHTML()}</span></div>
+    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">Món ${G.level+1}/${DISHES.length}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
       <div class="recipe">${Object.keys(G.need).map(k=>{
         const g=Math.min(G.got[k]||0,G.need[k]), pct=g/G.need[k]*100;
         return `<div class="chip ${g>=G.need[k]?"done":""}" data-ing="${k}"><div class="ce emoji">${ING[k].e}</div><div class="cn">${g}/${G.need[k]}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
@@ -635,7 +638,7 @@ function win(){
   const hasNext=G.level+1<DISHES.length;
   modal(`<h2>Nấu xong rồi!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="stars">${starsHTML(stars)}</div>
-    <p>Mất <b>${G.lost}</b> mạng · Điểm <b>${G.score}</b><br><small>3★ không mất mạng · 2★ mất 1 mạng · 1★ mất từ 2 mạng</small></p>
+    <p>${G.lost?`Vỡ <b>${G.lost}</b> đĩa · `:"Không vỡ đĩa nào · "}Điểm <b>${G.score}</b></p>
     <p class="fact">${D.d}</p>
     <div class="actions">${hasNext?`<button class="btn green" data-act="next">Món tiếp theo ›</button>`:""}
     <button class="btn" data-act="retry">Nấu lại</button><button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
@@ -648,18 +651,16 @@ function lose(){
       <div class="actions"><button class="btn green" data-act="retry">Chơi lại</button><button class="btn" data-act="rank">🏆 Xem bảng xếp hạng</button><button class="btn brown" data-act="home">Về bếp</button></div>`);
   } else {
     const D=DISHES[G.level];
-    const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`${ING[k].e} ${G.need[k]-(G.got[k]||0)}`).join(" · ");
+    const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`<span class="emoji">${ING[k].e}</span> <b>${G.need[k]-(G.got[k]||0)}</b>`).join(" · ");
     G.lives--; G.lost++; renderHUD();
     if(G.lives>0){
-      const nextStars = G.lost===1?2:1;
-      modal(`<h2>Thớt đầy rồi!</h2><div class="bigE emoji">💔</div>
-        <p>Mất 1 mạng. Còn <span class="emoji">${heartsHTML()}</span></p>
-        <p>Nguyên liệu đã gom vẫn được giữ. Còn thiếu:<br><span class="emoji" style="font-size:20px">${left}</span></p>
-        <p class="fact">Hoàn thành món bây giờ được tối đa ${nextStars}★</p>
+      modal(`<h2>Thớt đầy rồi!</h2><div class="bigE emoji">💥</div>
+        <p>Vỡ 1 đĩa! Còn <span class="emoji">${heartsHTML()}</span></p>
+        <p>Nguyên liệu đã gom vẫn được giữ. Còn thiếu:<br><span style="font-size:20px">${left}</span></p>
         <div class="actions"><button class="btn green" data-act="continue">Dọn thớt, nấu tiếp</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
     } else {
-      modal(`<h2>Hết mạng rồi!</h2><div class="bigE emoji">😵‍💫</div>
-        <p>Món <b>${D.n}</b> còn thiếu:<br><span class="emoji" style="font-size:20px">${left}</span></p>
+      modal(`<h2>Vỡ hết đĩa rồi!</h2><div class="bigE emoji">😵‍💫</div>
+        <p>Món <b>${D.n}</b> còn thiếu:<br><span style="font-size:20px">${left}</span></p>
         <div class="actions"><button class="btn green" data-act="retry">Nấu lại từ đầu</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
     }
   }

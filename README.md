@@ -32,8 +32,8 @@ Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên li�
 
 - **Nguyên liệu nhiễu:** khoảng 30% khối là nguyên liệu không thuộc món (càng về sau càng nhiều loại). Chúng vẫn xóa được nhưng không được tính vào công thức.
 - Khối mới ưu tiên những nguyên liệu còn thiếu nhiều nhất.
-- **5 mạng mỗi lần nấu:** thớt hết chỗ thì mất 1 mạng. Thớt được dọn sạch, nguyên liệu đã gom và điểm vẫn giữ nguyên. Hết cả 5 mạng thì phải nấu lại món từ đầu.
-- **Sao theo số mạng bị mất:** không mất mạng nào được 3★, mất 1 mạng được 2★, mất từ 2 mạng trở lên được 1★.
+- **5 cái đĩa 🍽️ mỗi lần nấu:** thớt hết chỗ thì vỡ 1 đĩa. Thớt được dọn sạch, nguyên liệu đã gom và điểm vẫn giữ nguyên. Vỡ hết 5 đĩa thì phải nấu lại món từ đầu.
+- **Sao theo số đĩa bị vỡ:** không vỡ đĩa nào được 3★, vỡ 1 đĩa được 2★, vỡ từ 2 đĩa trở lên được 1★. Cách tính này không hiện trong game.
 - Nấu xong một món thì mở món kế tiếp, và công thức (kèm giới thiệu món) được ghi vào **📖 Sổ công thức**.
 
 ### Chế độ ♾️ Chợ vô tận

@@ -33,9 +33,10 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 - **Nguyên liệu nhiễu:** khoảng 30% khối là nguyên liệu không thuộc món (càng về sau càng nhiều loại). Chúng vẫn xóa được nhưng không được tính vào công thức.
 - Khối mới ưu tiên những nguyên liệu còn thiếu nhiều nhất.
 - **5 cái đĩa 🍽️ mỗi lần nấu:** thớt hết chỗ thì vỡ 1 đĩa. Thớt được dọn sạch, nguyên liệu đã gom và điểm vẫn giữ nguyên. Vỡ hết 5 đĩa thì phải nấu lại món từ đầu.
-- **Sao theo số đĩa bị vỡ:** không vỡ đĩa nào được 3★, vỡ 1 đĩa được 2★, vỡ từ 2 đĩa trở lên được 1★. Cách tính này không hiện trong game.
+- **Khách đánh giá 1–5 sao** sau mỗi order, lấy mức thấp nhất trong các điều kiện: nấu hoàn hảo được 5★, món ngon 4★, hơi khét 3★; vỡ 1 đĩa hoặc nấu sai thứ tự còn 2★; vỡ từ 2 đĩa, nấu chậm, thối sai tiền hoặc để khách chờ lâu chỉ được 1★.
+- **Menu quán** hiện giá và độ ưa chuộng của từng món (điểm trung bình các đánh giá). Món ít được ưa chuộng sẽ được khách gọi nhiều hơn để bạn gỡ điểm. Bảng xếp hạng có tab **⭐ Đánh giá**, xếp theo tổng số sao khách chấm.
 - **Nấu và bán:** gom đủ nguyên liệu thì vào bước nấu (chạm đúng lúc, giữ lửa hoặc xếp đúng thứ tự), rồi mang món ra cho khách và đếm tiền thối. Tiền thu về và tiền boa cộng vào doanh thu của tài khoản. Chi tiết xem [ROADMAP.md](ROADMAP.md).
-- Nấu xong một món thì mở món kế tiếp, và công thức (kèm giới thiệu món) được ghi vào **📖 Sổ công thức**.
+- Nấu xong một món thì mở món kế tiếp, và công thức (kèm giới thiệu món) được ghi vào **📋 Menu quán**.
 
 ### Chế độ ♾️ Chợ vô tận
 - Chơi kiểu cổ điển: có 7 nguyên liệu ngẫu nhiên, chơi đến khi hết chỗ, lưu kỷ lục.

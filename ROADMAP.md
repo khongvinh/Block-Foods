@@ -28,6 +28,7 @@ Gom đủ nguyên liệu thì vào bước nấu ngắn, khoảng 8–15 giây. 
 - Người chơi chạm các tờ tiền Việt Nam để đếm đúng tiền thối. Chạm tờ đã đếm để bỏ ra, hoặc bấm "Đếm lại".
 - Khách có thanh kiên nhẫn 15 giây. Mỗi lần thối sai bị trừ 3 giây. Hết kiên nhẫn thì khách bỏ đi, không lấy tiền thối và không boa.
 - **Tiền boa:** món Hoàn hảo được 20% giá món, món Ngon được 10%, món Hơi khét không có boa. Thối càng nhanh boa càng nhiều. Mỗi lần thối sai mất 30% tiền boa.
+- Sau mỗi order khách chấm 1–5 sao: 5★ hoàn hảo, 4★ ngon, 3★ hơi khét, 2★ vỡ 1 đĩa hoặc nấu sai, 1★ vỡ từ 2 đĩa, nấu chậm, thối sai tiền hoặc để khách chờ lâu. Menu quán hiện độ ưa chuộng của từng món (điểm trung bình).
 - Tiền thu về cộng vào **tổng doanh thu**, lưu theo tài khoản. Bảng xếp hạng có thêm tab **💰 Doanh thu**.
 
 ## 3. Nâng cấp quán ăn (⏳ làm tiếp theo)

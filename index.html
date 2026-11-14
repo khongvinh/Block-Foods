@@ -13,6 +13,7 @@
   --bw:min(92vw, 420px, 54vh);
   --cs:calc((var(--bw) - 20px) / 8);
 }
+[hidden]{display:none!important}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 body{
@@ -37,7 +38,9 @@ button{font:inherit;cursor:pointer;border:0}
 .icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #9a6234}
 
 /* ---------- Home ---------- */
-#home{justify-content:center;gap:16px}
+#home{justify-content:flex-start;gap:0}
+.home-bar{width:100%;max-width:440px;display:flex;justify-content:flex-end;flex:0 0 auto}
+.home-main{flex:1;min-height:0;width:100%;overflow-y:auto;touch-action:pan-y;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding-block:8px}
 .logo{text-align:center;margin-bottom:10px}
 .logo .tiles{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
 .logo .tiles span{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;font-size:28px;font-weight:900;color:#fff;
@@ -46,7 +49,7 @@ button{font:inherit;cursor:pointer;border:0}
 .logo p{margin:8px 0 0;color:var(--fg);font-weight:600;opacity:.9}
 .floaters{font-size:34px;letter-spacing:6px;margin:4px 0 14px;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
-.bestline{color:var(--fg);font-weight:700;opacity:.9}
+.bestline{text-align:center;color:var(--fg);font-weight:700;opacity:.9}
 
 /* ---------- Level select / book ---------- */
 .topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -74,10 +77,10 @@ button{font:inherit;cursor:pointer;border:0}
 #game{gap:8px}
 .hud{width:var(--bw);display:flex;flex-direction:column;gap:8px}
 .hud-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.pill{background:linear-gradient(#7b4fd0,#5b34a8);border-radius:14px;padding:6px 14px;font-weight:900;font-size:22px;min-width:96px;text-align:center;
+.pill{color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.35);white-space:nowrap;background:linear-gradient(#7b4fd0,#5b34a8);border-radius:14px;padding:6px 14px;font-weight:900;font-size:22px;min-width:96px;text-align:center;
   box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 3px 6px rgba(0,0,0,.25)}
 .pill.score{background:linear-gradient(#7a4a26,#5a341c);border:2px solid var(--gold);font-size:26px;min-width:120px}
-.pill small{display:block;font-size:10px;font-weight:700;opacity:.8;letter-spacing:1px}
+.pill small{display:block;font-size:11px;font-weight:800;opacity:.9;letter-spacing:1px;text-shadow:none}
 .dish-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px;text-shadow:0 2px 0 rgba(255,255,255,.7)}
 .dish-title .e{font-size:30px}
 .moves{font-weight:800;font-size:14px;background:rgba(255,255,255,.75);color:var(--fg);box-shadow:0 2px 0 rgba(31,74,55,.15);border-radius:10px;padding:4px 10px}
@@ -229,12 +232,23 @@ button{font:inherit;cursor:pointer;border:0}
 .newtag{display:inline-block;background:#e85d2a;color:#fff;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800;margin-left:6px;vertical-align:middle}
 .ostars{color:var(--gold);text-shadow:0 1px 0 #8a5a00}
 .ostars .off,.recipe-card .s .off{color:#d8c7ae;text-shadow:none}
+.rate{color:var(--gold);text-shadow:0 1px 0 #8a5a00;letter-spacing:1px;white-space:nowrap}
+.rate .off{color:#d8c7ae;text-shadow:none}
+.rate-num{font-weight:800;font-size:13px;opacity:.75;margin-left:4px}
+.price-tag{display:inline-block;background:#3fae5a;color:#fff;border-radius:8px;padding:1px 8px;font-size:13px;font-weight:800;margin-left:6px;vertical-align:middle}
+.review{background:#fff;border-radius:14px;padding:10px 12px;text-align:left;margin:10px 0;box-shadow:0 2px 0 #e2cfae}
+.review .who{display:flex;align-items:center;gap:8px;font-weight:800}
+.review .who .emoji{font-size:30px}
+.review .rate{font-size:22px}
+.review ul{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on">
+  <div class="home-bar"><button class="icon-btn" id="btnSound" aria-label="Âm thanh">🔊</button></div>
+  <div class="home-main">
   <div class="logo">
     <div class="tiles">
       <span style="background:#e8322b">B</span><span style="background:#3fae5a">L</span><span style="background:#f4a52a">O</span><span style="background:#4a90d9">C</span><span style="background:#9b6bd1">K</span>
@@ -245,17 +259,17 @@ button{font:inherit;cursor:pointer;border:0}
   <div class="floaters emoji">🍜🥖🦐🌶️🍚</div>
   <button class="btn" id="btnCook">🍳 Mở quán</button>
   <button class="btn green" id="btnEndless">♾️ Chợ vô tận</button>
-  <button class="btn brown" data-go="book">📖 Sổ công thức</button>
+  <button class="btn brown" data-go="book">📋 Menu quán</button>
   <button class="btn" style="background:linear-gradient(#ffd45c,#f0a81c);box-shadow:0 5px 0 #a8700a,0 8px 16px rgba(0,0,0,.25)" data-go="rank">🏆 Bảng xếp hạng</button>
   <div class="bestline" id="bestLine"></div>
   <div class="acct" id="acct" hidden><img id="acctAv" alt=""><span id="acctName"></span></div>
-  <button class="icon-btn" id="btnSound" style="position:absolute;top:max(12px,env(safe-area-inset-top));right:16px" aria-label="Âm thanh">🔊</button>
+  </div>
 </section>
 
 
 <!-- ============ RECIPE BOOK ============ -->
 <section id="book" class="screen">
-  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Sổ công thức</h2><div style="width:44px"></div></div>
+  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Menu quán</h2><div style="width:44px"></div></div>
   <div class="scroll" id="bookList"></div>
 </section>
 
@@ -264,7 +278,7 @@ button{font:inherit;cursor:pointer;border:0}
   <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Bảng xếp hạng</h2><div style="width:44px"></div></div>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tabEndless" aria-selected="true" data-tab="endless">♾️ Chợ vô tận</button>
-    <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef">⭐ Đầu bếp</button>
+    <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef">⭐ Đánh giá</button>
     <button class="tab" role="tab" id="tabMoney" aria-selected="false" data-tab="money">💰 Doanh thu</button>
   </div>
   <div class="scroll" id="rankList"></div>
@@ -395,6 +409,11 @@ let progress = store.get("progress",{stars:{}}); // stars[dishId] = 1..3
 let best = store.get("best",0);
 const fmtVND=n=>(Math.round(n)||0).toLocaleString("vi-VN")+"đ";
 function earned(){ return progress.earned||0; }
+// Đánh giá của khách: progress.reviews[dishId] = {n: số đánh giá, sum: tổng sao}
+function reviews(){ return progress.reviews||(progress.reviews={}); }
+function dishRating(id){ const r=reviews()[id]; return r&&r.n?{avg:r.sum/r.n,n:r.n}:null; }
+function allRatings(){ let n=0,sum=0; Object.values(reviews()).forEach(r=>{ n+=r.n||0; sum+=r.sum||0; }); return {n,sum,avg:n?sum/n:0}; }
+function rateHTML(v){ const k=Math.round(v); return `<span class="rate">${"★".repeat(k)}<span class="off">${"★".repeat(5-k)}</span></span>`; }
 function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);
 
@@ -711,9 +730,10 @@ function stopKitchen(){ cancelAnimationFrame(kitchenRAF); kitchenRAF=0; }
 function startCooking(D,done){
   const cfg=COOK[D.id]||{type:"timing",t:"Nấu món",h:"Chạm khi kim vào vùng xanh.",pan:D.e};
   show("kitchen");
-  const finish=score=>{
+  const finish=(score,info={})=>{
     stopKitchen();
     const q=quality(Math.max(0,Math.min(100,Math.round(score))));
+    q.miss=info.miss||0; q.slow=!!info.slow;
     const kb=$("#kBody");
     kb.innerHTML=`<div class="kcard"><span class="kstep">BƯỚC 1/2 · NẤU</span><h2>${D.n}</h2>
       <div class="kpan">${dishE(D)}</div><p><span class="qbadge q-${q.k}">${q.label}</span></p>
@@ -800,7 +820,7 @@ function cookOrder(head,cfg,D,finish){
   const LIMIT=10; let idx=0,miss=0,t0=performance.now(),over=false;
   const end=()=>{ if(over) return; over=true; const el=(performance.now()-t0)/1000;
     const sc= idx<seq.length ? idx/seq.length*50-miss*10 : 100-miss*20-Math.max(0,el-4)*6;
-    finish(sc); };
+    finish(sc,{miss,slow:idx<seq.length}); };
   document.querySelectorAll(".ingbtn").forEach(b=>b.onclick=()=>{
     if(over) return;
     if(b.dataset.k===seq[idx]){
@@ -859,9 +879,9 @@ function startCheckout(D,q,done){
   document.querySelectorAll(".bills .bill").forEach(b=>b.onclick=()=>{ if(over) return; given.push(+b.dataset.v); given.sort((a,b)=>b-a); sfx.pick(); draw(); });
   $("#kGiven").onclick=e=>{ const b=e.target.closest("[data-i]"); if(!b||over) return; given.splice(+b.dataset.i,1); draw(); };
   $("#kReset").onclick=()=>{ if(over) return; given=[]; draw(); };
-  const close=(tip,msg)=>{ over=true; stopKitchen(); $("#kSay").textContent=msg;
+  const close=(tip,msg,slow)=>{ over=true; stopKitchen(); $("#kSay").textContent=msg;
     $("#kFeed").textContent=tip?`+ ${fmtVND(price)} · boa ${fmtVND(tip)}`:`+ ${fmtVND(price)}`;
-    setTimeout(()=>done({price,tip,total:price+tip}),1400); };
+    setTimeout(()=>done({price,tip,total:price+tip,wrong,slow:!!slow}),1400); };
   $("#kGive").onclick=()=>{
     if(over) return;
     const s=sum();
@@ -878,7 +898,7 @@ function startCheckout(D,q,done){
   };
   const loop=t=>{ if(over) return; const dt=Math.min(0.1,(t-last)/1000); last=t; left=Math.max(0,left-dt);
     $("#kPat").style.width=left/PAT*100+"%";
-    if(left<=0){ close(0,"Thôi khỏi thối, tôi vội lắm!"); return; }
+    if(left<=0){ close(0,"Thôi khỏi thối, tôi vội lắm!",true); return; }
     kitchenRAF=requestAnimationFrame(loop); };
   kitchenRAF=requestAnimationFrame(loop);
 }
@@ -892,21 +912,39 @@ function closeModal(){ $("#modal").classList.remove("on"); }
 function win(){
   if(G.over) return; G.over=true;
   const D=DISHES[G.level];
-  const stars = G.lost===0?3 : G.lost===1?2 : 1;
-  const prev=progress.stars[D.id]||0; G.wasDone=prev>0;
-  if(stars>prev){ progress.stars[D.id]=stars; saveLocal(); }
-  sfx.win(); syncMyScore();
-  floatText("Đủ nguyên liệu rồi!", innerWidth/2, innerHeight*0.4);
-  setTimeout(()=>startCooking(D,(q,qs)=>startCheckout(D,q,(pay)=>finishWin(D,stars,q,pay))),900);
-}
-function finishWin(D,stars,q,pay){
-  const wasDone=G.wasDone;
-  progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
+  G.wasDone=!!progress.stars[D.id];
   sfx.win();
+  floatText("Đủ nguyên liệu rồi!", innerWidth/2, innerHeight*0.4);
+  setTimeout(()=>startCooking(D,(q,qs)=>startCheckout(D,q,(pay)=>finishWin(D,q,pay))),900);
+}
+// Khách chấm 1–5 sao: lấy mức thấp nhất trong các điều kiện
+function rateOrder(q,lost,pay){
+  let r = q.k==="perfect"?5 : q.k==="good"?4 : 3; const notes=[];
+  if(q.k==="perfect") notes.push("Món nấu hoàn hảo");
+  else if(q.k==="good") notes.push("Món ngon");
+  else notes.push("Món hơi khét");
+  if(q.miss){ r=Math.min(r,2); notes.push("Nấu sai thứ tự"); }
+  if(lost===1){ r=Math.min(r,2); notes.push("Vỡ 1 đĩa"); }
+  if(lost>=2){ r=1; notes.push(`Vỡ ${lost} đĩa`); }
+  if(q.slow){ r=1; notes.push("Nấu chậm"); }
+  if(pay.wrong){ r=1; notes.push("Thối sai tiền"); }
+  if(pay.slow){ r=1; notes.push("Để khách chờ lâu"); }
+  return {r,notes};
+}
+const REVIEW_SAY={5:"Tuyệt vời! Nhất định sẽ quay lại!",4:"Ngon lắm, cảm ơn quán!",3:"Cũng được.",2:"Hơi thất vọng chút…",1:"Chán quá, chắc không quay lại."};
+function finishWin(D,q,pay){
+  const wasDone=G.wasDone, C=G.customer||rnd(CUSTOMERS);
+  const {r,notes}=rateOrder(q,G.lost,pay);
+  const rv=reviews(); rv[D.id]=rv[D.id]||{n:0,sum:0}; rv[D.id].n++; rv[D.id].sum+=r;
+  progress.stars[D.id]=Math.max(progress.stars[D.id]||0,r);
+  progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
+  r>=4?sfx.win():sfx.place();
+  const pop=dishRating(D.id);
   modal(`<h2>Khách đã thanh toán!</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
-    <div class="stars">${starsHTML(stars)}</div>
-    <p><span class="qbadge q-${q.k}">${q.label}</span></p>
-    <p>${G.lost?`Vỡ <b>${G.lost}</b> đĩa · `:"Không vỡ đĩa nào · "}Điểm <b>${G.score}</b></p>
+    <div class="review"><div class="who"><span class="emoji">${C.e}</span><span>${C.n}</span></div>
+      <div>${rateHTML(r)}</div><div style="font-weight:600;margin-top:2px">“${REVIEW_SAY[r]}”</div>
+      <ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul></div>
+    <p style="font-size:14px">Độ ưa chuộng món: ${rateHTML(pop.avg)}<span class="rate-num">${pop.avg.toFixed(1)} · ${pop.n} đánh giá</span></p>
     <p class="money">💰 Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
     <p class="fact">${D.d}</p>
     ${unlockedCount()>DISHES.indexOf(D)+1&&!wasDone?`<p class="rank-badge">🔓 Mở khóa món mới: ${DISHES[DISHES.indexOf(D)+1].n}</p>`:""}
@@ -956,7 +994,7 @@ function pickOrder(avoidId){
   const fresh=open.filter(d=>!progress.stars[d.id]);
   if(fresh.length && !avoidId) return fresh[0];
   const pool=open.length>1?open.filter(d=>d.id!==avoidId):open;
-  return weighted(pool,d=>4-(progress.stars[d.id]||0));
+  return weighted(pool,d=>{ const x=dishRating(d.id); return x?6-x.avg:3; });
 }
 function newOrder(avoidId){
   G.mode="level";
@@ -968,7 +1006,7 @@ function newOrder(avoidId){
     <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="oSay"></span></div></div>
     <div class="order-dish">${dishE(D)}</div>
     <h2>${D.n}${isNew?`<span class="newtag">MÓN MỚI</span>`:""}</h2>
-    <p class="khint" style="margin:2px 0">Giá ${fmtVND(PRICE[D.id]||30000)}${isNew?"":` · <span class="ostars">${starsHTML(progress.stars[D.id])}</span>`}</p>
+    <p class="khint" style="margin:2px 0">Giá ${fmtVND(PRICE[D.id]||30000)}${dishRating(D.id)?` · ${rateHTML(dishRating(D.id).avg)}<span class="rate-num">${dishRating(D.id).avg.toFixed(1)}</span>`:""}</p>
     <div class="order-ings">${Object.entries(D.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div>
     <button class="btn green kbig" id="oTake">Nhận order ›</button>
     <div style="display:flex;justify-content:space-between;margin-top:8px">
@@ -981,10 +1019,13 @@ function newOrder(avoidId){
   const sk=$("#oSkip"); if(sk) sk.onclick=()=>newOrder(D.id);
 }
 function renderBook(){
-  $("#bookList").innerHTML=DISHES.map(d=>{
-    const ok=!!progress.stars[d.id];
-    return `<div class="recipe-card ${ok?"":"locked"}"><div class="big">${dishE(d)}</div><div>
-      <h3>${ok?d.n:"???"}</h3>${ok?`<div class="s" style="color:var(--gold);text-shadow:0 1px 0 #8a5a00">${starsHTML(progress.stars[d.id])}</div>`:""}${ok?`<p>${d.d}</p>`:`<p><i>Chưa có khách gọi món này. Phục vụ thêm khách để mở khóa.</i></p>`}
+  const u=unlockedCount();
+  $("#bookList").innerHTML=DISHES.map((d,i)=>{
+    const ok=i<u, x=dishRating(d.id);
+    return `<div class="recipe-card ${ok?"":"locked"}"><div class="big">${dishE(d)}</div><div style="min-width:0">
+      <h3>${ok?d.n:"Món sắp ra mắt"}${ok?`<span class="price-tag">${fmtVND(PRICE[d.id]||30000)}</span>`:""}</h3>
+      ${ok?(x?`<div>${rateHTML(x.avg)}<span class="rate-num">${x.avg.toFixed(1)} · ${x.n} đánh giá</span></div>`:`<div class="rate-num" style="margin:0">Chưa có đánh giá</div>`):""}
+      ${ok?`<p>${d.d}</p>`:`<p><i>Phục vụ thêm khách để mở món này.</i></p>`}
       <div class="ings">${Object.entries(d.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div></div></div>`;
   }).join("");
 }
@@ -993,7 +1034,7 @@ function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
   if(id==="book") renderBook();
   if(id==="rank") renderRank();
-  if(id==="home"){ $("#bestLine").textContent = `👑 Kỷ lục chợ vô tận: ${best} · ⭐ ${Object.values(progress.stars).reduce((a,b)=>a+b,0)}/${DISHES.length*3} · 💰 ${fmtVND(earned())}`; }
+  if(id==="home"){ const a=allRatings(); $("#bestLine").textContent = `👑 Kỷ lục: ${best} · ⭐ ${a.n?a.avg.toFixed(1)+" ("+a.n+" đánh giá)":"chưa có đánh giá"} · 💰 ${fmtVND(earned())}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 $("#btnEndless").addEventListener("click",startEndless);
@@ -1015,7 +1056,7 @@ const LB={db:null,user:null,myId:null,rows:[],state:"loading",canWrite:true,tab:
 function totalStars(){ return Object.values(progress.stars).reduce((a,b)=>a+b,0); }
 function myRow(){ return LB.rows.find(r=>r.id===LB.myId); }
 function sortedRows(tab){
-  const key = tab==="endless" ? (r=>r.endless||0) : tab==="money" ? (r=>r.earned||0) : (r=>(r.stars||0)*1000+(r.dishes||0));
+  const key = tab==="endless" ? (r=>r.endless||0) : tab==="money" ? (r=>r.earned||0) : (r=>r.rsum||0);
   return LB.rows.filter(r=>key(r)>0).sort((a,b)=>key(b)-key(a) || (a.at||0)-(b.at||0));
 }
 function myRank(tab){ const i=sortedRows(tab).findIndex(r=>r.id===LB.myId); return i<0?null:i+1; }
@@ -1036,7 +1077,7 @@ async function renderRank(){
     const val = LB.tab==="endless"
       ? `${r.endless}<small>điểm</small>`
       : LB.tab==="money" ? `<span class="money">${fmtVND(r.earned)}</span><small>doanh thu</small>`
-      : `${r.stars||0}★<small>${r.dishes||0} món</small>`;
+      : `${(r.rcount?r.rsum/r.rcount:0).toFixed(1)}★<small>${r.rcount||0} đánh giá</small>`;
     return `<div class="lb-row ${me?"me":""}"><div class="lb-rank">${i<3?`<span class="emoji">${medal[i]}</span>`:i+1}</div>
       <img class="lb-av" alt="" data-av="${i}">
       <div class="lb-name" data-n="${i}"></div><div class="lb-val">${val}</div></div>`;
@@ -1056,7 +1097,10 @@ async function syncMyScore(){
   const next={endless:Math.max(best,cur.endless||0), prog,
     stars:Object.values(prog).reduce((a,b)=>a+b,0), dishes:Object.keys(prog).length,
     earned:Math.max(earned(),cur.earned||0)};
-  if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})) return;
+  const rv={...(cur.rv||{})};
+  Object.entries(reviews()).forEach(([k,v])=>{ if(!rv[k]||(v.n||0)>(rv[k].n||0)) rv[k]={n:v.n,sum:v.sum}; });
+  next.rv=rv; next.rcount=Object.values(rv).reduce((a,b)=>a+(b.n||0),0); next.rsum=Object.values(rv).reduce((a,b)=>a+(b.sum||0),0);
+  if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})&&JSON.stringify(rv)===JSON.stringify(cur.rv||{})) return;
   next.at=Date.now();
   LB.writing=true;
   try{ await LB.db.collection("scores").doc(LB.myId).set(next); }
@@ -1078,6 +1122,8 @@ function mergeCloud(){
   Object.entries(mine.prog||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)) progress.stars[k]=Math.max(progress.stars[k]||0,+v||0); });
   best=Math.max(best,+mine.endless||0);
   progress.earned=Math.max(earned(),+mine.earned||0);
+  const rv=reviews();
+  Object.entries(mine.rv||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)&&(!rv[k]||(+v.n||0)>(rv[k].n||0))) rv[k]={n:+v.n||0,sum:+v.sum||0}; });
   saveLocal();
 }
 async function showAccount(user){

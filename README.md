@@ -34,6 +34,7 @@ Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên li�
 - Khối mới ưu tiên những nguyên liệu còn thiếu nhiều nhất.
 - **5 cái đĩa 🍽️ mỗi lần nấu:** thớt hết chỗ thì vỡ 1 đĩa. Thớt được dọn sạch, nguyên liệu đã gom và điểm vẫn giữ nguyên. Vỡ hết 5 đĩa thì phải nấu lại món từ đầu.
 - **Sao theo số đĩa bị vỡ:** không vỡ đĩa nào được 3★, vỡ 1 đĩa được 2★, vỡ từ 2 đĩa trở lên được 1★. Cách tính này không hiện trong game.
+- **Nấu và bán:** gom đủ nguyên liệu thì vào bước nấu (chạm đúng lúc, giữ lửa hoặc xếp đúng thứ tự), rồi mang món ra cho khách và đếm tiền thối. Tiền thu về và tiền boa cộng vào doanh thu của tài khoản. Chi tiết xem [ROADMAP.md](ROADMAP.md).
 - Nấu xong một món thì mở món kế tiếp, và công thức (kèm giới thiệu món) được ghi vào **📖 Sổ công thức**.
 
 ### Chế độ ♾️ Chợ vô tận
@@ -51,7 +52,4 @@ Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên li�
 - Tiến độ, số sao, kỷ lục và cài đặt âm thanh lưu trong `localStorage`.
 
 ## Hướng phát triển
-- Vật phẩm hỗ trợ: 🔪 Dao (xóa 1 ô), 🍳 Chảo (xóa vùng 3×3), 🔄 Đổi khay.
-- Ô "đặc biệt" trên thớt: ô đá lạnh cần xóa 2 lần, ô gia vị nhân đôi nguyên liệu.
-- Bản đồ vùng miền (Bắc, Trung, Nam) với đặc sản từng tỉnh.
-- Nhiệm vụ hằng ngày: "Mâm cơm gia đình" (nấu 3 món trong một màn).
+Xem [ROADMAP.md](ROADMAP.md).

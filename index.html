@@ -173,6 +173,53 @@ button{font:inherit;cursor:pointer;border:0}
 .plate{display:inline-block}
 .plate.broken{opacity:.3;filter:grayscale(1) brightness(.6)}
 .platebar{display:inline-flex;gap:1px;background:#6b4226;border-radius:10px;padding:2px 6px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25)}
+
+/* ---------- Bếp nấu (ý tưởng 1) & quầy tính tiền (ý tưởng 2) ---------- */
+.kwrap{width:100%;max-width:420px;flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:0}
+.kcard{background:var(--cream);color:var(--ink);border-radius:22px;padding:18px 16px;box-shadow:0 6px 0 #b98a5c,0 12px 24px rgba(0,0,0,.18);text-align:center}
+.kcard h2{margin:0 0 4px;font-size:24px}
+.kstep{display:inline-block;background:#3fae5a;color:#fff;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:800;letter-spacing:.5px;margin-bottom:6px}
+.khint{font-size:14px;line-height:1.45;margin:4px 0 10px;opacity:.85}
+.kpan{font-size:70px;line-height:1.1;margin:6px 0;transition:transform .1s}
+.kpan.sizzle{animation:sizzle .15s linear infinite}
+@keyframes sizzle{50%{transform:translate(1px,-1px) rotate(1deg)}}
+.tbar{position:relative;height:34px;border-radius:17px;background:linear-gradient(90deg,#f2d7a8,#e8b46a 50%,#d8794a);box-shadow:inset 0 2px 4px rgba(0,0,0,.2);margin:12px 0;overflow:hidden}
+.tzone{position:absolute;top:0;bottom:0;background:rgba(63,174,90,.85);border-left:2px solid #fff;border-right:2px solid #fff}
+.tneedle{position:absolute;top:-4px;bottom:-4px;width:6px;margin-left:-3px;background:#3b2412;border-radius:3px;box-shadow:0 0 0 2px #fff}
+.kbig{width:100%;font-size:22px;padding:16px}
+.kdots{display:flex;gap:6px;justify-content:center;font-size:20px}
+.kfeed{min-height:26px;font-weight:900;font-size:20px;color:var(--accent)}
+.kprog{height:8px;border-radius:4px;background:#e7d3b3;overflow:hidden;margin-top:8px}
+.kprog i{display:block;height:100%;width:0;background:var(--green)}
+.slots{display:flex;gap:6px;justify-content:center;margin:10px 0}
+.slot2{width:52px;height:52px;border-radius:12px;background:#efe0c6;display:grid;place-items:center;font-size:28px;box-shadow:inset 0 2px 4px rgba(0,0,0,.12)}
+.slot2 .ghost{opacity:.3;filter:grayscale(.6)}
+.slot2.ok{background:#d8f5d0}
+.ingbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ingbtn{width:62px;height:62px;border-radius:14px;font-size:32px;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 65%,#fff),var(--c));box-shadow:0 4px 0 color-mix(in srgb,var(--c) 60%,#000)}
+.ingbtn:active{transform:translateY(2px)}
+.ingbtn.used{visibility:hidden}
+.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.cust{display:flex;align-items:flex-start;gap:12px;text-align:left}
+.cust .face{font-size:58px;line-height:1}
+.bubble{position:relative;background:#fff;border-radius:16px;padding:10px 12px;font-weight:600;line-height:1.4;box-shadow:0 2px 0 #e2cfae;flex:1;min-width:0}
+.bubble b{display:block;font-size:12px;opacity:.6;margin-bottom:2px}
+.qbadge{display:inline-block;border-radius:999px;padding:3px 12px;font-weight:800;font-size:14px;color:#fff}
+.q-perfect{background:#e8a317}.q-good{background:#3fae5a}.q-burnt{background:#8d6e63}
+.patience{height:10px;border-radius:5px;background:#e7d3b3;overflow:hidden;margin:6px 0 2px}
+.patience i{display:block;height:100%;background:linear-gradient(90deg,#ef4b3c,#f7b733 40%,#3fae5a 70%);transition:width .2s linear}
+.billrow{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:15px;margin:6px 0}
+.billrow span:last-child{font-variant-numeric:tabular-nums}
+.bill{display:inline-flex;align-items:center;justify-content:center;min-width:86px;height:40px;padding:0 8px;border-radius:6px;font-weight:900;font-size:14px;color:#fff;
+  background:var(--b);box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 3px 0 rgba(0,0,0,.25);text-shadow:0 1px 1px rgba(0,0,0,.35);font-variant-numeric:tabular-nums}
+.bill:active{transform:translateY(2px)}
+.bills{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.bills .bill{width:100%;min-width:0}
+.given{min-height:48px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;background:#efe0c6;border-radius:12px;padding:6px;margin-top:8px}
+.given .bill{min-width:0;height:30px;font-size:11px;padding:0 6px}
+.given .empty{opacity:.5;font-size:13px;font-weight:600}
+.money{font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -214,9 +261,13 @@ button{font:inherit;cursor:pointer;border:0}
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tabEndless" aria-selected="true" data-tab="endless">♾️ Chợ vô tận</button>
     <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef">⭐ Đầu bếp</button>
+    <button class="tab" role="tab" id="tabMoney" aria-selected="false" data-tab="money">💰 Doanh thu</button>
   </div>
   <div class="scroll" id="rankList"></div>
 </section>
+
+<!-- ============ BẾP NẤU & QUẦY TÍNH TIỀN ============ -->
+<section id="kitchen" class="screen"><div class="kwrap" id="kBody"></div></section>
 
 <!-- ============ GAME ============ -->
 <section id="game" class="screen">
@@ -336,6 +387,8 @@ let ACCOUNT_ID=null;
 const pkey=k=>ACCOUNT_ID?("u_"+ACCOUNT_ID+"_"+k):k;
 let progress = store.get("progress",{stars:{}}); // stars[dishId] = 1..3
 let best = store.get("best",0);
+const fmtVND=n=>(Math.round(n)||0).toLocaleString("vi-VN")+"đ";
+function earned(){ return progress.earned||0; }
 function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);
 
@@ -622,6 +675,208 @@ function flyTo(cellEl,ing){
     {duration:650+Math.random()*250,easing:"ease-in"}).onfinish=()=>{ f.remove(); const c=document.querySelector(`.chip[data-ing="${ing}"]`); if(c){c.classList.add("pop"); setTimeout(()=>c.classList.remove("pop"),150);} };
 }
 
+
+/* =========================================================
+   Ý TƯỞNG 1: BẾP NẤU — mini game ngắn sau khi gom đủ nguyên liệu
+   ========================================================= */
+const PRICE={trungChien:25000,comTam:40000,banhMi:20000,pho:50000,bunCha:45000,goiCuon:30000,
+  canhChua:55000,banhXeo:40000,caKho:60000,bunBo:50000,canhNam:35000,comChien:45000};
+const COOK={
+  trungChien:{type:"hold",  t:"Chiên trứng",        h:"Nhấn giữ để tăng lửa, thả ra để hạ lửa. Giữ kim trong vùng xanh để trứng vàng đều.", pan:"🍳"},
+  comTam:    {type:"order", t:"Bày đĩa cơm tấm",    h:"Chạm nguyên liệu theo đúng thứ tự để bày đĩa thật nhanh.", pan:"🍽️"},
+  banhMi:    {type:"order", t:"Kẹp nhân bánh mì",   h:"Chạm nguyên liệu theo đúng thứ tự để kẹp vào ổ bánh.", pan:"🥖"},
+  pho:       {type:"timing",t:"Chan nước dùng",     h:"Chạm khi kim chạy vào vùng xanh. Làm 3 lần, mỗi lần nhanh hơn.", pan:"🍜"},
+  bunCha:    {type:"order", t:"Bày mẹt bún chả",    h:"Chạm nguyên liệu theo đúng thứ tự để bày mẹt.", pan:"🥢"},
+  goiCuon:   {type:"order", t:"Cuốn gỏi cuốn",      h:"Chạm nguyên liệu theo đúng thứ tự để cuốn cho chặt tay.", pan:"🌯"},
+  canhChua:  {type:"timing",t:"Nêm canh chua",      h:"Chạm khi kim vào vùng xanh để nêm vừa chua vừa ngọt.", pan:"🥣"},
+  banhXeo:   {type:"hold",  t:"Đổ bánh xèo",        h:"Nhấn giữ để tăng lửa, thả ra để hạ lửa. Lửa vừa thì bánh mới giòn.", pan:"🥞"},
+  caKho:     {type:"timing",t:"Canh lửa kho cá",    h:"Chạm khi kim vào vùng xanh để nước kho sánh mà không khét.", pan:"🍲"},
+  bunBo:     {type:"timing",t:"Chan nước lèo",      h:"Chạm khi kim vào vùng xanh để chan vừa tô.", pan:"🍜"},
+  canhNam:   {type:"timing",t:"Nêm nếm canh",       h:"Chạm khi kim vào vùng xanh để canh ngọt thanh.", pan:"🍵"},
+  comChien:  {type:"hold",  t:"Đảo cơm chiên",      h:"Nhấn giữ để tăng lửa, thả ra để hạ lửa. Lửa đều thì cơm tơi hạt.", pan:"🍳"},
+};
+function quality(score){
+  if(score>=85) return {k:"perfect",label:"✨ Hoàn hảo",tip:0.2,score};
+  if(score>=55) return {k:"good",label:"😋 Ngon",tip:0.1,score};
+  return {k:"burnt",label:"😅 Hơi khét",tip:0,score};
+}
+let kitchenRAF=0;
+function stopKitchen(){ cancelAnimationFrame(kitchenRAF); kitchenRAF=0; }
+function startCooking(D,done){
+  const cfg=COOK[D.id]||{type:"timing",t:"Nấu món",h:"Chạm khi kim vào vùng xanh.",pan:D.e};
+  show("kitchen");
+  const finish=score=>{
+    stopKitchen();
+    const q=quality(Math.max(0,Math.min(100,Math.round(score))));
+    const kb=$("#kBody");
+    kb.innerHTML=`<div class="kcard"><span class="kstep">BƯỚC 1/2 · NẤU</span><h2>${D.n}</h2>
+      <div class="kpan emoji">${D.e}</div><p><span class="qbadge q-${q.k}">${q.label}</span></p>
+      <p class="khint">Món đã sẵn sàng. Có khách đang chờ!</p>
+      <button class="btn green kbig" id="kNext" disabled style="opacity:.6">Mang ra cho khách ›</button></div>`;
+    setTimeout(()=>{ const b=$("#kNext"); if(b){ b.disabled=false; b.style.opacity=""; } },700);
+    q.k==="burnt"?sfx.bad():sfx.clear(q.k==="perfect"?3:1);
+    $("#kNext").onclick=()=>done(q);
+  };
+  const head=`<span class="kstep">BƯỚC 1/2 · NẤU</span><h2>${cfg.t}</h2><p class="khint">${cfg.h}</p>`;
+  if(cfg.type==="timing") cookTiming(head,cfg,finish);
+  else if(cfg.type==="hold") cookHold(head,cfg,finish);
+  else cookOrder(head,cfg,D,finish);
+}
+
+// Kiểu 1: chạm đúng lúc (3 lần)
+function cookTiming(head,cfg,finish){
+  $("#kBody").innerHTML=`<div class="kcard">${head}<div class="kpan emoji" id="kPan">${cfg.pan}</div>
+    <div class="kdots" id="kDots">⚪⚪⚪</div>
+    <div class="tbar"><div class="tzone" id="kZone"></div><div class="tneedle" id="kNeedle"></div></div>
+    <div class="kfeed" id="kFeed"></div>
+    <button class="btn kbig" id="kTap">Chạm!</button></div>`;
+  let round=0,pos=0,dir=1,last=performance.now(),zone={a:0,w:0},scores=[],locked=false;
+  const speeds=[0.75,1.05,1.4];
+  const newZone=()=>{ zone.w=[0.2,0.16,0.13][round]; zone.a=0.08+Math.random()*(0.84-zone.w);
+    const z=$("#kZone"); z.style.left=zone.a*100+"%"; z.style.width=zone.w*100+"%"; };
+  newZone();
+  const loop=t=>{ const dt=Math.min(0.05,(t-last)/1000); last=t;
+    if(!locked){ pos+=dir*speeds[round]*dt; if(pos>1){pos=1;dir=-1;} if(pos<0){pos=0;dir=1;} }
+    $("#kNeedle").style.left=pos*100+"%"; kitchenRAF=requestAnimationFrame(loop); };
+  kitchenRAF=requestAnimationFrame(loop);
+  $("#kTap").onclick=()=>{
+    if(locked) return; locked=true;
+    const c=zone.a+zone.w/2, d=Math.abs(pos-c);
+    let sc, msg;
+    if(d<=zone.w/2){ sc=100-Math.round(d/(zone.w/2)*25); msg=sc>=90?"Chuẩn vị! 👌":"Vừa khéo!"; sfx.place(); }
+    else if(d<=zone.w/2+0.08){ sc=50; msg="Hơi lệch chút…"; sfx.pick(); }
+    else { sc=15; msg="Trật rồi! 😬"; sfx.bad(); }
+    scores.push(sc); $("#kFeed").textContent=msg;
+    $("#kDots").textContent=scores.map(x=>x>=75?"🟢":x>=50?"🟡":"🔴").join("")+"⚪".repeat(3-scores.length);
+    $("#kPan").classList.add("sizzle"); setTimeout(()=>$("#kPan")&&$("#kPan").classList.remove("sizzle"),300);
+    setTimeout(()=>{ round++; if(round>=3){ finish(scores.reduce((a,b)=>a+b,0)/3); return; }
+      newZone(); locked=false; $("#kFeed").textContent=""; },650);
+  };
+}
+
+// Kiểu 2: giữ lửa trong vùng xanh
+function cookHold(head,cfg,finish){
+  $("#kBody").innerHTML=`<div class="kcard">${head}<div class="kpan emoji" id="kPan">${cfg.pan}</div>
+    <div class="tbar"><div class="tzone" id="kZone"></div><div class="tneedle" id="kNeedle"></div></div>
+    <div class="kfeed" id="kFeed">Lửa nhỏ</div>
+    <button class="btn kbig" id="kHold" style="touch-action:none">🔥 Giữ để tăng lửa</button>
+    <div class="kprog"><i id="kProg"></i></div></div>`;
+  const DUR=8, W=0.24; let heat=0.15,hold=false,t0=null,last=null,inside=0;
+  const btn=$("#kHold");
+  const on=e=>{ e.preventDefault(); hold=true; }, off=()=>{ hold=false; };
+  btn.addEventListener("pointerdown",on); btn.addEventListener("pointerup",off);
+  btn.addEventListener("pointerleave",off); btn.addEventListener("pointercancel",off);
+  const loop=t=>{
+    if(t0===null){ t0=t; last=t; }
+    const dt=Math.min(0.05,(t-last)/1000), el=(t-t0)/1000; last=t;
+    heat=Math.max(0,Math.min(1,heat+(hold?0.6:-0.45)*dt));
+    const c=0.55+0.2*Math.sin(el*1.4), a=c-W/2;
+    const z=$("#kZone"); z.style.left=a*100+"%"; z.style.width=W*100+"%";
+    $("#kNeedle").style.left=heat*100+"%";
+    const inZ=Math.abs(heat-c)<=W/2; if(inZ) inside+=dt;
+    $("#kFeed").textContent= inZ?"Lửa vừa 👍": heat>c?"Quá lửa! 🔥":"Lửa nhỏ";
+    $("#kPan").classList.toggle("sizzle",inZ||heat>c);
+    $("#kProg").style.width=Math.min(100,el/DUR*100)+"%";
+    if(el>=DUR){ finish(Math.min(100,inside/(DUR*0.8)*100)); return; }
+    kitchenRAF=requestAnimationFrame(loop);
+  };
+  kitchenRAF=requestAnimationFrame(loop);
+}
+
+// Kiểu 3: chạm nguyên liệu theo đúng thứ tự
+function cookOrder(head,cfg,D,finish){
+  const seq=Object.keys(D.need);
+  const shuffled=seq.slice().sort(()=>Math.random()-.5);
+  $("#kBody").innerHTML=`<div class="kcard" id="kCard">${head}<div class="kpan emoji">${cfg.pan}</div>
+    <div class="slots">${seq.map((k,i)=>`<div class="slot2" data-s="${i}"><span class="emoji ghost">${ING[k].e}</span></div>`).join("")}</div>
+    <div class="ingbtns">${shuffled.map(k=>`<button class="ingbtn emoji" data-k="${k}" style="--c:${ING[k].c}" aria-label="${ING[k].n}">${ING[k].e}</button>`).join("")}</div>
+    <div class="kfeed" id="kFeed"></div><div class="kprog"><i id="kProg"></i></div></div>`;
+  const LIMIT=10; let idx=0,miss=0,t0=performance.now(),over=false;
+  const end=()=>{ if(over) return; over=true; const el=(performance.now()-t0)/1000;
+    const sc= idx<seq.length ? idx/seq.length*50-miss*10 : 100-miss*20-Math.max(0,el-4)*6;
+    finish(sc); };
+  document.querySelectorAll(".ingbtn").forEach(b=>b.onclick=()=>{
+    if(over) return;
+    if(b.dataset.k===seq[idx]){
+      const sl=document.querySelector(`.slot2[data-s="${idx}"]`); sl.classList.add("ok"); sl.innerHTML=`<span class="emoji">${ING[b.dataset.k].e}</span>`;
+      b.classList.add("used"); idx++; sfx.place(); $("#kFeed").textContent="";
+      if(idx>=seq.length) setTimeout(end,300);
+    } else { miss++; sfx.bad(); $("#kFeed").textContent="Sai thứ tự!"; const c=$("#kCard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); }
+  });
+  const loop=t=>{ if(over) return; const el=(t-t0)/1000; $("#kProg").style.width=Math.min(100,el/LIMIT*100)+"%";
+    if(el>=LIMIT){ end(); return; } kitchenRAF=requestAnimationFrame(loop); };
+  kitchenRAF=requestAnimationFrame(loop);
+}
+
+/* =========================================================
+   Ý TƯỞNG 2: KHÁCH GỌI MÓN & TÍNH TIỀN THỐI
+   ========================================================= */
+const CUSTOMERS=[
+  {e:"👩‍🎓",n:"Cô sinh viên",hi:"Cho em một phần {d} nha!"},
+  {e:"🧔",n:"Bác xe ôm",hi:"Làm cho chú một phần {d}, nhanh nhanh nghen!"},
+  {e:"👨‍💼",n:"Anh văn phòng",hi:"Một phần {d} mang đi nhé, anh đang vội."},
+  {e:"👵",n:"Bà ngoại",hi:"Cho bà một phần {d} nhé cháu."},
+  {e:"👱‍♂️",n:"Anh Tây du lịch",hi:"Hello! One {d}, please. Cảm ơn!"},
+  {e:"👷",n:"Chú thợ hồ",hi:"Cho chú phần {d}, nhiều nhiều chút nghe!"},
+  {e:"👧",n:"Bé Na",hi:"Con muốn ăn {d} ạ!"},
+];
+const REACT={perfect:["Trời ơi ngon tuyệt cú mèo!","Ngon quá trời luôn, lần sau ghé nữa!"],
+  good:["Ngon đó nha!","Vừa miệng lắm!"],burnt:["Hơi khét chút ha…","Cũng được, lần sau nấu kỹ hơn nha."]};
+const BILLS=[{v:500000,c:"#2a9fb8"},{v:200000,c:"#c0603a"},{v:100000,c:"#3f8f4a"},{v:50000,c:"#b04f86"},
+  {v:20000,c:"#3c6fc4"},{v:10000,c:"#a68a2c"},{v:5000,c:"#6a5cad"}];
+const billColor=v=>(BILLS.find(b=>b.v===v)||{}).c||"#777";
+const billHTML=(v,attr="")=>`<button class="bill" style="--b:${billColor(v)}" ${attr}>${v.toLocaleString("vi-VN")}</button>`;
+
+function startCheckout(D,q,done){
+  const C=rnd(CUSTOMERS), price=PRICE[D.id]||30000;
+  const payOpts=[50000,100000,200000,500000].filter(v=>v>price).slice(0,2);
+  const paid=rnd(payOpts), change=paid-price;
+  const PAT=15; let left=PAT, given=[], wrong=0, over=false, last=performance.now();
+  show("kitchen");
+  $("#kBody").innerHTML=`<div class="kcard" id="kCard"><span class="kstep">BƯỚC 2/2 · TÍNH TIỀN</span>
+    <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="kSay"></span></div></div>
+    <p style="margin:10px 0 4px"><span class="emoji" style="font-size:30px">${D.e}</span> <span class="qbadge q-${q.k}">${q.label}</span></p>
+    <div class="billrow"><span>Giá món</span><span>${fmtVND(price)}</span></div>
+    <div class="billrow"><span>Khách đưa</span><span>${billHTML(paid,'disabled tabindex="-1"')}</span></div>
+    <div class="billrow"><span>Bạn đã đếm</span><span id="kSum">0đ</span></div>
+    <div class="patience" title="Độ kiên nhẫn của khách"><i id="kPat" style="width:100%"></i></div>
+    <div class="given" id="kGiven"></div>
+    <div class="bills">${BILLS.filter(b=>b.v<paid).map(b=>billHTML(b.v,`data-v="${b.v}"`)).join("")}</div>
+    <div class="kfeed" id="kFeed"></div>
+    <div style="display:flex;gap:8px"><button class="btn brown" style="min-width:0;flex:1;font-size:16px;padding:12px" id="kReset">Đếm lại</button>
+    <button class="btn green" style="min-width:0;flex:2;font-size:16px;padding:12px" id="kGive">Đưa tiền thối</button></div></div>`;
+  $("#kSay").textContent=C.hi.replace("{d}",D.n)+" "+rnd(REACT[q.k]);
+  const sum=()=>given.reduce((a,b)=>a+b,0);
+  const draw=()=>{ $("#kSum").textContent=fmtVND(sum());
+    $("#kGiven").innerHTML=given.length?given.map((v,i)=>billHTML(v,`data-i="${i}" aria-label="Bỏ tờ ${v}"`)).join(""):`<span class="empty">Chạm vào tờ tiền bên dưới để đếm tiền thối</span>`; };
+  draw();
+  document.querySelectorAll(".bills .bill").forEach(b=>b.onclick=()=>{ if(over) return; given.push(+b.dataset.v); given.sort((a,b)=>b-a); sfx.pick(); draw(); });
+  $("#kGiven").onclick=e=>{ const b=e.target.closest("[data-i]"); if(!b||over) return; given.splice(+b.dataset.i,1); draw(); };
+  $("#kReset").onclick=()=>{ if(over) return; given=[]; draw(); };
+  const close=(tip,msg)=>{ over=true; stopKitchen(); $("#kSay").textContent=msg;
+    $("#kFeed").textContent=tip?`+ ${fmtVND(price)} · boa ${fmtVND(tip)}`:`+ ${fmtVND(price)}`;
+    setTimeout(()=>done({price,tip,total:price+tip}),1400); };
+  $("#kGive").onclick=()=>{
+    if(over) return;
+    const s=sum();
+    if(s===change){
+      sfx.clear(2);
+      const raw=price*q.tip*(0.4+0.6*left/PAT)*Math.max(0,1-wrong*0.3);
+      const tip=Math.round(raw/1000)*1000;
+      close(tip, tip?"Cảm ơn nha, gửi thêm chút tiền boa nè!":"Cảm ơn nha!");
+    } else {
+      wrong++; left=Math.max(0,left-3); sfx.bad();
+      $("#kFeed").textContent= s<change?`Thối thiếu ${fmtVND(change-s)}!`:`Thối dư ${fmtVND(s-change)}!`;
+      const c=$("#kCard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
+    }
+  };
+  const loop=t=>{ if(over) return; const dt=Math.min(0.1,(t-last)/1000); last=t; left=Math.max(0,left-dt);
+    $("#kPat").style.width=left/PAT*100+"%";
+    if(left<=0){ close(0,"Thôi khỏi thối, tôi vội lắm!"); return; }
+    kitchenRAF=requestAnimationFrame(loop); };
+  kitchenRAF=requestAnimationFrame(loop);
+}
+
 /* =========================================================
    MODALS / SCREENS
    ========================================================= */
@@ -635,10 +890,18 @@ function win(){
   const prev=progress.stars[D.id]||0;
   if(stars>prev){ progress.stars[D.id]=stars; saveLocal(); }
   sfx.win(); syncMyScore();
+  floatText("Đủ nguyên liệu rồi!", innerWidth/2, innerHeight*0.4);
+  setTimeout(()=>startCooking(D,(q,qs)=>startCheckout(D,q,(pay)=>finishWin(D,stars,q,pay))),900);
+}
+function finishWin(D,stars,q,pay){
+  progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
+  sfx.win();
   const hasNext=G.level+1<DISHES.length;
-  modal(`<h2>Nấu xong rồi!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
+  modal(`<h2>Khách đã thanh toán!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="stars">${starsHTML(stars)}</div>
+    <p><span class="qbadge q-${q.k}">${q.label}</span></p>
     <p>${G.lost?`Vỡ <b>${G.lost}</b> đĩa · `:"Không vỡ đĩa nào · "}Điểm <b>${G.score}</b></p>
+    <p class="money">💰 Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
     <p class="fact">${D.d}</p>
     <div class="actions">${hasNext?`<button class="btn green" data-act="next">Món tiếp theo ›</button>`:""}
     <button class="btn" data-act="retry">Nấu lại</button><button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
@@ -698,11 +961,12 @@ function renderBook(){
   }).join("");
 }
 function show(id){
+  if(id!=="kitchen") stopKitchen();
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
   if(id==="levels") renderLevels();
   if(id==="book") renderBook();
   if(id==="rank") renderRank();
-  if(id==="home"){ $("#bestLine").textContent = `👑 Kỷ lục chợ vô tận: ${best} · ⭐ ${Object.values(progress.stars).reduce((a,b)=>a+b,0)}/${DISHES.length*3}`; }
+  if(id==="home"){ $("#bestLine").textContent = `👑 Kỷ lục chợ vô tận: ${best} · ⭐ ${Object.values(progress.stars).reduce((a,b)=>a+b,0)}/${DISHES.length*3} · 💰 ${fmtVND(earned())}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 $("#btnEndless").addEventListener("click",startEndless);
@@ -723,7 +987,7 @@ const LB={db:null,user:null,myId:null,rows:[],state:"loading",canWrite:true,tab:
 function totalStars(){ return Object.values(progress.stars).reduce((a,b)=>a+b,0); }
 function myRow(){ return LB.rows.find(r=>r.id===LB.myId); }
 function sortedRows(tab){
-  const key = tab==="endless" ? (r=>r.endless||0) : (r=>(r.stars||0)*1000+(r.dishes||0));
+  const key = tab==="endless" ? (r=>r.endless||0) : tab==="money" ? (r=>r.earned||0) : (r=>(r.stars||0)*1000+(r.dishes||0));
   return LB.rows.filter(r=>key(r)>0).sort((a,b)=>key(b)-key(a) || (a.at||0)-(b.at||0));
 }
 function myRank(tab){ const i=sortedRows(tab).findIndex(r=>r.id===LB.myId); return i<0?null:i+1; }
@@ -743,6 +1007,7 @@ async function renderRank(){
     const p=ps[r.id]||{}, me=r.id===LB.myId;
     const val = LB.tab==="endless"
       ? `${r.endless}<small>điểm</small>`
+      : LB.tab==="money" ? `<span class="money">${fmtVND(r.earned)}</span><small>doanh thu</small>`
       : `${r.stars||0}★<small>${r.dishes||0} món</small>`;
     return `<div class="lb-row ${me?"me":""}"><div class="lb-rank">${i<3?`<span class="emoji">${medal[i]}</span>`:i+1}</div>
       <img class="lb-av" alt="" data-av="${i}">
@@ -761,8 +1026,9 @@ async function syncMyScore(){
   const prog={...(cur.prog||{})};
   Object.entries(progress.stars).forEach(([k,v])=>{ prog[k]=Math.max(prog[k]||0,v); });
   const next={endless:Math.max(best,cur.endless||0), prog,
-    stars:Object.values(prog).reduce((a,b)=>a+b,0), dishes:Object.keys(prog).length};
-  if(next.endless===(cur.endless||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})) return;
+    stars:Object.values(prog).reduce((a,b)=>a+b,0), dishes:Object.keys(prog).length,
+    earned:Math.max(earned(),cur.earned||0)};
+  if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})) return;
   next.at=Date.now();
   LB.writing=true;
   try{ await LB.db.collection("scores").doc(LB.myId).set(next); }
@@ -783,6 +1049,7 @@ function mergeCloud(){
   const mine=myRow(); if(!mine) return;
   Object.entries(mine.prog||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)) progress.stars[k]=Math.max(progress.stars[k]||0,+v||0); });
   best=Math.max(best,+mine.endless||0);
+  progress.earned=Math.max(earned(),+mine.earned||0);
   saveLocal();
 }
 async function showAccount(user){

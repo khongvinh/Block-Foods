@@ -270,29 +270,29 @@ const ALL_ING = Object.keys(ING);
 
 // need: số lượng ô nguyên liệu cần thu thập (bằng cách xóa hàng/cột)
 const DISHES = [
-  {id:"trungChien", e:"🍳", n:"Trứng chiên hành", need:{trung:8, hanh:6},
+  {id:"trungChien", e:"🍳", n:"Trứng chiên hành", need:{trung:16, hanh:12},
    d:"Món “cứu đói” quen thuộc của mọi gia đình: trứng đánh với hành lá, chiên vàng, chấm nước mắm."},
-  {id:"comTam", e:"🍛", n:"Cơm tấm sườn", need:{com:10, suon:8, trung:6},
+  {id:"comTam", e:"🍛", n:"Cơm tấm sườn", need:{com:20, suon:16, trung:12},
    d:"Đặc sản Sài Gòn: cơm tấm, sườn nướng mỡ hành, chả trứng, ăn kèm đồ chua và nước mắm."},
-  {id:"banhMi", e:"🥪", n:"Bánh mì thịt", need:{banhMi:10, thit:8, duaLeo:6, ot:5},
+  {id:"banhMi", e:"🥪", n:"Bánh mì thịt", need:{banhMi:20, thit:16, duaLeo:12, ot:10},
    d:"Ổ bánh mì giòn rụm kẹp thịt, pa-tê, dưa leo, đồ chua, rau mùi và vài lát ớt."},
-  {id:"pho", e:"🍜", n:"Phở bò", need:{pho:12, thit:10, hanh:8, rauThom:8},
+  {id:"pho", e:"🍜", n:"Phở bò", need:{pho:24, thit:20, hanh:16, rauThom:16},
    d:"Linh hồn ẩm thực Hà Nội: nước dùng hầm xương trong vắt, bánh phở mềm, thịt bò tái chín."},
-  {id:"bunCha", e:"🥢", n:"Bún chả", need:{bun:12, suon:10, rauSong:8, ot:6},
+  {id:"bunCha", e:"🥢", n:"Bún chả", need:{bun:24, suon:20, rauSong:16, ot:12},
    d:"Chả thịt nướng than hoa thơm lừng, ăn cùng bún, rau sống và bát nước chấm chua ngọt."},
-  {id:"goiCuon", e:"🌯", n:"Gỏi cuốn", need:{banhTrang:10, tom:10, bun:8, rauSong:8},
+  {id:"goiCuon", e:"🌯", n:"Gỏi cuốn", need:{banhTrang:20, tom:20, bun:16, rauSong:16},
    d:"Bánh tráng cuốn tôm, thịt, bún, rau sống tươi mát, chấm tương đậu hoặc mắm nêm."},
-  {id:"canhChua", e:"🥣", n:"Canh chua cá", need:{ca:12, caChua:10, thom:8, rauThom:8},
+  {id:"canhChua", e:"🥣", n:"Canh chua cá", need:{ca:24, caChua:20, thom:16, rauThom:16},
    d:"Món canh miền Tây chua thanh vị me, có cá, cà chua, thơm, giá và ngò om."},
-  {id:"banhXeo", e:"🥞", n:"Bánh xèo", need:{botGao:12, tom:10, thit:8, gia:10},
+  {id:"banhXeo", e:"🥞", n:"Bánh xèo", need:{botGao:24, tom:20, thit:16, gia:20},
    d:"Bột gạo pha nghệ đổ “xèo xèo” trên chảo nóng, nhân tôm thịt giá, cuốn rau chấm nước mắm."},
-  {id:"caKho", e:"🍲", n:"Cá kho tộ", need:{ca:14, nuocMau:10, toi:8, ot:8},
+  {id:"caKho", e:"🍲", n:"Cá kho tộ", need:{ca:28, nuocMau:20, toi:16, ot:16},
    d:"Cá kho trong niêu đất với nước màu, tỏi, ớt, tiêu — đậm đà, “tốn cơm” nhất bữa."},
-  {id:"bunBo", e:"🌶️", n:"Bún bò Huế", need:{bun:14, thit:12, ot:10, chanh:8, rauSong:8},
+  {id:"bunBo", e:"🌶️", n:"Bún bò Huế", need:{bun:28, thit:24, ot:20, chanh:16, rauSong:16},
    d:"Sợi bún to, nước dùng thơm mùi sả và mắm ruốc, cay nồng đặc trưng xứ Huế."},
-  {id:"canhNam", e:"🍵", n:"Canh nấm đậu hũ", need:{nam:12, dauHu:12, hanh:10, caChua:8},
+  {id:"canhNam", e:"🍵", n:"Canh nấm đậu hũ", need:{nam:24, dauHu:24, hanh:20, caChua:16},
    d:"Món canh thanh đạm cho ngày chay hoặc bữa cơm nhẹ nhàng, ngọt tự nhiên từ nấm."},
-  {id:"comChien", e:"🍚", n:"Cơm chiên dương châu", need:{com:16, trung:12, tom:10, hanh:10, thit:8},
+  {id:"comChien", e:"🍚", n:"Cơm chiên dương châu", need:{com:32, trung:24, tom:20, hanh:20, thit:16},
    d:"Cơm chiên tơi hạt với trứng, tôm, lạp xưởng, đậu và hành — món tiệc ai cũng mê."},
 ];
 
@@ -366,7 +366,7 @@ const N=8;
 const G = {
   mode:"level", level:0, grid:[], tray:[null,null,null],
   score:0, combo:0, movesSinceClear:0, used:0,
-  got:{}, need:{}, pool:[], extras:[], over:false,
+  got:{}, need:{}, pool:[], extras:[], over:false, lives:5, lost:0,
 };
 
 const $ = s=>document.querySelector(s);
@@ -420,12 +420,21 @@ function startLevel(i){
   G.need={...D.need}; G.got={};
   const others = ALL_ING.filter(k=>!(k in D.need));
   G.extras = []; for(let k=0;k<Math.min(1+Math.floor(i/3),3);k++){ const x=rnd(others.filter(o=>!G.extras.includes(o))); G.extras.push(x); }
+  G.lives=MAX_LIVES; G.lost=0;
   resetBoard(); show("game");
 }
 function startEndless(){
   G.mode="endless"; G.need={}; G.got={};
   G.pool = ALL_ING.slice().sort(()=>Math.random()-.5).slice(0,7);
   resetBoard(); show("game");
+}
+const MAX_LIVES=5;
+function heartsHTML(){ return "❤️".repeat(G.lives)+"🤍".repeat(MAX_LIVES-G.lives); }
+// Mất 1 mạng: dọn thớt, giữ nguyên liệu đã gom và điểm
+function continueLevel(){
+  G.grid=Array.from({length:N},()=>Array(N).fill(null));
+  G.combo=0; G.movesSinceClear=0; G.over=false;
+  refillTray(); renderBoard(); renderTray(); renderHUD();
 }
 function resetBoard(){
   G.grid=Array.from({length:N},()=>Array(N).fill(null));
@@ -463,7 +472,7 @@ function renderHUD(){
   } else {
     const D=DISHES[G.level];
     center.innerHTML=`<span class="e emoji">${D.e}</span><span>${D.n}</span>`;
-    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">Món ${G.level+1}/${DISHES.length}</span><span class="moves">Điểm: ${G.score}</span><span class="moves">Lượt: ${G.used}</span></div>
+    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">Món ${G.level+1}/${DISHES.length}</span><span class="moves">Điểm: ${G.score}</span><span class="moves emoji" title="Mạng còn lại" aria-label="Còn ${G.lives} mạng">${heartsHTML()}</span></div>
       <div class="recipe">${Object.keys(G.need).map(k=>{
         const g=Math.min(G.got[k]||0,G.need[k]), pct=g/G.need[k]*100;
         return `<div class="chip ${g>=G.need[k]?"done":""}" data-ing="${k}"><div class="ce emoji">${ING[k].e}</div><div class="cn">${g}/${G.need[k]}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
@@ -619,16 +628,14 @@ function closeModal(){ $("#modal").classList.remove("on"); }
 function win(){
   if(G.over) return; G.over=true;
   const D=DISHES[G.level];
-  const total=Object.values(G.need).reduce((a,b)=>a+b,0);
-  const par=Math.ceil(total/3.2);
-  const stars = G.used<=par?3 : G.used<=par*1.45?2 : 1;
+  const stars = G.lost===0?3 : G.lost===1?2 : 1;
   const prev=progress.stars[D.id]||0;
   if(stars>prev){ progress.stars[D.id]=stars; saveLocal(); }
   sfx.win(); syncMyScore();
   const hasNext=G.level+1<DISHES.length;
   modal(`<h2>Nấu xong rồi!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="stars">${starsHTML(stars)}</div>
-    <p>Dùng <b>${G.used}</b> lượt · Điểm <b>${G.score}</b><br><small>3★ khi hoàn thành trong ≤ ${par} lượt</small></p>
+    <p>Mất <b>${G.lost}</b> mạng · Điểm <b>${G.score}</b><br><small>3★ không mất mạng · 2★ mất 1 mạng · 1★ mất từ 2 mạng</small></p>
     <p class="fact">${D.d}</p>
     <div class="actions">${hasNext?`<button class="btn green" data-act="next">Món tiếp theo ›</button>`:""}
     <button class="btn" data-act="retry">Nấu lại</button><button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
@@ -642,9 +649,19 @@ function lose(){
   } else {
     const D=DISHES[G.level];
     const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`${ING[k].e} ${G.need[k]-(G.got[k]||0)}`).join(" · ");
-    modal(`<h2>Thớt đầy mất rồi!</h2><div class="bigE emoji">😵‍💫</div>
-      <p>Món <b>${D.n}</b> còn thiếu:<br><span class="emoji" style="font-size:20px">${left}</span></p>
-      <div class="actions"><button class="btn green" data-act="retry">Thử lại</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+    G.lives--; G.lost++; renderHUD();
+    if(G.lives>0){
+      const nextStars = G.lost===1?2:1;
+      modal(`<h2>Thớt đầy rồi!</h2><div class="bigE emoji">💔</div>
+        <p>Mất 1 mạng. Còn <span class="emoji">${heartsHTML()}</span></p>
+        <p>Nguyên liệu đã gom vẫn được giữ. Còn thiếu:<br><span class="emoji" style="font-size:20px">${left}</span></p>
+        <p class="fact">Hoàn thành món bây giờ được tối đa ${nextStars}★</p>
+        <div class="actions"><button class="btn green" data-act="continue">Dọn thớt, nấu tiếp</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+    } else {
+      modal(`<h2>Hết mạng rồi!</h2><div class="bigE emoji">😵‍💫</div>
+        <p>Món <b>${D.n}</b> còn thiếu:<br><span class="emoji" style="font-size:20px">${left}</span></p>
+        <div class="actions"><button class="btn green" data-act="retry">Nấu lại từ đầu</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+    }
   }
 }
 $("#modal").addEventListener("click",e=>{
@@ -656,6 +673,7 @@ $("#modal").addEventListener("click",e=>{
   if(a==="home") show("home");
   if(a==="rank"){ LB.tab=G.mode==="endless"?"endless":"chef"; show("rank"); }
   if(a==="resume"){}
+  if(a==="continue") continueLevel();
   if(a==="quit") show(G.mode==="endless"?"home":"levels");
 });
 

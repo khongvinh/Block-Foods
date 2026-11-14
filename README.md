@@ -17,22 +17,23 @@ Mỗi màn là một món ăn, cần gom đủ số lượng từng nguyên li�
 
 | # | Món | Nguyên liệu cần |
 |---|-----|-----------------|
-| 1 | Trứng chiên hành | 🥚8 · 🧅6 |
-| 2 | Cơm tấm sườn | 🍚10 · 🍖8 · 🥚6 |
-| 3 | Bánh mì thịt | 🥖10 · 🥩8 · 🥒6 · 🌶️5 |
-| 4 | Phở bò | 🍜12 · 🥩10 · 🧅8 · 🌿8 |
-| 5 | Bún chả | 🍝12 · 🍖10 · 🥬8 · 🌶️6 |
-| 6 | Gỏi cuốn | 🫓10 · 🦐10 · 🍝8 · 🥬8 |
-| 7 | Canh chua cá | 🐟12 · 🍅10 · 🍍8 · 🌿8 |
-| 8 | Bánh xèo | 🌾12 · 🦐10 · 🥩8 · 🌱10 |
-| 9 | Cá kho tộ | 🐟14 · 🍯10 · 🧄8 · 🌶️8 |
-| 10 | Bún bò Huế | 🍝14 · 🥩12 · 🌶️10 · 🍋8 · 🥬8 |
-| 11 | Canh nấm đậu hũ | 🍄12 · 🧈12 · 🧅10 · 🍅8 |
-| 12 | Cơm chiên dương châu | 🍚16 · 🥚12 · 🦐10 · 🧅10 · 🥩8 |
+| 1 | Trứng chiên hành | 🥚16 · 🧅12 |
+| 2 | Cơm tấm sườn | 🍚20 · 🍖16 · 🥚12 |
+| 3 | Bánh mì thịt | 🥖20 · 🥩16 · 🥒12 · 🌶️10 |
+| 4 | Phở bò | 🍜24 · 🥩20 · 🧅16 · 🌿16 |
+| 5 | Bún chả | 🍝24 · 🍖20 · 🥬16 · 🌶️12 |
+| 6 | Gỏi cuốn | 🫓20 · 🦐20 · 🍝16 · 🥬16 |
+| 7 | Canh chua cá | 🐟24 · 🍅20 · 🍍16 · 🌿16 |
+| 8 | Bánh xèo | 🌾24 · 🦐20 · 🥩16 · 🌱20 |
+| 9 | Cá kho tộ | 🐟28 · 🍯20 · 🧄16 · 🌶️16 |
+| 10 | Bún bò Huế | 🍝28 · 🥩24 · 🌶️20 · 🍋16 · 🥬16 |
+| 11 | Canh nấm đậu hũ | 🍄24 · 🧈24 · 🧅20 · 🍅16 |
+| 12 | Cơm chiên dương châu | 🍚32 · 🥚24 · 🦐20 · 🧅20 · 🥩16 |
 
 - **Nguyên liệu nhiễu:** khoảng 30% khối là nguyên liệu không thuộc món (càng về sau càng nhiều loại). Chúng vẫn xóa được nhưng không được tính vào công thức.
 - Khối mới ưu tiên những nguyên liệu còn thiếu nhiều nhất.
-- **Sao:** 3★ nếu xong trong số lượt chuẩn (tổng nguyên liệu ÷ 3,2), 2★ nếu không quá 1,45 lần số đó, còn lại 1★.
+- **5 mạng mỗi lần nấu:** thớt hết chỗ thì mất 1 mạng. Thớt được dọn sạch, nguyên liệu đã gom và điểm vẫn giữ nguyên. Hết cả 5 mạng thì phải nấu lại món từ đầu.
+- **Sao theo số mạng bị mất:** không mất mạng nào được 3★, mất 1 mạng được 2★, mất từ 2 mạng trở lên được 1★.
 - Nấu xong một món thì mở món kế tiếp, và công thức (kèm giới thiệu món) được ghi vào **📖 Sổ công thức**.
 
 ### Chế độ ♾️ Chợ vô tận

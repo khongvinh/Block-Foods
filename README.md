@@ -43,7 +43,7 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 
 ### Âm thanh
 - **Hiệu ứng và rung (🔊):** đặt khối, xóa hàng, vỡ đĩa, chiên xèo xèo, dao chặt, chuông cửa khi khách vào, đếm tờ tiền, "ka-ching" khi thối đúng, còi báo khi thối sai. Điện thoại Android rung kèm, iPhone không hỗ trợ rung.
-- **Nhạc nền (🎵):** giai điệu ngũ cung tiếng gảy kiểu đàn tranh, tạo trực tiếp trong trình duyệt. Phát ở trang chủ, Menu và Bảng xếp hạng, tắt khi vào bếp.
+- **Nhạc nền (🎵):** giai điệu dân ca ngũ cung sôi động (nhịp 132) với tiếng đàn bầu luyến láy, sáo trúc, trống và mõ, tạo trực tiếp trong trình duyệt. Phát ở trang chủ, Menu và Bảng xếp hạng, tắt khi vào bếp.
 
 ### Tính điểm
 - Đặt khối: +1 điểm mỗi ô.

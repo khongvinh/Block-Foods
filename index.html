@@ -158,6 +158,18 @@ button{font:inherit;cursor:pointer;border:0}
 .lb-val{font-weight:900;font-size:18px;font-variant-numeric:tabular-nums;text-align:right}
 .lb-val small{display:block;font-size:11px;font-weight:700;opacity:.6}
 .rank-badge{display:inline-block;background:#3fae5a;color:#fff;border-radius:10px;padding:4px 10px;font-weight:800;font-size:14px;margin-top:4px}
+
+/* ---------- Account gate ---------- */
+#gate{position:fixed;inset:0;z-index:90;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;
+  padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(180deg,var(--wood1),var(--wood2) 60%,var(--wood3))}
+#gate.on{display:flex}
+#gate .card{animation:none}
+.spin{width:38px;height:38px;border-radius:50%;border:4px solid #e7d3b3;border-top-color:var(--accent);margin:8px auto;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);color:var(--fg);border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;font-size:14px;max-width:100%}
+.acct img{width:28px;height:28px;border-radius:50%;background:#e7d3b3}
+.acct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -177,6 +189,7 @@ button{font:inherit;cursor:pointer;border:0}
   <button class="btn brown" data-go="book">📖 Sổ công thức</button>
   <button class="btn" style="background:linear-gradient(#ffd45c,#f0a81c);box-shadow:0 5px 0 #a8700a,0 8px 16px rgba(0,0,0,.25)" data-go="rank">🏆 Bảng xếp hạng</button>
   <div class="bestline" id="bestLine"></div>
+  <div class="acct" id="acct" hidden><img id="acctAv" alt=""><span id="acctName"></span></div>
   <button class="icon-btn" id="btnSound" style="position:absolute;top:max(12px,env(safe-area-inset-top));right:16px" aria-label="Âm thanh">🔊</button>
 </section>
 
@@ -217,6 +230,8 @@ button{font:inherit;cursor:pointer;border:0}
 </section>
 
 <div id="drag"></div>
+
+<div id="gate" class="on"><div class="card" id="gateCard"><h2>Block Foods</h2><div class="spin"></div><p>Đang kiểm tra tài khoản…</p></div></div>
 
 <div class="modal" id="modal"><div class="card" id="modalCard"></div></div>
 
@@ -313,8 +328,12 @@ const store = {
   get(k,def){ try{ const v=localStorage.getItem("bf_"+k); return v==null?def:JSON.parse(v);}catch(e){return def;} },
   set(k,v){ try{ localStorage.setItem("bf_"+k,JSON.stringify(v)); }catch(e){} }
 };
+// Tiến trình gắn với tài khoản: khóa lưu cục bộ theo id người chơi, bản chính nằm trên máy chủ (scores/<id>)
+let ACCOUNT_ID=null;
+const pkey=k=>ACCOUNT_ID?("u_"+ACCOUNT_ID+"_"+k):k;
 let progress = store.get("progress",{stars:{}}); // stars[dishId] = 1..3
 let best = store.get("best",0);
+function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);
 
 /* =========================================================
@@ -564,7 +583,7 @@ function place(i,r0,c0){
 function afterMove(){
   if(G.tray.every(x=>!x)) refillTray();
   renderTray(); renderHUD();
-  if(G.mode==="endless" && G.score>best){ best=G.score; store.set("best",best); }
+  if(G.mode==="endless" && G.score>best){ best=G.score; saveLocal(); }
   if(G.mode==="level" && Object.keys(G.need).every(k=>(G.got[k]||0)>=G.need[k])) return setTimeout(win,450);
   const alive=G.tray.filter(Boolean);
   if(alive.length && !alive.some(p=>fitsAnywhere(p.shape))) setTimeout(lose,500);
@@ -604,7 +623,7 @@ function win(){
   const par=Math.ceil(total/3.2);
   const stars = G.used<=par?3 : G.used<=par*1.45?2 : 1;
   const prev=progress.stars[D.id]||0;
-  if(stars>prev){ progress.stars[D.id]=stars; store.set("progress",progress); }
+  if(stars>prev){ progress.stars[D.id]=stars; saveLocal(); }
   sfx.win(); syncMyScore();
   const hasNext=G.level+1<DISHES.length;
   modal(`<h2>Nấu xong rồi!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
@@ -697,7 +716,7 @@ async function renderRank(){
   if(LB.state==="loading"){ box.innerHTML=`<div class="lb-note">Đang tải bảng xếp hạng…</div>`; return; }
   const rows=sortedRows(LB.tab);
   let note = LB.state==="slow" ? `<div class="lb-note">Chưa kết nối được bảng xếp hạng, dữ liệu có thể chưa mới nhất.</div>` : "";
-  if(!LB.canWrite) note+=`<div class="lb-note">Bạn đang có quyền chỉ xem nên điểm của bạn chưa được ghi lên bảng. Hãy nhờ chủ game cấp quyền “Contributor”.</div>`;
+  if(!LB.canWrite) note+=`<div class="lb-note">Tài khoản của bạn đang có quyền chỉ xem nên tiến trình và điểm chưa lưu được lên tài khoản. Hãy nhờ chủ game cấp quyền “Contributor”.</div>`;
   if(!rows.length){ box.innerHTML=note+`<div class="lb-note">Chưa ai có điểm. Chơi một ván để đứng đầu bảng!</div>`; return; }
   let ps={}; try{ if(LB.user) ps=await LB.user.profiles(rows.map(r=>r.id)); }catch(e){}
   const medal=["🥇","🥈","🥉"];
@@ -720,9 +739,11 @@ document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ LB
 async function syncMyScore(){
   if(!LB.db||!LB.myId||!LB.canWrite||LB.writing) return;
   const cur=myRow()||{};
-  const next={endless:Math.max(best,cur.endless||0), stars:Math.max(totalStars(),cur.stars||0),
-    dishes:Math.max(Object.keys(progress.stars).length,cur.dishes||0)};
-  if(next.endless===(cur.endless||0)&&next.stars===(cur.stars||0)&&next.dishes===(cur.dishes||0)) return;
+  const prog={...(cur.prog||{})};
+  Object.entries(progress.stars).forEach(([k,v])=>{ prog[k]=Math.max(prog[k]||0,v); });
+  const next={endless:Math.max(best,cur.endless||0), prog,
+    stars:Object.values(prog).reduce((a,b)=>a+b,0), dishes:Object.keys(prog).length};
+  if(next.endless===(cur.endless||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})) return;
   next.at=Date.now();
   LB.writing=true;
   try{ await LB.db.collection("scores").doc(LB.myId).set(next); }
@@ -730,26 +751,56 @@ async function syncMyScore(){
   finally{ LB.writing=false; }
 }
 
+/* ---------- Tài khoản: bắt buộc đăng nhập, tiến trình theo tài khoản ---------- */
+function gate(html){ $("#gateCard").innerHTML=html; $("#gate").classList.add("on"); }
+function openGame(){ $("#gate").classList.remove("on"); show(document.querySelector(".screen.on")?.id||"home"); }
+function needLogin(){
+  gate(`<h2>Đăng nhập để chơi</h2><div class="bigE emoji">🔐</div>
+    <p>Game này chỉ dành cho người được mời. Hãy đăng nhập Claude bằng <b>đúng tài khoản Gmail</b> đã được mời, rồi mở lại link.</p>
+    <p class="fact">Tiến trình, số sao và kỷ lục được lưu theo tài khoản của bạn, nên chơi ở máy nào cũng tiếp tục được.</p>`);
+}
+// Gộp tiến trình trên máy chủ vào máy này (lấy giá trị cao hơn)
+function mergeCloud(){
+  const mine=myRow(); if(!mine) return;
+  Object.entries(mine.prog||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)) progress.stars[k]=Math.max(progress.stars[k]||0,+v||0); });
+  best=Math.max(best,+mine.endless||0);
+  saveLocal();
+}
+async function showAccount(user){
+  try{ const me=await user.me(); $("#acctName").textContent=(me.name||"Người chơi")+" · ☁️ lưu theo tài khoản";
+    if(me.avatarUrl) $("#acctAv").src=me.avatarUrl; $("#acct").hidden=false; }catch(e){}
+}
+
 (async()=>{
-  if(!window.claude||typeof window.claude.use!=="function"){ LB.state="off"; return; }
+  if(!window.claude||typeof window.claude.use!=="function"){ LB.state="off"; $("#gate").classList.remove("on"); return; } // mở file trực tiếp: chơi offline
   try{
     const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
     LB.user=user;
-    if(!db||!user){ LB.state="off"; renderRank(); return; }
+    if(!db||!user){ LB.state="off"; needLogin(); return; }
     LB.myId=await user.id();
-    if(!LB.myId){ LB.state="off"; renderRank(); return; }
+    if(!LB.myId){ LB.state="off"; needLogin(); return; }
+    ACCOUNT_ID=LB.myId;
+    // lần đầu: chuyển tiến trình cũ (lưu chung trên máy) sang tài khoản
+    progress=store.get(pkey("progress"),store.get("progress",{stars:{}})); best=store.get(pkey("best"),store.get("best",0));
+    showAccount(user);
     const cw=await user.can("data.write"); if(cw===false) LB.canWrite=false;
     LB.db=db;
-    let timer=setTimeout(()=>{ if(LB.state==="loading"){ LB.state="slow"; renderRank(); } },10000);
+    let opened=false;
+    const timer=setTimeout(()=>{
+      if(LB.state==="loading"){ LB.state="slow"; renderRank();
+        gate(`<h2>Mạng chậm</h2><div class="bigE emoji">📶</div><p>Chưa tải được tiến trình từ tài khoản của bạn.</p>
+          <div class="actions"><button class="btn green" id="gateGo">Chơi tạm, đồng bộ sau</button></div>`);
+        $("#gateGo").onclick=()=>{ opened=true; openGame(); }; }
+    },10000);
     let synced=false;
     db.collection("scores").limit(1000).onSnapshot(snap=>{
       LB.rows=snap.docs.map(d=>({id:d.id,...d.data()}));
       if(!snap.metadata.fromCache){ clearTimeout(timer); LB.state="ready";
-        if(!synced){ synced=true; setTimeout(syncMyScore,0); } }
+        if(!synced){ synced=true; mergeCloud(); setTimeout(syncMyScore,0); if(!opened){ opened=true; openGame(); } } }
       else if(LB.state==="loading") LB.state="slow";
       renderRank();
-    },err=>{ clearTimeout(timer); LB.state="slow"; renderRank(); });
-  }catch(e){ LB.state="off"; renderRank(); }
+    },err=>{ clearTimeout(timer); LB.state="slow"; renderRank(); if(!opened){ opened=true; openGame(); } });
+  }catch(e){ LB.state="off"; needLogin(); }
 })();
 
 // hook cho test tự động

@@ -132,7 +132,7 @@ button{font:inherit;cursor:pointer;border:0}
 .chip .bar{height:5px;background:#e7d3b3;border-radius:3px;overflow:hidden;margin-top:2px}
 .chip .bar i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
 .chip.done{background:#d8f5d0}
-.chip.done::after{content:"✓";position:absolute;top:-6px;right:-6px;background:var(--green);color:#fff;border-radius:50%;width:20px;height:20px;font-size:13px;font-weight:900;display:grid;place-items:center}
+.chip.done::after{content:"";background:url("assets/ui-check.webp") center/80% no-repeat #fff!important;position:absolute;top:-6px;right:-6px;background:var(--green);color:#fff;border-radius:50%;width:20px;height:20px;font-size:13px;font-weight:900;display:grid;place-items:center}
 .chip.pop{transform:scale(1.18)}
 
 /* ---------- Board (cutting board) ---------- */
@@ -282,6 +282,32 @@ button{font:inherit;cursor:pointer;border:0}
 .review .who .emoji{font-size:30px}
 .review .rate{font-size:22px}
 .review ul{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.5}
+/* ---------- Hình vẽ thay emoji ---------- */
+.ic{display:inline-block;width:1em;height:1em;object-fit:contain;vertical-align:-.15em}
+.ic.dish{width:1.35em;height:1.1em}
+.ic.cus{width:1.1em;height:1.15em;vertical-align:bottom}
+.tile .ic{width:82%;height:82%;vertical-align:middle;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.fly .ic{width:30px;height:30px}
+.ingbtn .ic{width:78%;height:78%}
+.slot2 .ic{width:80%;height:80%}
+.chip .ce .ic{width:26px;height:26px}
+.plate .ic{width:24px;height:24px;vertical-align:middle}
+.platebar{background:#f6ead2;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12),0 0 0 2px #a8724a}
+.rate .ic{width:1em;height:1em;vertical-align:-.12em;margin-right:1px}
+.stars .ic{width:38px;height:38px;margin:0 2px}
+.bill.billimg{background:none;box-shadow:none;padding:0;height:auto;min-width:0;line-height:0}
+.bill.billimg img{width:100%;height:auto;filter:drop-shadow(0 3px 2px rgba(0,0,0,.25))}
+.bills .bill:not(.billimg){height:52px}
+.given .bill.billimg{width:58px}
+.billrow .bill.billimg{width:96px}
+.given .bill:not(.billimg){height:32px}
+.backimg{background:none!important;box-shadow:none!important;width:66px!important;height:44px!important;padding:0;line-height:0}
+.backimg img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))}
+.pan-hold{position:relative;display:inline-block;line-height:0}
+.pan-hold .chao{width:150px;height:auto}
+.pan-hold .flame{position:absolute;left:28%;bottom:-18px;width:56px;height:auto;animation:flick .3s ease-in-out infinite alternate}
+@keyframes flick{to{transform:scale(1.08,.92)}}
+.kpan .ic{width:110px;height:90px}
 </style>
 </head>
 <body>
@@ -313,13 +339,13 @@ button{font:inherit;cursor:pointer;border:0}
 
 <!-- ============ RECIPE BOOK ============ -->
 <section id="book" class="screen">
-  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Menu quán</h2><div style="width:44px"></div></div>
+  <div class="topbar"><button class="icon-btn backimg" data-go="home" aria-label="Quay lại"><img src="assets/btn-back.webp" alt=""></button><h2>Menu quán</h2><div style="width:44px"></div></div>
   <div class="scroll" id="bookList"></div>
 </section>
 
 <!-- ============ LEADERBOARD ============ -->
 <section id="rank" class="screen">
-  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Bảng xếp hạng</h2><div style="width:44px"></div></div>
+  <div class="topbar"><button class="icon-btn backimg" data-go="home" aria-label="Quay lại"><img src="assets/btn-back.webp" alt=""></button><h2>Bảng xếp hạng</h2><div style="width:44px"></div></div>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tabEndless" aria-selected="true" data-tab="endless">♾️ Chợ vô tận</button>
     <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef">⭐ Đánh giá</button>
@@ -335,7 +361,7 @@ button{font:inherit;cursor:pointer;border:0}
 <section id="game" class="screen">
   <div class="hud">
     <div class="hud-row">
-      <button class="icon-btn" id="btnBack" aria-label="Thoát">‹</button>
+      <button class="icon-btn backimg" id="btnBack" aria-label="Thoát"><img src="assets/btn-back.webp" alt=""></button>
       <div id="hudCenter" class="dish-title"></div>
       <button class="icon-btn" id="btnRestart" aria-label="Chơi lại">↻</button>
     </div>
@@ -430,7 +456,14 @@ const SHAPE_DEFS = [
   ["###|###|###",0.35],
 ];
 // Biểu tượng món: emoji chính + emoji nhỏ ở góc (nếu có)
-const dishE = D => D.badge ? `<span class="dish-ic emoji">${D.e}<i>${D.badge}</i></span>` : `<span class="emoji">${D.e}</span>`;
+const IMG = (n,cls="",alt="") => `<img class="ic ${cls}" src="assets/${n}.webp" alt="${alt}" draggable="false">`;
+const dishE = D => IMG("dish-"+D.id.toLowerCase(),"dish",D.n);
+// Nguyên liệu đã có hình vẽ; còn lại dùng emoji
+const ING_IMG={trung:"ing-trung",hanh:"ing-hanh",com:"food-com",duaLeo:"ing-dualeo",banhMi:"ing-banhmi",ot:"food-ot",
+  pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-banhtrang",tom:"ing-tom2",thom:"ing-thom",botGao:"ing-botgao",
+  nuocMau:"ing-nuocmau",chanh:"ing-chanh"};
+const ingE = k => ING_IMG[k] ? IMG(ING_IMG[k],"",ING[k].n) : `<span class="emoji">${ING[k].e}</span>`;
+const custE = C => C&&C.id ? IMG("cus-"+C.id,"cus",C.n) : `<span class="emoji">${C?C.e:""}</span>`;
 const SHAPES = SHAPE_DEFS.map(([s,w])=>{
   const cells=[]; s.split("|").forEach((row,r)=>[...row].forEach((ch,c)=>{ if(ch==="#") cells.push([r,c]); }));
   const h=Math.max(...cells.map(x=>x[0]))+1, wd=Math.max(...cells.map(x=>x[1]))+1;
@@ -457,7 +490,7 @@ function earned(){ return progress.earned||0; }
 function reviews(){ return progress.reviews||(progress.reviews={}); }
 function dishRating(id){ const r=reviews()[id]; return r&&r.n?{avg:r.sum/r.n,n:r.n}:null; }
 function allRatings(){ let n=0,sum=0; Object.values(reviews()).forEach(r=>{ n+=r.n||0; sum+=r.sum||0; }); return {n,sum,avg:n?sum/n:0}; }
-function rateHTML(v){ const k=Math.round(v); return `<span class="rate">${"★".repeat(k)}<span class="off">${"★".repeat(5-k)}</span></span>`; }
+function rateHTML(v){ const k=Math.round(v); return `<span class="rate" aria-label="${k} sao">${IMG("ui-star").repeat(k)}${IMG("ui-star-off").repeat(5-k)}</span>`; }
 function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);   // hiệu ứng âm thanh + rung
 let musicOn = store.get("music",true);   // nhạc nền trang chủ
@@ -588,7 +621,7 @@ const cellEls=[];
 for(let r=0;r<N;r++) for(let c=0;c<N;c++){ const d=document.createElement("div"); d.className="cell"; boardEl.appendChild(d); cellEls.push(d); }
 const cellAt=(r,c)=>cellEls[r*N+c];
 
-function tileHTML(ing){ const I=ING[ing]; return `<div class="tile" style="--c:${I.c}"><span class="emoji">${I.e}</span></div>`; }
+function tileHTML(ing){ const I=ING[ing]; return `<div class="tile" style="--c:${I.c}">${ingE(ing)}</div>`; }
 
 /* ---------- Random helpers ---------- */
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
@@ -642,7 +675,7 @@ function startEndless(){
   resetBoard(); show("game");
 }
 const MAX_LIVES=5;
-function heartsHTML(){ return '<span class="platebar">'+'<span class="plate">🍽️</span>'.repeat(G.lives)+'<span class="plate broken">🍽️</span>'.repeat(MAX_LIVES-G.lives)+'</span>'; }
+function heartsHTML(){ return '<span class="platebar">'+'<span class="plate">'+IMG("cook-dia")+'</span>'.repeat(G.lives)+'<span class="plate broken">'+IMG("cook-dia-vo")+'</span>'.repeat(MAX_LIVES-G.lives)+'</span>'; }
 // Vỡ 1 đĩa: dọn thớt, giữ nguyên liệu đã gom và điểm
 function continueLevel(){
   G.grid=Array.from({length:N},()=>Array(N).fill(null));
@@ -675,20 +708,20 @@ function renderTray(){
     slot.innerHTML = p? pieceHTML(p,"piece"+(fitsAnywhere(p.shape)?"":" dim")) : "";
   });
 }
-function starsHTML(n){ return [1,2,3].map(k=>k<=n?"★":`<span class="off">★</span>`).join(""); }
+function starsHTML(n){ return [1,2,3].map(k=>IMG(k<=n?"ui-star":"ui-star-off")).join(""); }
 
 function renderHUD(){
   const center=$("#hudCenter"), sub=$("#hudSub");
   if(G.mode==="endless"){
-    center.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div class="pill"><small>KỶ LỤC</small><span class="emoji">👑</span> ${best}</div><div class="pill score"><small>ĐIỂM</small>${G.score}</div></div>`;
-    sub.innerHTML=`<div class="recipe">${G.pool.map(k=>`<div class="chip" style="min-width:40px;padding:3px 5px"><div class="ce emoji">${ING[k].e}</div></div>`).join("")}</div>`;
+    center.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div class="pill"><small>KỶ LỤC</small>${IMG("ui-crown")} ${best}</div><div class="pill score"><small>ĐIỂM</small>${G.score}</div></div>`;
+    sub.innerHTML=`<div class="recipe">${G.pool.map(k=>`<div class="chip" style="min-width:40px;padding:3px 5px"><div class="ce">${ingE(k)}</div></div>`).join("")}</div>`;
   } else {
     const D=DISHES[G.level];
-    center.innerHTML=`${G.customer?`<span class="e emoji" title="${G.customer.n}">${G.customer.e}</span>`:""}<span class="e">${dishE(D)}</span><span>${D.n}</span>`;
-    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">🧾 ${G.customer?G.customer.n:"Order"}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
+    center.innerHTML=`${G.customer?`<span class="e" title="${G.customer.n}">${custE(G.customer)}</span>`:""}<span class="e">${dishE(D)}</span><span>${D.n}</span>`;
+    sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">${IMG("ui-order")} ${G.customer?G.customer.n:"Order"}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
       <div class="recipe">${Object.keys(G.need).map(k=>{
         const g=Math.min(G.got[k]||0,G.need[k]), pct=g/G.need[k]*100;
-        return `<div class="chip ${g>=G.need[k]?"done":""}" data-ing="${k}"><div class="ce emoji">${ING[k].e}</div><div class="cn">${g}/${G.need[k]}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+        return `<div class="chip ${g>=G.need[k]?"done":""}" data-ing="${k}"><div class="ce">${ingE(k)}</div><div class="cn">${g}/${G.need[k]}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
       }).join("")}</div>`;
   }
 }
@@ -824,7 +857,7 @@ function floatText(txt,x,y,size=34,delay=0){
 function flyTo(cellEl,ing){
   const chip=document.querySelector(`.chip[data-ing="${ing}"]`); if(!chip) return;
   const a=cellEl.getBoundingClientRect(), b=chip.getBoundingClientRect();
-  const f=document.createElement("div"); f.className="fly emoji"; f.textContent=ING[ing].e;
+  const f=document.createElement("div"); f.className="fly"; f.innerHTML=ingE(ing);
   f.style.left=(a.left+a.width/2)+"px"; f.style.top=(a.top+a.height/2)+"px";
   document.body.appendChild(f);
   const dx=b.left+b.width/2-(a.left+a.width/2), dy=b.top+b.height/2-(a.top+a.height/2);
@@ -860,7 +893,7 @@ function quality(score){
 let kitchenRAF=0;
 function stopKitchen(){ cancelAnimationFrame(kitchenRAF); kitchenRAF=0; }
 function startCooking(D,done){
-  const cfg=COOK[D.id]||{type:"timing",t:"Nấu món",h:"Chạm khi kim vào vùng xanh.",pan:D.e};
+  let cfg=COOK[D.id]||{type:"timing",t:"Nấu món",h:"Chạm khi kim vào vùng xanh.",pan:D.e};
   show("kitchen");
   const finish=(score,info={})=>{
     stopKitchen();
@@ -876,6 +909,9 @@ function startCooking(D,done){
     $("#kNext").onclick=()=>done(q);
   };
   const head=`<span class="kstep">BƯỚC 1/2 · NẤU</span><h2>${cfg.t}</h2><p class="khint">${cfg.h}</p>`;
+  const PAN_IMG={comTam:"cook-dia",bunCha:"cook-met",banhMi:"ing-banhmi",goiCuon:"ing-banhtrang"};
+  cfg = {...cfg, pan: cfg.type==="hold" ? `<span class="pan-hold"><img class="chao" src="assets/cook-chao.webp" alt=""><img class="flame" src="assets/cook-lua.webp" alt=""></span>`
+    : PAN_IMG[D.id] ? IMG(PAN_IMG[D.id]) : dishE(D)};
   if(cfg.type==="timing") cookTiming(head,cfg,finish);
   else if(cfg.type==="hold") cookHold(head,cfg,finish);
   else cookOrder(head,cfg,D,finish);
@@ -947,8 +983,8 @@ function cookOrder(head,cfg,D,finish){
   const seq=Object.keys(D.need);
   const shuffled=seq.slice().sort(()=>Math.random()-.5);
   $("#kBody").innerHTML=`<div class="kcard" id="kCard">${head}<div class="kpan emoji">${cfg.pan}</div>
-    <div class="slots">${seq.map((k,i)=>`<div class="slot2" data-s="${i}"><span class="emoji ghost">${ING[k].e}</span></div>`).join("")}</div>
-    <div class="ingbtns">${shuffled.map(k=>`<button class="ingbtn emoji" data-k="${k}" style="--c:${ING[k].c}" aria-label="${ING[k].n}">${ING[k].e}</button>`).join("")}</div>
+    <div class="slots">${seq.map((k,i)=>`<div class="slot2" data-s="${i}"><span class="ghost">${ingE(k)}</span></div>`).join("")}</div>
+    <div class="ingbtns">${shuffled.map(k=>`<button class="ingbtn" data-k="${k}" style="--c:${ING[k].c}" aria-label="${ING[k].n}">${ingE(k)}</button>`).join("")}</div>
     <div class="kfeed" id="kFeed"></div><div class="kprog"><i id="kProg"></i></div></div>`;
   const LIMIT=10; let idx=0,miss=0,t0=performance.now(),over=false;
   const end=()=>{ if(over) return; over=true; const el=(performance.now()-t0)/1000;
@@ -957,7 +993,7 @@ function cookOrder(head,cfg,D,finish){
   document.querySelectorAll(".ingbtn").forEach(b=>b.onclick=()=>{
     if(over) return;
     if(b.dataset.k===seq[idx]){
-      const sl=document.querySelector(`.slot2[data-s="${idx}"]`); sl.classList.add("ok"); sl.innerHTML=`<span class="emoji">${ING[b.dataset.k].e}</span>`;
+      const sl=document.querySelector(`.slot2[data-s="${idx}"]`); sl.classList.add("ok"); sl.innerHTML=ingE(b.dataset.k);
       b.classList.add("used"); idx++; sfx.chop(); $("#kFeed").textContent="";
       if(idx>=seq.length) setTimeout(end,300);
     } else { miss++; sfx.bad(); $("#kFeed").textContent="Sai thứ tự!"; const c=$("#kCard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); }
@@ -971,12 +1007,15 @@ function cookOrder(head,cfg,D,finish){
    Ý TƯỞNG 2: KHÁCH GỌI MÓN & TÍNH TIỀN THỐI
    ========================================================= */
 // Lời thoại của khách
-const VOICE_DATA={"customers": [{"id": "sv", "e": "👩‍🎓", "n": "Cô sinh viên", "hi": "Cho em một phần {d} nha!"}, {"id": "xeom", "e": "🧔", "n": "Bác xe ôm", "hi": "Làm cho chú một phần {d}, nhanh nhanh nghen!"}, {"id": "vp", "e": "👨‍💼", "n": "Anh văn phòng", "hi": "Một phần {d} mang đi nhé, anh đang vội."}, {"id": "ba", "e": "👵", "n": "Bà ngoại", "hi": "Cho bà một phần {d} nhé cháu."}, {"id": "tay", "e": "👱‍♂️", "n": "Anh Tây du lịch", "hi": "Hello! One {d}, please. Cảm ơn!"}, {"id": "tho", "e": "👷", "n": "Chú thợ hồ", "hi": "Cho chú phần {d}, nhiều nhiều chút nghe!"}, {"id": "na", "e": "👧", "n": "Bé Na", "hi": "Con muốn ăn {d} ạ!"}], "react": {"perfect": ["Trời ơi ngon tuyệt cú mèo!", "Ngon quá trời luôn!"], "good": ["Ngon đó nha!", "Vừa miệng lắm!"], "burnt": ["Hơi khét chút ha.", "Cũng được, lần sau nấu kỹ hơn nha."]}, "payAsk": "Tính tiền giúp nha!", "review": {"5": "Tuyệt vời! Nhất định sẽ quay lại!", "4": "Ngon lắm, cảm ơn quán!", "3": "Cũng được.", "2": "Hơi thất vọng chút.", "1": "Chán quá, chắc không quay lại."}, "lines": {"wless": "Ơ, thối thiếu rồi kìa!", "wmore": "Ơ, thối dư rồi nè!", "out": "Thôi khỏi thối, tôi vội lắm!", "oktip": "Cảm ơn nha, gửi thêm chút tiền boa nè!", "ok": "Cảm ơn nha!"}};
+const VOICE_DATA={"customers": [{"id": "sv", "e": "👩‍🎓", "n": "Cô sinh viên", "hi": "Cho em một phần {d} nha!"}, {"id": "xeom", "e": "🧔", "n": "Bác xe ôm", "hi": "Làm cho chú một phần {d}, nhanh nhanh nghen!"}, {"id": "vp", "e": "👨‍💼", "n": "Anh văn phòng", "hi": "Một phần {d} mang đi nhé, anh đang vội."}, {"id": "ba", "e": "👵", "n": "Bà ngoại", "hi": "Cho bà một phần {d} nhé cháu."}, {"id": "tay", "e": "👱‍♂️", "n": "Anh Tây du lịch", "hi": "Hello! One {d}, please. Cảm ơn!"}, {"id": "tho", "e": "👷", "n": "Chú thợ hồ", "hi": "Cho chú phần {d}, nhiều nhiều chút nghe!"}, {"id": "na", "e": "👧", "n": "Bé Na", "hi": "Con muốn ăn {d} ạ!"}, {"id": "chuba", "e": "👨‍🌾", "n": "Chú Ba miền Tây", "hi": "Cho chú Ba một phần {d} nghen con!"}], "react": {"perfect": ["Trời ơi ngon tuyệt cú mèo!", "Ngon quá trời luôn!"], "good": ["Ngon đó nha!", "Vừa miệng lắm!"], "burnt": ["Hơi khét chút ha.", "Cũng được, lần sau nấu kỹ hơn nha."]}, "payAsk": "Tính tiền giúp nha!", "review": {"5": "Tuyệt vời! Nhất định sẽ quay lại!", "4": "Ngon lắm, cảm ơn quán!", "3": "Cũng được.", "2": "Hơi thất vọng chút.", "1": "Chán quá, chắc không quay lại."}, "lines": {"wless": "Ơ, thối thiếu rồi kìa!", "wmore": "Ơ, thối dư rồi nè!", "out": "Thôi khỏi thối, tôi vội lắm!", "oktip": "Cảm ơn nha, gửi thêm chút tiền boa nè!", "ok": "Cảm ơn nha!"}};
 const CUSTOMERS=VOICE_DATA.customers, REACT=VOICE_DATA.react, VL=VOICE_DATA.lines;
 const BILLS=[{v:500000,c:"#2a9fb8"},{v:200000,c:"#c0603a"},{v:100000,c:"#3f8f4a"},{v:50000,c:"#b04f86"},
   {v:20000,c:"#3c6fc4"},{v:10000,c:"#a68a2c"},{v:5000,c:"#6a5cad"}];
 const billColor=v=>(BILLS.find(b=>b.v===v)||{}).c||"#777";
-const billHTML=(v,attr="")=>`<button class="bill" style="--b:${billColor(v)}" ${attr}>${v.toLocaleString("vi-VN")}</button>`;
+const BILL_IMG={500000:"bill-500k",200000:"bill-200k",100000:"bill-100k",50000:"bill-50k",20000:"bill-20k",5000:"bill-5k"};
+const billHTML=(v,attr="")=>BILL_IMG[v]
+  ? `<button class="bill billimg" ${attr} aria-label="${v.toLocaleString("vi-VN")} đồng"><img src="assets/${BILL_IMG[v]}.webp" alt="${v.toLocaleString("vi-VN")}" draggable="false"></button>`
+  : `<button class="bill" style="--b:${billColor(v)}" ${attr}>${v.toLocaleString("vi-VN")}</button>`;
 
 function startCheckout(D,q,done){
   const C=G.customer||rnd(CUSTOMERS), price=PRICE[D.id]||30000;
@@ -985,7 +1024,7 @@ function startCheckout(D,q,done){
   const PAT=15; let left=PAT, given=[], wrong=0, over=false, last=performance.now();
   show("kitchen");
   $("#kBody").innerHTML=`<div class="kcard" id="kCard"><span class="kstep">BƯỚC 2/2 · TÍNH TIỀN</span>
-    <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="kSay"></span></div></div>
+    <div class="cust"><div class="face">${custE(C)}</div><div class="bubble"><b>${C.n}</b><span id="kSay"></span></div></div>
     <p style="margin:10px 0 4px"><span style="font-size:30px">${dishE(D)}</span> <span class="qbadge q-${q.k}">${q.label}</span></p>
     <div class="billrow"><span>Giá món</span><span>${fmtVND(price)}</span></div>
     <div class="billrow"><span>Khách đưa</span><span>${billHTML(paid,'disabled tabindex="-1"')}</span></div>
@@ -1068,33 +1107,33 @@ function finishWin(D,q,pay){
   r>=4?sfx.win():sfx.bad();
   const pop=dishRating(D.id);
   modal(`<h2>Khách đã thanh toán!</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
-    <div class="review"><div class="who"><span class="emoji">${C.e}</span><span>${C.n}</span></div>
+    <div class="review"><div class="who"><span style="font-size:34px">${custE(C)}</span><span>${C.n}</span></div>
       <div>${rateHTML(r)}</div><div style="font-weight:600;margin-top:2px">“${REVIEW_SAY[r]}”</div>
       <ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul></div>
     <p style="font-size:14px">Độ ưa chuộng món: ${rateHTML(pop.avg)}<span class="rate-num">${pop.avg.toFixed(1)} · ${pop.n} đánh giá</span></p>
-    <p class="money">💰 Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
+    <p class="money">${IMG("ui-money")} Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
     <p class="fact">${D.d}</p>
-    ${unlockedCount()>DISHES.indexOf(D)+1&&!wasDone?`<p class="rank-badge">🔓 Mở khóa món mới: ${DISHES[DISHES.indexOf(D)+1].n}</p>`:""}
+    ${unlockedCount()>DISHES.indexOf(D)+1&&!wasDone?`<p class="rank-badge">${IMG("ui-unlock")} Mở khóa món mới: ${DISHES[DISHES.indexOf(D)+1].n}</p>`:""}
     <div class="actions"><button class="btn green" data-act="next">Mời khách tiếp theo ›</button>
     <button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="home">Về quán</button></div>`);
 }
 function lose(){
   if(G.over) return; G.over=true; if(G.mode==="endless") sfx.lose(); syncMyScore();
   if(G.mode==="endless"){
-    modal(`<h2>Hết chỗ trên thớt!</h2><div class="bigE emoji">🔪</div>
+    modal(`<h2>Hết chỗ trên thớt!</h2><div class="bigE">${IMG("ui-knife")}</div>
       <p>Điểm: <b style="font-size:28px">${G.score}</b><br>Kỷ lục: <b>${best}</b>${G.score>=best&&G.score>0?" <span class='emoji'>🎉</span> Kỷ lục mới!":""}${myRank("endless")?`<br><span class="rank-badge">🏆 Hạng ${myRank("endless")} trên bảng</span>`:""}</p>
       <div class="actions"><button class="btn green" data-act="retry">Chơi lại</button><button class="btn" data-act="rank">🏆 Xem bảng xếp hạng</button><button class="btn brown" data-act="home">Về bếp</button></div>`);
   } else {
     const D=DISHES[G.level];
-    const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`<span class="emoji">${ING[k].e}</span> <b>${G.need[k]-(G.got[k]||0)}</b>`).join(" · ");
+    const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`${ingE(k)} <b>${G.need[k]-(G.got[k]||0)}</b>`).join(" · ");
     G.lives--; G.lost++; renderHUD(); sfx.plate();
     if(G.lives>0){
-      modal(`<h2>Thớt đầy rồi!</h2><div class="bigE emoji">💥</div>
+      modal(`<h2>Thớt đầy rồi!</h2><div class="bigE">${IMG("cook-dia-vo")}</div>
         <p>Vỡ 1 đĩa! Còn <span class="emoji">${heartsHTML()}</span></p>
         <p>Nguyên liệu đã gom vẫn được giữ. Còn thiếu:<br><span style="font-size:20px">${left}</span></p>
         <div class="actions"><button class="btn green" data-act="continue">Dọn thớt, nấu tiếp</button><button class="btn brown" data-act="home">Bỏ order, về quán</button></div>`);
     } else {
-      modal(`<h2>Vỡ hết đĩa rồi!</h2><div class="bigE emoji">😵‍💫</div>
+      modal(`<h2>Vỡ hết đĩa rồi!</h2><div class="bigE">${IMG("ui-dizzy")}</div>
         <p>Món <b>${D.n}</b> còn thiếu:<br><span style="font-size:20px">${left}</span></p>
         <div class="actions"><button class="btn green" data-act="retry">Nấu lại từ đầu</button><button class="btn" data-act="next">Mời khách khác</button><button class="btn brown" data-act="home">Về quán</button></div>`);
     }
@@ -1130,11 +1169,11 @@ function newOrder(avoidId){
   const isNew=!progress.stars[D.id];
   show("kitchen");
   $("#kBody").innerHTML=`<div class="kcard"><span class="kstep">KHÁCH VÀO QUÁN</span>
-    <div class="cust"><div class="face emoji">${C.e}</div><div class="bubble"><b>${C.n}</b><span id="oSay"></span></div></div>
+    <div class="cust"><div class="face">${custE(C)}</div><div class="bubble"><b>${C.n}</b><span id="oSay"></span></div></div>
     <div class="order-dish">${dishE(D)}</div>
     <h2>${D.n}${isNew?`<span class="newtag">MÓN MỚI</span>`:""}</h2>
     <p class="khint" style="margin:2px 0">Giá ${fmtVND(PRICE[D.id]||30000)}${dishRating(D.id)?` · ${rateHTML(dishRating(D.id).avg)}<span class="rate-num">${dishRating(D.id).avg.toFixed(1)}</span>`:""}</p>
-    <div class="order-ings">${Object.entries(D.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div>
+    <div class="order-ings">${Object.entries(D.need).map(([k,v])=>`<span>${ingE(k)} ${ING[k].n} ×${v}</span>`).join("")}</div>
     <button class="btn green kbig" id="oTake">Nhận order ›</button>
     <div style="display:flex;justify-content:space-between;margin-top:8px">
       <button class="linkbtn" id="oHome">‹ Về quán</button>
@@ -1153,7 +1192,7 @@ function renderBook(){
       <h3>${ok?d.n:"Món sắp ra mắt"}${ok?`<span class="price-tag">${fmtVND(PRICE[d.id]||30000)}</span>`:""}</h3>
       ${ok?(x?`<div>${rateHTML(x.avg)}<span class="rate-num">${x.avg.toFixed(1)} · ${x.n} đánh giá</span></div>`:`<div class="rate-num" style="margin:0">Chưa có đánh giá</div>`):""}
       ${ok?`<p>${d.d}</p>`:`<p><i>Phục vụ thêm khách để mở món này.</i></p>`}
-      <div class="ings">${Object.entries(d.need).map(([k,v])=>`<span><span class="emoji">${ING[k].e}</span> ${ING[k].n} ×${v}</span>`).join("")}</div></div></div>`;
+      <div class="ings">${Object.entries(d.need).map(([k,v])=>`<span>${ingE(k)} ${ING[k].n} ×${v}</span>`).join("")}</div></div></div>`;
   }).join("");
 }
 function show(id){
@@ -1162,13 +1201,13 @@ function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
   if(id==="book") renderBook();
   if(id==="rank") renderRank();
-  if(id==="home"){ const a=allRatings(); $("#bestLine").textContent = `👑 Kỷ lục: ${best} · ⭐ ${a.n?a.avg.toFixed(1)+" ("+a.n+" đánh giá)":"chưa có đánh giá"} · 💰 ${fmtVND(earned())}`; }
+  if(id==="home"){ const a=allRatings(); $("#bestLine").innerHTML = `${IMG("ui-crown")} Kỷ lục: ${+best||0} · ${IMG("ui-star")} ${a.n?a.avg.toFixed(1)+" ("+a.n+" đánh giá)":"chưa có đánh giá"} · ${IMG("ui-money")} ${fmtVND(earned())}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 $("#btnEndless").addEventListener("click",startEndless);
 $("#btnCook").addEventListener("click",()=>newOrder());
 $("#btnBack").addEventListener("click",()=>{
-  modal(`<h2>Tạm nghỉ</h2><div class="bigE emoji">🧑‍🍳</div><div class="actions">
+  modal(`<h2>Tạm nghỉ</h2><div class="bigE">${IMG("ui-chef")}</div><div class="actions">
    <button class="btn green" data-act="resume">Nấu tiếp</button><button class="btn brown" data-act="quit">Thoát</button></div>`);
 });
 $("#btnRestart").addEventListener("click",()=>{ G.mode==="endless"?startEndless():startLevel(G.level); });
@@ -1203,14 +1242,14 @@ async function renderRank(){
   if(!LB.canWrite) note+=`<div class="lb-note">Tài khoản của bạn đang có quyền chỉ xem nên tiến trình và điểm chưa lưu được lên tài khoản. Hãy nhờ chủ game cấp quyền “Contributor”.</div>`;
   if(!rows.length){ box.innerHTML=note+`<div class="lb-note">Chưa ai có điểm. Chơi một ván để đứng đầu bảng!</div>`; return; }
   let ps={}; try{ if(LB.user) ps=await LB.user.profiles(rows.map(r=>r.id)); }catch(e){}
-  const medal=["🥇","🥈","🥉"];
+  const medal=[IMG("ui-medal-1"),IMG("ui-medal-2"),IMG("ui-medal-3")];
   box.innerHTML=note+rows.map((r,i)=>{
     const p=ps[r.id]||{}, me=r.id===LB.myId;
     const val = LB.tab==="endless"
       ? `${r.endless}<small>điểm</small>`
       : LB.tab==="money" ? `<span class="money">${fmtVND(r.earned)}</span><small>doanh thu</small>`
       : `${(r.rcount?r.rsum/r.rcount:0).toFixed(1)}★<small>${r.rcount||0} đánh giá</small>`;
-    return `<div class="lb-row ${me?"me":""}"><div class="lb-rank">${i<3?`<span class="emoji">${medal[i]}</span>`:i+1}</div>
+    return `<div class="lb-row ${me?"me":""}"><div class="lb-rank">${i<3?`<span style="font-size:30px">${medal[i]}</span>`:i+1}</div>
       <img class="lb-av" alt="" data-av="${i}">
       <div class="lb-name" data-n="${i}"></div><div class="lb-val">${val}</div></div>`;
   }).join("");
@@ -1244,7 +1283,7 @@ async function syncMyScore(){
 function gate(html){ $("#gateCard").innerHTML=html; $("#gate").classList.add("on"); }
 function openGame(){ $("#gate").classList.remove("on"); show(document.querySelector(".screen.on")?.id||"home"); }
 function needLogin(){
-  gate(`<h2>Đăng nhập để chơi</h2><div class="bigE emoji">🔐</div>
+  gate(`<h2>Đăng nhập để chơi</h2><div class="bigE">${IMG("ui-login")}</div>
     <p>Game này chỉ dành cho người được mời. Hãy đăng nhập Claude bằng <b>đúng tài khoản Gmail</b> đã được mời, rồi mở lại link.</p>
     <p class="fact">Tiến trình, số sao và kỷ lục được lưu theo tài khoản của bạn, nên chơi ở máy nào cũng tiếp tục được.</p>`);
 }
@@ -1259,7 +1298,7 @@ function mergeCloud(){
   saveLocal();
 }
 async function showAccount(user){
-  try{ const me=await user.me(); $("#acctName").textContent=(me.name||"Người chơi")+" · ☁️ lưu theo tài khoản";
+  try{ const me=await user.me(); $("#acctName").textContent=(me.name||"Người chơi"); $("#acctName").insertAdjacentHTML("beforeend",` · ${IMG("ui-cloud")} lưu theo tài khoản`);
     if(me.avatarUrl) $("#acctAv").src=me.avatarUrl; $("#acct").hidden=false; }catch(e){}
 }
 
@@ -1280,7 +1319,7 @@ async function showAccount(user){
     let opened=false;
     const timer=setTimeout(()=>{
       if(LB.state==="loading"){ LB.state="slow"; renderRank();
-        gate(`<h2>Mạng chậm</h2><div class="bigE emoji">📶</div><p>Chưa tải được tiến trình từ tài khoản của bạn.</p>
+        gate(`<h2>Mạng chậm</h2><div class="bigE">${IMG("ui-wifi")}</div><p>Chưa tải được tiến trình từ tài khoản của bạn.</p>
           <div class="actions"><button class="btn green" id="gateGo">Chơi tạm, đồng bộ sau</button></div>`);
         $("#gateGo").onclick=()=>{ opened=true; openGame(); }; }
     },10000);

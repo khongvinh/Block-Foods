@@ -17,28 +17,28 @@ Hiện trên mỗi ô của thớt 8×8, trong khay khối và trên thanh công
 
 | # | Emoji | Nguyên liệu | Tên file | Trạng thái |
 |---|---|---|---|---|
-| 1 | 🥚 | Trứng | ing-trung | ⬜ |
-| 2 | 🧅 | Hành (hành lá + củ hành) | ing-hanh | ⬜ |
+| 1 | 🥚 | Trứng | ing-trung | ✅ |
+| 2 | 🧅 | Hành (hành lá + củ hành) | ing-hanh | ✅ |
 | 3 | 🍚 | Cơm (chén cơm) | ing-com | ✅ dùng hình chén cơm |
 | 4 | 🍖 | Sườn nướng | ing-suon | ⬜ |
-| 5 | 🥒 | Dưa leo | ing-dualeo | ⬜ |
-| 6 | 🥖 | Bánh mì (ổ không nhân) | ing-banhmi | ⬜ |
+| 5 | 🥒 | Dưa leo | ing-dualeo | ✅ |
+| 6 | 🥖 | Bánh mì (ổ không nhân) | ing-banhmi | ✅ |
 | 7 | 🥩 | Thịt (thịt bò hoặc heo sống) | ing-thit | ⬜ |
 | 8 | 🌶️ | Ớt | ing-ot | ✅ dùng hình quả ớt |
-| 9 | 🍜 | Bánh phở (vắt bánh phở trắng) | ing-banhpho | ⬜ |
-| 10 | 🌿 | Rau thơm (húng, ngò) | ing-rauthom | ⬜ |
+| 9 | 🍜 | Bánh phở (vắt bánh phở trắng) | ing-banhpho | ✅ |
+| 10 | 🌿 | Rau thơm (húng, ngò) | ing-rauthom | ✅ |
 | 11 | 🍝 | Bún (vắt bún tươi) | ing-bun | ⬜ |
 | 12 | 🥬 | Rau sống (xà lách) | ing-rausong | ⬜ |
-| 13 | 🫓 | Bánh tráng | ing-banhtrang | ⬜ |
-| 14 | 🦐 | Tôm | ing-tom | ✅ dùng hình con tôm |
+| 13 | 🫓 | Bánh tráng | ing-banhtrang | ✅ |
+| 14 | 🦐 | Tôm | ing-tom | ✅ |
 | 15 | 🐟 | Cá | ing-ca | ⬜ |
 | 16 | 🍅 | Cà chua | ing-cachua | ⬜ |
-| 17 | 🍍 | Thơm (dứa) | ing-thom | ⬜ |
-| 18 | 🌾 | Bột gạo (bao hoặc chén bột) | ing-botgao | ⬜ |
+| 17 | 🍍 | Thơm (dứa) | ing-thom | ✅ |
+| 18 | 🌾 | Bột gạo (bao hoặc chén bột) | ing-botgao | ✅ |
 | 19 | 🌱 | Giá đỗ | ing-gia | ⬜ |
 | 20 | 🧄 | Tỏi | ing-toi | ⬜ |
-| 21 | 🍯 | Nước màu (chén nước màu caramel) | ing-nuocmau | ⬜ |
-| 22 | 🍋 | Chanh (chanh xanh Việt Nam) | ing-chanh | ⬜ |
+| 21 | 🍯 | Nước màu (chén nước màu caramel) | ing-nuocmau | ✅ |
+| 22 | 🍋 | Chanh (chanh xanh Việt Nam) | ing-chanh | ✅ |
 | 23 | 🍄 | Nấm | ing-nam | ⬜ |
 | 24 | 🧈 | Đậu hũ (miếng đậu vàng) | ing-dauhu | ⬜ |
 
@@ -47,79 +47,79 @@ Hiện ở thẻ khách gọi món, màn nấu, màn thanh toán, Menu quán và
 
 | # | Emoji hiện tại | Món | Tên file | Trạng thái |
 |---|---|---|---|---|
-| 1 | 🍳 | Trứng chiên hành | dish-trungchien | ⬜ |
-| 2 | 🍛 | Cơm tấm sườn (đĩa cơm, sườn, chả trứng, đồ chua) | dish-comtam | ⬜ |
+| 1 | 🍳 | Trứng chiên hành | dish-trungchien | ✅ |
+| 2 | 🍛 | Cơm tấm sườn (đĩa cơm, sườn, chả trứng, đồ chua) | dish-comtam | ✅ |
 | 3 | 🥪 | Bánh mì thịt | dish-banhmi | ✅ dùng hình bánh mì kẹp |
 | 4 | 🍜 | Phở bò | dish-pho | ✅ dùng hình tô phở |
-| 5 | 🍢 | Bún chả (mẹt bún, chả, chén nước chấm) | dish-buncha | ⬜ |
-| 6 | 🌯 | Gỏi cuốn (đĩa cuốn + chén tương) | dish-goicuon | ⬜ |
-| 7 | 🥣 | Canh chua cá | dish-canhchua | ⬜ |
-| 8 | 🥞 | Bánh xèo | dish-banhxeo | ⬜ |
-| 9 | 🍲 | Cá kho tộ (niêu đất) | dish-cakho | ⬜ |
-| 10 | 🍜🌶️ | Bún bò Huế (tô bún nước đỏ, sả, chả) | dish-bunbo | ⬜ |
-| 11 | 🍵 | Canh nấm đậu hũ | dish-canhnam | ⬜ |
-| 12 | 🍚 | Cơm chiên dương châu | dish-comchien | ⬜ |
+| 5 | 🍢 | Bún chả (mẹt bún, chả, chén nước chấm) | dish-buncha | ✅ |
+| 6 | 🌯 | Gỏi cuốn (đĩa cuốn + chén tương) | dish-goicuon | ✅ |
+| 7 | 🥣 | Canh chua cá | dish-canhchua | ✅ |
+| 8 | 🥞 | Bánh xèo | dish-banhxeo | ✅ |
+| 9 | 🍲 | Cá kho tộ (niêu đất) | dish-cakho | ✅ |
+| 10 | 🍜🌶️ | Bún bò Huế (tô bún nước đỏ, sả, chả) | dish-bunbo | ✅ |
+| 11 | 🍵 | Canh nấm đậu hũ | dish-canhnam | ✅ |
+| 12 | 🍚 | Cơm chiên dương châu | dish-comchien | ✅ |
 
 ## 3. Khách hàng (7 hình)
 Chân dung từ ngực trở lên, mặt vui vẻ. Nếu được thì vẽ thêm 2 biểu cảm cho mỗi khách: **vui** (5★) và **buồn** (1–2★), đặt tên thêm `-vui` hoặc `-buon`.
 
 | # | Emoji | Khách | Gợi ý tạo hình | Tên file | Trạng thái |
 |---|---|---|---|---|---|
-| 1 | 👩‍🎓 | Cô sinh viên | Tóc dài, áo sơ mi trắng, balo | cus-sv | ⬜ |
-| 2 | 🧔 | Bác xe ôm | Áo khoác, mũ bảo hiểm, râu | cus-xeom | ⬜ |
-| 3 | 👨‍💼 | Anh văn phòng | Áo sơ mi, cà vạt, đeo kính | cus-vp | ⬜ |
-| 4 | 👵 | Bà ngoại | Tóc bạc búi, áo bà ba | cus-ba | ⬜ |
-| 5 | 👱‍♂️ | Anh Tây du lịch | Tóc vàng, nón lá, máy ảnh | cus-tay | ⬜ |
-| 6 | 👷 | Chú thợ hồ | Nón bảo hộ, áo lao động | cus-tho | ⬜ |
-| 7 | 👧 | Bé Na | Tóc hai bím, áo đầm | cus-na | ⬜ |
+| 1 | 👩‍🎓 | Cô sinh viên | Tóc dài, áo sơ mi trắng, balo | cus-sv | ✅ |
+| 2 | 🧔 | Bác xe ôm | Áo khoác, mũ bảo hiểm, râu | cus-xeom | ✅ |
+| 3 | 👨‍💼 | Anh văn phòng | Áo sơ mi, cà vạt, đeo kính | cus-vp | ✅ |
+| 4 | 👵 | Bà ngoại | Tóc bạc búi, áo bà ba | cus-ba | ✅ |
+| 5 | 👱‍♂️ | Anh Tây du lịch | Tóc vàng, nón lá, máy ảnh | cus-tay | ✅ |
+| 6 | 👷 | Chú thợ hồ | Nón bảo hộ, áo lao động | cus-tho | ✅ |
+| 7 | 👧 | Bé Na | Tóc hai bím, áo đầm | cus-na | ✅ |
 
 ## 4. Màn nấu ăn (3 hình)
 Các món còn lại dùng hình món ăn ở mục 2.
 
 | Emoji | Dùng cho | Tên file | Trạng thái |
 |---|---|---|---|
-| 🍽️ | Đĩa trống (bày cơm tấm), cũng dùng làm "đĩa" thay cho mạng chơi | cook-dia | ⬜ |
-| 💥🍽️ | Đĩa vỡ (khi thớt đầy) | cook-dia-vo | ⬜ |
-| 🥢 | Mẹt tre trống (bày bún chả) | cook-met | ⬜ |
-| 🔥 | Ngọn lửa (mini game giữ lửa) | cook-lua | ⬜ |
-| 🍳 | Chảo trống (chiên trứng, bánh xèo, cơm chiên) | cook-chao | ⬜ |
+| 🍽️ | Đĩa trống (bày cơm tấm), cũng dùng làm "đĩa" thay cho mạng chơi | cook-dia | ✅ |
+| 💥🍽️ | Đĩa vỡ (khi thớt đầy) | cook-dia-vo | ✅ |
+| 🥢 | Mẹt tre trống (bày bún chả) | cook-met | ✅ |
+| 🔥 | Ngọn lửa (mini game giữ lửa) | cook-lua | ✅ |
+| 🍳 | Chảo trống (chiên trứng, bánh xèo, cơm chiên) | cook-chao | ✅ |
 
 ## 5. Tiền Việt Nam ở quầy tính tiền (7 hình)
 Hiện đang là ô màu có chữ số. Vẽ tờ tiền **cách điệu**, có mệnh giá và màu gần giống thật nhưng **không sao chép y hệt** tờ tiền thật. Hình chữ nhật nằm ngang, tỉ lệ khoảng 2:1, **có ghi số mệnh giá**.
 
 | Mệnh giá | Màu gợi ý | Tên file | Trạng thái |
 |---|---|---|---|
-| 500.000 | Xanh ngọc | bill-500k | ⬜ |
-| 200.000 | Đỏ nâu | bill-200k | ⬜ |
-| 100.000 | Xanh lá | bill-100k | ⬜ |
-| 50.000 | Hồng tím | bill-50k | ⬜ |
-| 20.000 | Xanh dương | bill-20k | ⬜ |
+| 500.000 | Xanh ngọc | bill-500k | ✅ |
+| 200.000 | Đỏ nâu | bill-200k | ✅ |
+| 100.000 | Xanh lá | bill-100k | ✅ |
+| 50.000 | Hồng tím | bill-50k | ✅ |
+| 20.000 | Xanh dương | bill-20k | ✅ |
 | 10.000 | Vàng nâu | bill-10k | ⬜ |
-| 5.000 | Tím | bill-5k | ⬜ |
+| 5.000 | Tím | bill-5k | ✅ |
 
 ## 6. Biểu tượng giao diện (khoảng 20 hình, cỡ nhỏ)
 Có thể vẽ kiểu icon gỗ giống nút nhạc và nút loa, hoặc kiểu sticker.
 
 | Emoji | Dùng ở đâu | Tên file | Trạng thái |
 |---|---|---|---|
-| ⭐ ★ | Sao đánh giá (vẽ 2 hình: sao vàng và sao xám) | ui-star, ui-star-off | ⬜ |
-| 💰 | Tiền, doanh thu | ui-money | ⬜ |
-| 👑 | Kỷ lục | ui-crown | ⬜ |
-| 🏆 | Bảng xếp hạng | ui-trophy | ⬜ |
-| 🥇 🥈 🥉 | Hạng 1, 2, 3 | ui-medal-1/2/3 | ⬜ |
-| 🧾 | Order của khách | ui-order | ⬜ |
-| 🔓 🔒 | Mở khóa món, món chưa mở | ui-unlock, ui-lock | ⬜ |
+| ⭐ ★ | Sao đánh giá (vẽ 2 hình: sao vàng và sao xám) | ui-star, ui-star-off | ✅ |
+| 💰 | Tiền, doanh thu | ui-money | ✅ |
+| 👑 | Kỷ lục | ui-crown | ✅ |
+| 🏆 | Bảng xếp hạng | ui-trophy | ✅ |
+| 🥇 🥈 🥉 | Hạng 1, 2, 3 | ui-medal-1/2/3 | ✅ |
+| 🧾 | Order của khách | ui-order | ✅ |
+| 🔓 🔒 | Mở khóa món, món chưa mở | ui-unlock, ui-lock | ✅ |
 | ✨ 😋 😅 | Chất lượng món: Hoàn hảo, Ngon, Hơi khét | ui-q-perfect/good/burnt | ⬜ |
-| 🔪 | Hết chỗ (Chợ vô tận) | ui-knife | ⬜ |
-| 😵‍💫 | Vỡ hết đĩa | ui-dizzy | ⬜ |
-| 🎉 | Kỷ lục mới | ui-party | ⬜ |
-| 🧑‍🍳 | Đầu bếp (màn tạm nghỉ) | ui-chef | ⬜ |
-| 🔐 | Màn yêu cầu đăng nhập | ui-login | ⬜ |
-| ☁️ | Lưu theo tài khoản | ui-cloud | ⬜ |
-| 📶 | Mạng chậm | ui-wifi | ⬜ |
-| ‹ ↻ | Nút quay lại, chơi lại (icon gỗ vuông giống nút nhạc) | btn-back, btn-restart | ⬜ |
+| 🔪 | Hết chỗ (Chợ vô tận) | ui-knife | ✅ |
+| 😵‍💫 | Vỡ hết đĩa | ui-dizzy | ✅ |
+| 🎉 | Kỷ lục mới | ui-party | ✅ |
+| 🧑‍🍳 | Đầu bếp (màn tạm nghỉ) | ui-chef | ✅ |
+| 🔐 | Màn yêu cầu đăng nhập | ui-login | ✅ |
+| ☁️ | Lưu theo tài khoản | ui-cloud | ✅ |
+| 📶 | Mạng chậm | ui-wifi | ✅ |
+| ‹ ↻ | Nút quay lại, chơi lại (icon gỗ vuông giống nút nhạc) | btn-back, btn-restart | ✅ |
 | ♾️ | Chợ vô tận | đã có trong nút | ✅ |
-| ✓ | Dấu tick khi gom đủ nguyên liệu | ui-check | ⬜ |
+| ✓ | Dấu tick khi gom đủ nguyên liệu | ui-check | ✅ |
 | 👌 👍 😬 🟢 🟡 🔴 ⚪ | Phản hồi trong mini game nấu | Có thể giữ emoji, không bắt buộc | — |
 
 ## 7. Khung và nền (không phải emoji, nhưng làm game đồng bộ hơn)
@@ -134,6 +134,13 @@ Có thể vẽ kiểu icon gỗ giống nút nhạc và nút loa, hoặc kiểu 
 | Nút xanh lá, cam, nâu không có chữ | Các nút trong popup (Nhận order, Đưa tiền thối…) | btn-green, btn-orange, btn-brown | ⬜ |
 
 ---
+
+### Còn thiếu (đang tạm dùng emoji)
+- **10 nguyên liệu:** Sườn, Thịt, Bún (vắt bún), Rau sống, Cá, Cà chua, Giá đỗ, Tỏi, Nấm, Đậu hũ
+- **Tờ 10.000đ:** tờ xanh lá trong bảng hình ghi "100k" nên trùng với tờ 100k
+- **Biểu tượng chất lượng món:** mới có mặt cười Ngon, còn thiếu Hoàn hảo ✨ và Hơi khét 😅
+- **Nút chơi lại** (↻) dạng icon gỗ
+- **Khung và nền** ở mục 7
 
 ### Tổng kết
 | Nhóm | Số hình | Ưu tiên |

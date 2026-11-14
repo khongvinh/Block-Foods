@@ -41,6 +41,11 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 ### Chế độ ♾️ Chợ vô tận
 - Chơi kiểu cổ điển: có 7 nguyên liệu ngẫu nhiên, chơi đến khi hết chỗ, lưu kỷ lục.
 
+### Âm thanh
+- **Hiệu ứng và rung (🔊):** đặt khối, xóa hàng, vỡ đĩa, chiên xèo xèo, dao chặt, chuông cửa khi khách vào, đếm tờ tiền, "ka-ching" khi thối đúng, còi báo khi thối sai. Điện thoại Android rung kèm, iPhone không hỗ trợ rung.
+- **Nhạc nền (🎵):** giai điệu ngũ cung tiếng gảy kiểu đàn tranh, tạo trực tiếp trong trình duyệt. Phát ở trang chủ, Menu và Bảng xếp hạng, tắt khi vào bếp.
+- **Giọng khách (🗣️):** 196 câu thoại thu sẵn trong `voice/`, mỗi khách một giọng riêng (nam/nữ, già/trẻ, giọng Bắc/Trung/Nam). Anh Tây du lịch dùng giọng tiếng Anh đọc tiếng Việt. Tạo lại bằng `python3 tools/make_voices.py` (cần espeak-ng và ffmpeg). Muốn sửa câu thoại thì sửa trong file đó, game sẽ tự khớp chữ với tiếng.
+
 ### Tính điểm
 - Đặt khối: +1 điểm mỗi ô.
 - Xóa n đường (hàng + cột) cùng lúc: +10·n² và +1 điểm mỗi ô bị xóa.

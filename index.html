@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#29423d">
+<meta name="theme-color" content="#d6f1e1">
 <title>Block Foods – Bếp Việt</title>
 <style>
 :root{
-  --wood1:#34514b; --wood2:#29423d; --wood3:#1d302c;
+  --wood1:#eefaf1; --wood2:#d6f1e1; --wood3:#bfe6d0; --fg:#1f4a37;
   --board:#5a341c; --board-edge:#3e2211; --cell:#4a2a16; --cell-line:#3a2010;
   --cream:#fff6e6; --ink:#3b2412; --accent:#e85d2a; --green:#3fae5a; --gold:#ffc83d;
   --bw:min(92vw, 420px, 54vh);
@@ -16,10 +16,10 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 body{
-  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--cream);
+  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--fg);
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.07) 0 1px, transparent 1px 44px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.07) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.55) 0 2px, transparent 2px 44px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 2px, transparent 2px 44px),
     linear-gradient(180deg,var(--wood1),var(--wood2) 60%,var(--wood3));
 }
 .emoji{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
@@ -43,15 +43,15 @@ button{font:inherit;cursor:pointer;border:0}
 .logo .tiles{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
 .logo .tiles span{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;font-size:28px;font-weight:900;color:#fff;
   box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.35),0 4px 8px rgba(0,0,0,.3);text-shadow:0 2px 0 rgba(0,0,0,.25)}
-.logo h1{margin:4px 0 0;font-size:44px;line-height:1;color:#fff4d6;text-shadow:0 4px 0 #8a3c12,0 8px 14px rgba(0,0,0,.35);letter-spacing:1px}
-.logo p{margin:8px 0 0;color:#fff1d9;font-weight:600;opacity:.9}
+.logo h1{margin:4px 0 0;font-size:44px;line-height:1;color:#ff7a2f;text-shadow:0 4px 0 #b8461a,0 8px 14px rgba(184,70,26,.25);letter-spacing:1px}
+.logo p{margin:8px 0 0;color:var(--fg);font-weight:600;opacity:.9}
 .floaters{font-size:34px;letter-spacing:6px;margin:4px 0 14px;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
-.bestline{color:#fff1d9;font-weight:700;opacity:.9}
+.bestline{color:var(--fg);font-weight:700;opacity:.9}
 
 /* ---------- Level select / book ---------- */
 .topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.topbar h2{margin:0;font-size:24px;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.topbar h2{margin:0;font-size:24px;text-shadow:0 2px 0 rgba(255,255,255,.7)}
 .scroll{flex:1;width:100%;max-width:440px;overflow-y:auto;touch-action:pan-y;padding:14px 2px 30px}
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .lv{background:var(--cream);color:var(--ink);border-radius:16px;padding:10px 6px 8px;text-align:center;box-shadow:0 4px 0 #b98a5c,0 6px 12px rgba(0,0,0,.2);position:relative}
@@ -79,9 +79,9 @@ button{font:inherit;cursor:pointer;border:0}
   box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 3px 6px rgba(0,0,0,.25)}
 .pill.score{background:linear-gradient(#7a4a26,#5a341c);border:2px solid var(--gold);font-size:26px;min-width:120px}
 .pill small{display:block;font-size:10px;font-weight:700;opacity:.8;letter-spacing:1px}
-.dish-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px;text-shadow:0 2px 0 rgba(0,0,0,.3)}
+.dish-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px;text-shadow:0 2px 0 rgba(255,255,255,.7)}
 .dish-title .e{font-size:30px}
-.moves{font-weight:800;font-size:14px;background:rgba(0,0,0,.2);border-radius:10px;padding:4px 10px}
+.moves{font-weight:800;font-size:14px;background:rgba(255,255,255,.75);color:var(--fg);box-shadow:0 2px 0 rgba(31,74,55,.15);border-radius:10px;padding:4px 10px}
 .recipe{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
 .chip{position:relative;background:var(--cream);color:var(--ink);border-radius:12px;padding:4px 8px 6px;min-width:58px;text-align:center;
   box-shadow:0 3px 0 #b98a5c;transition:transform .15s}
@@ -146,9 +146,9 @@ button{font:inherit;cursor:pointer;border:0}
 
 /* ---------- Leaderboard ---------- */
 .tabs{display:flex;gap:8px;width:100%;max-width:440px;margin-top:12px}
-.tab{flex:1;padding:10px;border-radius:12px;background:rgba(0,0,0,.18);color:var(--cream);font-weight:800;font-size:15px}
+.tab{flex:1;padding:10px;border-radius:12px;background:rgba(255,255,255,.55);color:var(--fg);font-weight:800;font-size:15px}
 .tab[aria-selected="true"]{background:var(--cream);color:var(--ink);box-shadow:0 3px 0 #b98a5c}
-.lb-note{color:#fff1d9;font-weight:600;text-align:center;font-size:14px;padding:10px 4px;line-height:1.45}
+.lb-note{color:var(--fg);font-weight:600;text-align:center;font-size:14px;padding:10px 4px;line-height:1.45}
 .lb-row{display:grid;grid-template-columns:34px 36px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--cream);color:var(--ink);
   border-radius:14px;padding:8px 12px;margin-bottom:8px;box-shadow:0 3px 0 #b98a5c}
 .lb-row.me{background:#fff0b8;box-shadow:0 3px 0 #c9a227,0 0 0 2px var(--gold)}

@@ -143,6 +143,22 @@ button{font:inherit;cursor:pointer;border:0}
 .card .actions{display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:14px}
 .card .btn{min-width:220px;font-size:18px;padding:12px 18px}
 .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:10px 4px;font-weight:700;border-bottom:1px solid #ead6b8}
+
+/* ---------- Leaderboard ---------- */
+.tabs{display:flex;gap:8px;width:100%;max-width:440px;margin-top:12px}
+.tab{flex:1;padding:10px;border-radius:12px;background:rgba(0,0,0,.18);color:var(--cream);font-weight:800;font-size:15px}
+.tab[aria-selected="true"]{background:var(--cream);color:var(--ink);box-shadow:0 3px 0 #b98a5c}
+.lb-note{color:#fff1d9;font-weight:600;text-align:center;font-size:14px;padding:10px 4px;line-height:1.45}
+.lb-row{display:grid;grid-template-columns:34px 36px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--cream);color:var(--ink);
+  border-radius:14px;padding:8px 12px;margin-bottom:8px;box-shadow:0 3px 0 #b98a5c}
+.lb-row.me{background:#fff0b8;box-shadow:0 3px 0 #c9a227,0 0 0 2px var(--gold)}
+.lb-rank{font-weight:900;font-size:18px;text-align:center;font-variant-numeric:tabular-nums}
+.lb-av{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#e7d3b3}
+.lb-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-name small{display:block;font-weight:600;opacity:.6;font-size:12px}
+.lb-val{font-weight:900;font-size:18px;font-variant-numeric:tabular-nums;text-align:right}
+.lb-val small{display:block;font-size:11px;font-weight:700;opacity:.6}
+.rank-badge{display:inline-block;background:#3fae5a;color:#fff;border-radius:10px;padding:4px 10px;font-weight:800;font-size:14px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -160,6 +176,7 @@ button{font:inherit;cursor:pointer;border:0}
   <button class="btn" data-go="levels">🍳 Vào bếp</button>
   <button class="btn green" id="btnEndless">♾️ Chợ vô tận</button>
   <button class="btn brown" data-go="book">📖 Sổ công thức</button>
+  <button class="btn" style="background:linear-gradient(#ffd45c,#f0a81c);box-shadow:0 5px 0 #a8700a,0 8px 16px rgba(0,0,0,.25)" data-go="rank">🏆 Bảng xếp hạng</button>
   <div class="bestline" id="bestLine"></div>
   <button class="icon-btn" id="btnSound" style="position:absolute;top:max(12px,env(safe-area-inset-top));right:16px" aria-label="Âm thanh">🔊</button>
 </section>
@@ -174,6 +191,16 @@ button{font:inherit;cursor:pointer;border:0}
 <section id="book" class="screen">
   <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Sổ công thức</h2><div style="width:44px"></div></div>
   <div class="scroll" id="bookList"></div>
+</section>
+
+<!-- ============ LEADERBOARD ============ -->
+<section id="rank" class="screen">
+  <div class="topbar"><button class="icon-btn" data-go="home" aria-label="Quay lại">‹</button><h2>Bảng xếp hạng</h2><div style="width:44px"></div></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tabEndless" aria-selected="true" data-tab="endless">♾️ Chợ vô tận</button>
+    <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef">⭐ Đầu bếp</button>
+  </div>
+  <div class="scroll" id="rankList"></div>
 </section>
 
 <!-- ============ GAME ============ -->
@@ -579,21 +606,21 @@ function win(){
   const stars = G.used<=par?3 : G.used<=par*1.45?2 : 1;
   const prev=progress.stars[D.id]||0;
   if(stars>prev){ progress.stars[D.id]=stars; store.set("progress",progress); }
-  sfx.win();
+  sfx.win(); syncMyScore();
   const hasNext=G.level+1<DISHES.length;
   modal(`<h2>Nấu xong rồi!</h2><div class="bigE emoji">${D.e}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="stars">${starsHTML(stars)}</div>
     <p>Dùng <b>${G.used}</b> lượt · Điểm <b>${G.score}</b><br><small>3★ khi hoàn thành trong ≤ ${par} lượt</small></p>
     <p class="fact">${D.d}</p>
     <div class="actions">${hasNext?`<button class="btn green" data-act="next">Món tiếp theo ›</button>`:""}
-    <button class="btn" data-act="retry">Nấu lại</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
+    <button class="btn" data-act="retry">Nấu lại</button><button class="btn" data-act="rank">🏆 Bảng xếp hạng</button><button class="btn brown" data-act="menu">Thực đơn</button></div>`);
 }
 function lose(){
-  if(G.over) return; G.over=true; sfx.lose();
+  if(G.over) return; G.over=true; sfx.lose(); syncMyScore();
   if(G.mode==="endless"){
     modal(`<h2>Hết chỗ trên thớt!</h2><div class="bigE emoji">🔪</div>
-      <p>Điểm: <b style="font-size:28px">${G.score}</b><br>Kỷ lục: <b>${best}</b>${G.score>=best&&G.score>0?" <span class='emoji'>🎉</span> Kỷ lục mới!":""}</p>
-      <div class="actions"><button class="btn green" data-act="retry">Chơi lại</button><button class="btn brown" data-act="home">Về bếp</button></div>`);
+      <p>Điểm: <b style="font-size:28px">${G.score}</b><br>Kỷ lục: <b>${best}</b>${G.score>=best&&G.score>0?" <span class='emoji'>🎉</span> Kỷ lục mới!":""}${myRank("endless")?`<br><span class="rank-badge">🏆 Hạng ${myRank("endless")} trên bảng</span>`:""}</p>
+      <div class="actions"><button class="btn green" data-act="retry">Chơi lại</button><button class="btn" data-act="rank">🏆 Xem bảng xếp hạng</button><button class="btn brown" data-act="home">Về bếp</button></div>`);
   } else {
     const D=DISHES[G.level];
     const left=Object.keys(G.need).filter(k=>(G.got[k]||0)<G.need[k]).map(k=>`${ING[k].e} ${G.need[k]-(G.got[k]||0)}`).join(" · ");
@@ -609,6 +636,7 @@ $("#modal").addEventListener("click",e=>{
   if(a==="retry") G.mode==="endless"?startEndless():startLevel(G.level);
   if(a==="menu") show("levels");
   if(a==="home") show("home");
+  if(a==="rank"){ LB.tab=G.mode==="endless"?"endless":"chef"; show("rank"); }
   if(a==="resume"){}
   if(a==="quit") show(G.mode==="endless"?"home":"levels");
 });
@@ -636,6 +664,7 @@ function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
   if(id==="levels") renderLevels();
   if(id==="book") renderBook();
+  if(id==="rank") renderRank();
   if(id==="home"){ $("#bestLine").textContent = `👑 Kỷ lục chợ vô tận: ${best} · ⭐ ${Object.values(progress.stars).reduce((a,b)=>a+b,0)}/${DISHES.length*3}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
@@ -648,6 +677,81 @@ $("#btnRestart").addEventListener("click",()=>{ G.mode==="endless"?startEndless(
 function syncSound(){ $("#btnSound").textContent=soundOn?"🔊":"🔇"; }
 $("#btnSound").addEventListener("click",()=>{ soundOn=!soundOn; store.set("sound",soundOn); syncSound(); });
 syncSound(); show("home");
+
+
+/* =========================================================
+   BẢNG XẾP HẠNG CHUNG (db: scores/<userId>)
+   ========================================================= */
+const LB={db:null,user:null,myId:null,rows:[],state:"loading",canWrite:true,tab:"endless",writing:false};
+function totalStars(){ return Object.values(progress.stars).reduce((a,b)=>a+b,0); }
+function myRow(){ return LB.rows.find(r=>r.id===LB.myId); }
+function sortedRows(tab){
+  const key = tab==="endless" ? (r=>r.endless||0) : (r=>(r.stars||0)*1000+(r.dishes||0));
+  return LB.rows.filter(r=>key(r)>0).sort((a,b)=>key(b)-key(a) || (a.at||0)-(b.at||0));
+}
+function myRank(tab){ const i=sortedRows(tab).findIndex(r=>r.id===LB.myId); return i<0?null:i+1; }
+
+async function renderRank(){
+  const box=$("#rankList"); if(!$("#rank").classList.contains("on")) return;
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.tab===LB.tab));
+  if(LB.state==="off"){ box.innerHTML=`<div class="lb-note">Bảng xếp hạng chỉ có khi mở game qua link chia sẻ và đã đăng nhập.</div>`; return; }
+  if(LB.state==="loading"){ box.innerHTML=`<div class="lb-note">Đang tải bảng xếp hạng…</div>`; return; }
+  const rows=sortedRows(LB.tab);
+  let note = LB.state==="slow" ? `<div class="lb-note">Chưa kết nối được bảng xếp hạng, dữ liệu có thể chưa mới nhất.</div>` : "";
+  if(!LB.canWrite) note+=`<div class="lb-note">Bạn đang có quyền chỉ xem nên điểm của bạn chưa được ghi lên bảng. Hãy nhờ chủ game cấp quyền “Contributor”.</div>`;
+  if(!rows.length){ box.innerHTML=note+`<div class="lb-note">Chưa ai có điểm. Chơi một ván để đứng đầu bảng!</div>`; return; }
+  let ps={}; try{ if(LB.user) ps=await LB.user.profiles(rows.map(r=>r.id)); }catch(e){}
+  const medal=["🥇","🥈","🥉"];
+  box.innerHTML=note+rows.map((r,i)=>{
+    const p=ps[r.id]||{}, me=r.id===LB.myId;
+    const val = LB.tab==="endless"
+      ? `${r.endless}<small>điểm</small>`
+      : `${r.stars||0}★<small>${r.dishes||0} món</small>`;
+    return `<div class="lb-row ${me?"me":""}"><div class="lb-rank">${i<3?`<span class="emoji">${medal[i]}</span>`:i+1}</div>
+      <img class="lb-av" alt="" data-av="${i}">
+      <div class="lb-name" data-n="${i}"></div><div class="lb-val">${val}</div></div>`;
+  }).join("");
+  rows.forEach((r,i)=>{ const el=box.querySelector(`[data-n="${i}"]`); const nm=(ps[r.id]&&ps[r.id].name)||"Đầu bếp ẩn danh";
+    const av=box.querySelector(`[data-av="${i}"]`); if(ps[r.id]&&ps[r.id].avatarUrl) av.src=ps[r.id].avatarUrl; else av.removeAttribute("src");
+    el.textContent=nm; if(r.id===LB.myId){ const s=document.createElement("small"); s.textContent="Bạn"; el.appendChild(s);} });
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ LB.tab=t.dataset.tab; renderRank(); }));
+
+// Ghi điểm của mình nếu tốt hơn bản đang lưu (gọi sau mỗi ván)
+async function syncMyScore(){
+  if(!LB.db||!LB.myId||!LB.canWrite||LB.writing) return;
+  const cur=myRow()||{};
+  const next={endless:Math.max(best,cur.endless||0), stars:Math.max(totalStars(),cur.stars||0),
+    dishes:Math.max(Object.keys(progress.stars).length,cur.dishes||0)};
+  if(next.endless===(cur.endless||0)&&next.stars===(cur.stars||0)&&next.dishes===(cur.dishes||0)) return;
+  next.at=Date.now();
+  LB.writing=true;
+  try{ await LB.db.collection("scores").doc(LB.myId).set(next); }
+  catch(e){ if(e&&e.code==="invalid_argument"){ LB.canWrite=false; renderRank(); } }
+  finally{ LB.writing=false; }
+}
+
+(async()=>{
+  if(!window.claude||typeof window.claude.use!=="function"){ LB.state="off"; return; }
+  try{
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    LB.user=user;
+    if(!db||!user){ LB.state="off"; renderRank(); return; }
+    LB.myId=await user.id();
+    if(!LB.myId){ LB.state="off"; renderRank(); return; }
+    const cw=await user.can("data.write"); if(cw===false) LB.canWrite=false;
+    LB.db=db;
+    let timer=setTimeout(()=>{ if(LB.state==="loading"){ LB.state="slow"; renderRank(); } },10000);
+    let synced=false;
+    db.collection("scores").limit(1000).onSnapshot(snap=>{
+      LB.rows=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(!snap.metadata.fromCache){ clearTimeout(timer); LB.state="ready";
+        if(!synced){ synced=true; setTimeout(syncMyScore,0); } }
+      else if(LB.state==="loading") LB.state="slow";
+      renderRank();
+    },err=>{ clearTimeout(timer); LB.state="slow"; renderRank(); });
+  }catch(e){ LB.state="off"; renderRank(); }
+})();
 
 // hook cho test tự động
 window.__BF={G,place,startLevel,startEndless,canPlace,fitsAnywhere};

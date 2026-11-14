@@ -248,7 +248,7 @@ button{font:inherit;cursor:pointer;border:0}
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on">
-  <div class="home-bar"><button class="icon-btn" id="btnMusic" aria-label="Nhạc nền" title="Nhạc nền">🎵</button><button class="icon-btn" id="btnVoice" aria-label="Giọng khách" title="Giọng khách">🗣️</button><button class="icon-btn" id="btnSound" aria-label="Hiệu ứng và rung" title="Hiệu ứng và rung">🔊</button></div>
+  <div class="home-bar"><button class="icon-btn" id="btnMusic" aria-label="Nhạc nền" title="Nhạc nền">🎵</button><button class="icon-btn" id="btnSound" aria-label="Hiệu ứng và rung" title="Hiệu ứng và rung">🔊</button></div>
   <div class="home-main">
   <div class="logo">
     <div class="tiles">
@@ -418,7 +418,6 @@ function rateHTML(v){ const k=Math.round(v); return `<span class="rate">${"★".
 function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);   // hiệu ứng âm thanh + rung
 let musicOn = store.get("music",true);   // nhạc nền trang chủ
-let voiceOn = store.get("voice",true);   // giọng khách
 
 /* =========================================================
    AUDIO (WebAudio, không cần file)
@@ -507,12 +506,6 @@ function syncMusic(){ const cur=document.querySelector(".screen.on")?.id; (music
 // Trình duyệt chỉ cho phát âm thanh sau lần chạm đầu tiên
 document.addEventListener("pointerdown",()=>{ const a=ac(); if(a&&a.state!=="running") a.resume().then(syncMusic).catch(()=>{}); else syncMusic(); },{passive:true});
 
-/* ---------- Giọng khách (file thu sẵn trong thư mục voice/) ---------- */
-let voiceAudio=null;
-function say(C,key){
-  if(!voiceOn||!C||!C.id) return;
-  try{ if(voiceAudio) voiceAudio.pause(); voiceAudio=new Audio(`voice/${C.id}/${key}.mp3`); voiceAudio.volume=1; voiceAudio.play().catch(()=>{}); }catch(e){}
-}
 
 /* =========================================================
    GAME STATE
@@ -912,8 +905,8 @@ function cookOrder(head,cfg,D,finish){
 /* =========================================================
    Ý TƯỞNG 2: KHÁCH GỌI MÓN & TÍNH TIỀN THỐI
    ========================================================= */
-// Câu thoại do tools/make_voices.py sinh ra, khớp với file giọng trong voice/
-/*VOICE_DATA*/const VOICE_DATA={"customers": [{"id": "sv", "e": "👩‍🎓", "n": "Cô sinh viên", "hi": "Cho em một phần {d} nha!"}, {"id": "xeom", "e": "🧔", "n": "Bác xe ôm", "hi": "Làm cho chú một phần {d}, nhanh nhanh nghen!"}, {"id": "vp", "e": "👨‍💼", "n": "Anh văn phòng", "hi": "Một phần {d} mang đi nhé, anh đang vội."}, {"id": "ba", "e": "👵", "n": "Bà ngoại", "hi": "Cho bà một phần {d} nhé cháu."}, {"id": "tay", "e": "👱‍♂️", "n": "Anh Tây du lịch", "hi": "Hello! One {d}, please. Cảm ơn!"}, {"id": "tho", "e": "👷", "n": "Chú thợ hồ", "hi": "Cho chú phần {d}, nhiều nhiều chút nghe!"}, {"id": "na", "e": "👧", "n": "Bé Na", "hi": "Con muốn ăn {d} ạ!"}], "react": {"perfect": ["Trời ơi ngon tuyệt cú mèo!", "Ngon quá trời luôn!"], "good": ["Ngon đó nha!", "Vừa miệng lắm!"], "burnt": ["Hơi khét chút ha.", "Cũng được, lần sau nấu kỹ hơn nha."]}, "payAsk": "Tính tiền giúp nha!", "review": {"5": "Tuyệt vời! Nhất định sẽ quay lại!", "4": "Ngon lắm, cảm ơn quán!", "3": "Cũng được.", "2": "Hơi thất vọng chút.", "1": "Chán quá, chắc không quay lại."}, "lines": {"wless": "Ơ, thối thiếu rồi kìa!", "wmore": "Ơ, thối dư rồi nè!", "out": "Thôi khỏi thối, tôi vội lắm!", "oktip": "Cảm ơn nha, gửi thêm chút tiền boa nè!", "ok": "Cảm ơn nha!"}};/*END_VOICE_DATA*/
+// Lời thoại của khách
+const VOICE_DATA={"customers": [{"id": "sv", "e": "👩‍🎓", "n": "Cô sinh viên", "hi": "Cho em một phần {d} nha!"}, {"id": "xeom", "e": "🧔", "n": "Bác xe ôm", "hi": "Làm cho chú một phần {d}, nhanh nhanh nghen!"}, {"id": "vp", "e": "👨‍💼", "n": "Anh văn phòng", "hi": "Một phần {d} mang đi nhé, anh đang vội."}, {"id": "ba", "e": "👵", "n": "Bà ngoại", "hi": "Cho bà một phần {d} nhé cháu."}, {"id": "tay", "e": "👱‍♂️", "n": "Anh Tây du lịch", "hi": "Hello! One {d}, please. Cảm ơn!"}, {"id": "tho", "e": "👷", "n": "Chú thợ hồ", "hi": "Cho chú phần {d}, nhiều nhiều chút nghe!"}, {"id": "na", "e": "👧", "n": "Bé Na", "hi": "Con muốn ăn {d} ạ!"}], "react": {"perfect": ["Trời ơi ngon tuyệt cú mèo!", "Ngon quá trời luôn!"], "good": ["Ngon đó nha!", "Vừa miệng lắm!"], "burnt": ["Hơi khét chút ha.", "Cũng được, lần sau nấu kỹ hơn nha."]}, "payAsk": "Tính tiền giúp nha!", "review": {"5": "Tuyệt vời! Nhất định sẽ quay lại!", "4": "Ngon lắm, cảm ơn quán!", "3": "Cũng được.", "2": "Hơi thất vọng chút.", "1": "Chán quá, chắc không quay lại."}, "lines": {"wless": "Ơ, thối thiếu rồi kìa!", "wmore": "Ơ, thối dư rồi nè!", "out": "Thôi khỏi thối, tôi vội lắm!", "oktip": "Cảm ơn nha, gửi thêm chút tiền boa nè!", "ok": "Cảm ơn nha!"}};
 const CUSTOMERS=VOICE_DATA.customers, REACT=VOICE_DATA.react, VL=VOICE_DATA.lines;
 const BILLS=[{v:500000,c:"#2a9fb8"},{v:200000,c:"#c0603a"},{v:100000,c:"#3f8f4a"},{v:50000,c:"#b04f86"},
   {v:20000,c:"#3c6fc4"},{v:10000,c:"#a68a2c"},{v:5000,c:"#6a5cad"}];
@@ -939,7 +932,7 @@ function startCheckout(D,q,done){
     <div style="display:flex;gap:8px"><button class="btn brown" style="min-width:0;flex:1;font-size:16px;padding:12px" id="kReset">Đếm lại</button>
     <button class="btn green" style="min-width:0;flex:2;font-size:16px;padding:12px" id="kGive">Đưa tiền thối</button></div></div>`;
   const ri=Math.floor(Math.random()*REACT[q.k].length);
-  $("#kSay").textContent=REACT[q.k][ri]+" "+VOICE_DATA.payAsk; say(C,`r_${q.k}_${ri}`);
+  $("#kSay").textContent=REACT[q.k][ri]+" "+VOICE_DATA.payAsk;
   const sum=()=>given.reduce((a,b)=>a+b,0);
   const draw=()=>{ $("#kSum").textContent=fmtVND(sum());
     $("#kGiven").innerHTML=given.length?given.map((v,i)=>billHTML(v,`data-i="${i}" aria-label="Bỏ tờ ${v}"`)).join(""):`<span class="empty">Chạm vào tờ tiền bên dưới để đếm tiền thối</span>`; };
@@ -957,17 +950,17 @@ function startCheckout(D,q,done){
       sfx.cash();
       const raw=price*q.tip*(0.4+0.6*left/PAT)*Math.max(0,1-wrong*0.3);
       const tip=Math.round(raw/1000)*1000;
-      close(tip, tip?VL.oktip:VL.ok); say(C,tip?"oktip":"ok");
+      close(tip, tip?VL.oktip:VL.ok);
     } else {
       wrong++; left=Math.max(0,left-3); sfx.buzz();
-      $("#kSay").textContent=s<change?VL.wless:VL.wmore; say(C,s<change?"wless":"wmore");
+      $("#kSay").textContent=s<change?VL.wless:VL.wmore;
       $("#kFeed").textContent= s<change?`Thối thiếu ${fmtVND(change-s)}!`:`Thối dư ${fmtVND(s-change)}!`;
       const c=$("#kCard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
     }
   };
   const loop=t=>{ if(over) return; const dt=Math.min(0.1,(t-last)/1000); last=t; left=Math.max(0,left-dt);
     $("#kPat").style.width=left/PAT*100+"%";
-    if(left<=0){ close(0,VL.out,true); say(C,"out"); return; }
+    if(left<=0){ close(0,VL.out,true); return; }
     kitchenRAF=requestAnimationFrame(loop); };
   kitchenRAF=requestAnimationFrame(loop);
 }
@@ -1007,7 +1000,7 @@ function finishWin(D,q,pay){
   const rv=reviews(); rv[D.id]=rv[D.id]||{n:0,sum:0}; rv[D.id].n++; rv[D.id].sum+=r;
   progress.stars[D.id]=Math.max(progress.stars[D.id]||0,r);
   progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
-  r>=4?sfx.win():sfx.bad(); setTimeout(()=>say(C,"v_"+r),500);
+  r>=4?sfx.win():sfx.bad();
   const pop=dishRating(D.id);
   modal(`<h2>Khách đã thanh toán!</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
     <div class="review"><div class="who"><span class="emoji">${C.e}</span><span>${C.n}</span></div>
@@ -1082,7 +1075,7 @@ function newOrder(avoidId){
       <button class="linkbtn" id="oHome">‹ Về quán</button>
       ${unlockedCount()>1?`<button class="linkbtn" id="oSkip">Mời khách khác</button>`:""}</div></div>`;
   $("#oSay").textContent=C.hi.replace("{d}",D.n);
-  sfx.door(); setTimeout(()=>say(C,"g_"+D.id),450);
+  sfx.door();
   $("#oTake").onclick=()=>startLevel(DISHES.indexOf(D));
   $("#oHome").onclick=()=>show("home");
   const sk=$("#oSkip"); if(sk) sk.onclick=()=>newOrder(D.id);
@@ -1116,11 +1109,10 @@ $("#btnBack").addEventListener("click",()=>{
 $("#btnRestart").addEventListener("click",()=>{ G.mode==="endless"?startEndless():startLevel(G.level); });
 function syncSound(){
   $("#btnSound").textContent=soundOn?"🔊":"🔇";
-  $("#btnMusic").classList.toggle("off",!musicOn); $("#btnVoice").classList.toggle("off",!voiceOn);
+  $("#btnMusic").classList.toggle("off",!musicOn);
 }
 $("#btnSound").addEventListener("click",()=>{ soundOn=!soundOn; store.set("sound",soundOn); syncSound(); if(soundOn){ sfx.pick(); vib(30); } });
 $("#btnMusic").addEventListener("click",()=>{ musicOn=!musicOn; store.set("music",musicOn); syncSound(); syncMusic(); });
-$("#btnVoice").addEventListener("click",()=>{ voiceOn=!voiceOn; store.set("voice",voiceOn); syncSound(); if(voiceOn) say(rnd(CUSTOMERS),"ok"); });
 syncSound(); show("home");
 
 

@@ -1,5 +1,8 @@
 # Hình cần vẽ thêm – Đợt 2
 
+> ✅ **Đã nhận đợt 2:** đủ 10 nguyên liệu, tờ 10k, món khét, nút chơi lại, 4 nút trơn. Toàn bộ mục A, B1–B3 và C (cách 1) đã xong.
+> Còn lại là phần **tùy chọn**: B4–B8 (biểu cảm khách, đồng xu, đồng hồ cát, hơi nóng) và mục D (khung, nền).
+
 Đợt 1 đã ghép **66 hình** vào game: 14 nguyên liệu, 12 món ăn, 8 khách, 5 đồ nấu, 6 tờ tiền, 21 icon, cùng logo, 4 nút trang chủ, nền gian bếp và 5 món trang trí.
 Dưới đây là những thứ **còn thiếu**. Chỗ nào chưa có hình, game tạm dùng emoji hoặc nút vẽ bằng CSS.
 

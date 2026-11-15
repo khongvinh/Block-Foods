@@ -316,6 +316,23 @@ button{font:inherit;cursor:pointer;border:0}
 .kfeed .ic,.kbig .ic{width:1.1em;height:1.1em}
 .btn .ic{width:1.15em;height:1.15em;vertical-align:-.2em}
 .tab .ic{width:20px;height:20px}
+/* ---------- Nút trơn bằng hình (đợt 2): border-image giữ nguyên hai đầu bo tròn ---------- */
+.btn{background:none!important;box-shadow:none!important;border:0;border-style:solid;
+  border-image-source:url("assets/btn-plain-orange.webp");border-image-slice:0 158 fill;border-image-width:0 28px;
+  color:#fff;min-height:56px;padding:12px 34px 14px;filter:drop-shadow(0 4px 4px rgba(60,30,10,.3));
+  text-shadow:0 2px 0 #6b2a10,1px 0 0 #6b2a10,-1px 0 0 #6b2a10,0 -1px 0 #6b2a10}
+.btn.green{border-image-source:url("assets/btn-plain-green.webp");border-image-slice:0 169 fill;
+  text-shadow:0 2px 0 #24481a,1px 0 0 #24481a,-1px 0 0 #24481a,0 -1px 0 #24481a}
+.btn.brown{border-image-source:url("assets/btn-plain-brown.webp");border-image-slice:0 100 fill;
+  text-shadow:0 2px 0 #3a1c0a,1px 0 0 #3a1c0a,-1px 0 0 #3a1c0a,0 -1px 0 #3a1c0a}
+.btn:active{transform:translateY(2px) scale(.98);filter:drop-shadow(0 2px 2px rgba(60,30,10,.3)) brightness(.95)}
+.tab[aria-selected="true"]{background:none;box-shadow:none;border-style:solid;border-width:0;
+  border-image:url("assets/btn-plain-gold.webp") 0 74 fill / 0 20px;color:#fff;text-shadow:0 1px 0 #7a4a10,1px 0 0 #7a4a10,-1px 0 0 #7a4a10}
+.woodsq{background:none!important;box-shadow:none!important;padding:0;line-height:0}
+.woodsq img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))}
+.hud-row .moves{white-space:nowrap}
+.hud-row .moves:first-child{min-width:0;max-width:38%;overflow:hidden;text-overflow:ellipsis}
+.bills{align-items:center}
 </style>
 </head>
 <body>
@@ -371,7 +388,7 @@ button{font:inherit;cursor:pointer;border:0}
     <div class="hud-row">
       <button class="icon-btn backimg" id="btnBack" aria-label="Thoát"><img src="assets/btn-back.webp" alt=""></button>
       <div id="hudCenter" class="dish-title"></div>
-      <button class="icon-btn" id="btnRestart" aria-label="Chơi lại">↻</button>
+      <button class="icon-btn woodsq" id="btnRestart" aria-label="Chơi lại"><img src="assets/btn-restart.webp" alt=""></button>
     </div>
     <div id="hudSub"></div>
   </div>
@@ -469,7 +486,8 @@ const dishE = D => IMG("dish-"+D.id.toLowerCase(),"dish",D.n);
 // Nguyên liệu đã có hình vẽ; còn lại dùng emoji
 const ING_IMG={trung:"ing-trung",hanh:"ing-hanh",com:"food-com",duaLeo:"ing-dualeo",banhMi:"ing-banhmi",ot:"food-ot",
   pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-banhtrang",tom:"ing-tom2",thom:"ing-thom",botGao:"ing-botgao",
-  nuocMau:"ing-nuocmau",chanh:"ing-chanh"};
+  nuocMau:"ing-nuocmau",chanh:"ing-chanh",suon:"ing-suon",thit:"ing-thit",bun:"ing-bun",rauSong:"ing-rausong",ca:"ing-ca",
+  caChua:"ing-cachua",gia:"ing-gia",toi:"ing-toi",nam:"ing-nam",dauHu:"ing-dauhu"};
 const ingE = k => ING_IMG[k] ? IMG(ING_IMG[k],"",ING[k].n) : `<span class="emoji">${ING[k].e}</span>`;
 const custE = C => C&&C.id ? IMG("cus-"+C.id,"cus",C.n) : `<span class="emoji">${C?C.e:""}</span>`;
 const SHAPES = SHAPE_DEFS.map(([s,w])=>{
@@ -896,7 +914,7 @@ const COOK={
 function quality(score){
   if(score>=85) return {k:"perfect",label:IMG("ui-crown-new")+" Hoàn hảo",tip:0.2,score};
   if(score>=55) return {k:"good",label:IMG("ui-smile")+" Ngon",tip:0.1,score};
-  return {k:"burnt",label:"😅 Hơi khét",tip:0,score};
+  return {k:"burnt",label:IMG("ui-burnt")+" Hơi khét",tip:0,score};
 }
 let kitchenRAF=0;
 function stopKitchen(){ cancelAnimationFrame(kitchenRAF); kitchenRAF=0; }
@@ -1020,7 +1038,7 @@ const CUSTOMERS=VOICE_DATA.customers, REACT=VOICE_DATA.react, VL=VOICE_DATA.line
 const BILLS=[{v:500000,c:"#2a9fb8"},{v:200000,c:"#c0603a"},{v:100000,c:"#3f8f4a"},{v:50000,c:"#b04f86"},
   {v:20000,c:"#3c6fc4"},{v:10000,c:"#a68a2c"},{v:5000,c:"#6a5cad"}];
 const billColor=v=>(BILLS.find(b=>b.v===v)||{}).c||"#777";
-const BILL_IMG={500000:"bill-500k",200000:"bill-200k",100000:"bill-100k",50000:"bill-50k",20000:"bill-20k",5000:"bill-5k"};
+const BILL_IMG={500000:"bill-500k",200000:"bill-200k",100000:"bill-100k",50000:"bill-50k",20000:"bill-20k",10000:"bill-10k",5000:"bill-5k"};
 const billHTML=(v,attr="")=>BILL_IMG[v]
   ? `<button class="bill billimg" ${attr} aria-label="${v.toLocaleString("vi-VN")} đồng"><img src="assets/${BILL_IMG[v]}.webp" alt="${v.toLocaleString("vi-VN")}" draggable="false"></button>`
   : `<button class="bill" style="--b:${billColor(v)}" ${attr}>${v.toLocaleString("vi-VN")}</button>`;

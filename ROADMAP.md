@@ -4,14 +4,39 @@ Trạng thái: ✅ đã chốt · 🧪 đã làm, chờ chủ game chơi thử v
 
 Quy ước: làm lần lượt. Khi chủ game chốt xong một phần thì gợi ý làm phần tiếp theo trong danh sách.
 
+## Đã làm xong
+
+| Nhóm | Nội dung |
+|---|---|
+| Lối chơi gốc | Thớt 8×8, kéo thả 3 khối, xóa hàng/cột, combo, thưởng "Đồng bộ", 5 cái đĩa (vỡ đĩa khi thớt đầy) |
+| Mở quán | Khách vào gọi món (8 khách), món mới mở dần, "Mời khách khác", 12 món |
+| Nấu ăn (ý tưởng 1) | 3 mini game: chạm đúng lúc, giữ lửa, xếp thứ tự |
+| Bán hàng (ý tưởng 2) | Thối tiền bằng 7 tờ tiền, thanh kiên nhẫn, tiền boa, doanh thu |
+| Đánh giá | Khách chấm 1–5 sao kèm lý do. Menu quán hiện độ ưa chuộng, bấm vào xem danh sách đánh giá |
+| Chợ vô tận | Chơi tính điểm, lưu kỷ lục |
+| Tài khoản | Bắt buộc đăng nhập, tiến trình lưu theo tài khoản, bảng xếp hạng chung (Chợ vô tận / Đánh giá / Doanh thu) |
+| Âm thanh | Nhạc nền dân ca, hiệu ứng, rung (giọng nói đã bỏ theo yêu cầu) |
+| Hình ảnh | Toàn bộ emoji đã thay bằng hình vẽ, nền gian bếp cho mọi màn, nút gỗ |
+
+## Chưa làm – chọn hướng tiếp theo
+
 | # | Ý tưởng | Trạng thái |
 |---|---------|------------|
 | 1 | Nấu nướng sau khi gom đủ nguyên liệu | 🧪 Chờ chốt |
 | 2 | Khách gọi món, giao món và tính tiền thối | 🧪 Chờ chốt |
-| 3 | Nâng cấp quán ăn bằng tiền kiếm được | ⏳ Làm tiếp theo |
+| 3 | Nâng cấp quán ăn bằng tiền kiếm được | ⏳ |
 | 4 | Đi chợ mỗi sáng | ⏳ |
 | 5 | Thử thách hằng ngày và theo sự kiện | ⏳ |
 | 6 | Bản đồ ẩm thực ba miền | ⏳ |
+| 7 | Chợ: Kho nguyên liệu, nối chợ với quán | ⏳ đề xuất |
+| 8 | Chợ: Khách sỉ đặt hàng giữa phiên | ⏳ |
+| 9 | Chợ: Ô đặc biệt (tươi, hư, đông lạnh, gia vị) | ⏳ |
+| 10 | Chợ: Thử thách chợ hằng ngày, cùng thứ tự khối | ⏳ đề xuất |
+| 11 | Chợ: Phiên chợ giới hạn thời gian | ⏳ |
+| 12 | Vật phẩm hỗ trợ: dao, chảo, đổi khay, hoàn tác | ⏳ (gộp được với 3) |
+| 13 | Bộ sưu tập và huy hiệu | ⏳ |
+| 14 | Thách đấu bạn bè | ⏳ |
+| 15 | Hình tùy chọn: biểu cảm khách, đồng xu, khung và nền | ⏳ chờ hình |
 
 ## 1. Nấu nướng (🧪 chờ chốt)
 Gom đủ nguyên liệu thì vào bước nấu ngắn, khoảng 8–15 giây. Mỗi món dùng một trong ba kiểu:

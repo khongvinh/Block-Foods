@@ -107,9 +107,11 @@ button{font:inherit;cursor:pointer;border:0}
 .lv .num{position:absolute;top:6px;left:8px;font-size:12px;font-weight:800;opacity:.5}
 .lv.locked{filter:grayscale(1);opacity:.55}
 .lv.locked::after{content:"🔒";position:absolute;inset:0;display:grid;place-items:center;font-size:30px}
-.recipe-card{background:var(--cream);color:var(--ink);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 4px 0 #b98a5c;display:flex;gap:12px}
-.recipe-card .big{font-size:46px}
-.recipe-card h3{margin:0 0 4px}
+.recipe-card{background:var(--cream);color:var(--ink);border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 4px 0 #b98a5c;display:grid;grid-template-columns:1fr 2fr;gap:12px;align-items:center}
+.recipe-card .big{display:grid;place-items:center;background:radial-gradient(circle at 50% 55%,#fff 0,#f6e7cc 70%);border-radius:14px;aspect-ratio:1;padding:6px}
+.recipe-card .big .ic.dish{width:100%;height:auto;max-height:100%}
+.recipe-card h3{margin:0 0 4px;font-size:17px;line-height:1.25}
+.recipe-card .price-tag{margin-left:0;margin-top:2px}
 .recipe-card p{margin:4px 0;font-size:14px;line-height:1.4}
 .recipe-card .ings{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .recipe-card .ings span{background:#f3e3c8;border-radius:8px;padding:2px 6px;font-size:13px}
@@ -333,6 +335,13 @@ button{font:inherit;cursor:pointer;border:0}
 .hud-row .moves{white-space:nowrap}
 .hud-row .moves:first-child{min-width:0;max-width:38%;overflow:hidden;text-overflow:ellipsis}
 .bills{align-items:center}
+.rate-btn{display:flex;align-items:center;flex-wrap:wrap;gap:2px 4px;background:#fff6e2;border:1.5px solid #e2c597;border-radius:10px;padding:4px 8px;margin:4px 0;font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.rate-btn:active{transform:scale(.98)}
+.rate-btn .more{font-weight:800;font-size:12px;color:#a8391a;margin-left:auto}
+.card .rv-list{max-height:52vh;overflow-y:auto;touch-action:pan-y;padding:0 2px;text-align:left}
+.review .when{font-size:12px;opacity:.6;font-weight:600;margin-left:auto}
+.rv-sum{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:800;margin:4px 0 8px}
+#modalCard{max-height:92vh;overflow-y:auto}
 </style>
 </head>
 <body>
@@ -516,6 +525,21 @@ function earned(){ return progress.earned||0; }
 function reviews(){ return progress.reviews||(progress.reviews={}); }
 function dishRating(id){ const r=reviews()[id]; return r&&r.n?{avg:r.sum/r.n,n:r.n}:null; }
 function allRatings(){ let n=0,sum=0; Object.values(reviews()).forEach(r=>{ n+=r.n||0; sum+=r.sum||0; }); return {n,sum,avg:n?sum/n:0}; }
+const REVIEW_LOG_MAX=20;
+function timeAgo(t){ const m=Math.round((Date.now()-t)/60000); if(m<1) return "vừa xong"; if(m<60) return m+" phút trước";
+  const h=Math.round(m/60); if(h<24) return h+" giờ trước"; const d=Math.round(h/24); return d<30? d+" ngày trước" : new Date(t).toLocaleDateString("vi-VN"); }
+function reviewHTML(e){ const C=CUSTOMERS.find(c=>c.id===e.c)||{n:"Khách",e:"🙂"};
+  return `<div class="review"><div class="who"><span style="font-size:34px">${custE(C)}</span><span>${C.n}</span>${e.t?`<span class="when">${timeAgo(e.t)}</span>`:""}</div>
+    <div>${rateHTML(e.r)}</div><div style="font-weight:600;margin-top:2px">“${VOICE_DATA.review[e.r]}”</div>
+    <ul>${(e.n||[]).map(n=>`<li>${n}</li>`).join("")}</ul></div>`; }
+function showReviews(id){
+  const D=DISHES.find(d=>d.id===id), x=dishRating(id), log=((reviews()[id]||{}).log||[]).slice().reverse();
+  modal(`<h2>Đánh giá của khách</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:2px 0">${D.n}</h3>
+    ${x?`<div class="rv-sum">${rateHTML(x.avg)}<span>${x.avg.toFixed(1)} · ${x.n} đánh giá</span></div>`:""}
+    <div class="rv-list">${log.length?log.map(reviewHTML).join(""):`<p class="fact">Các đánh giá trước đây chưa lưu chi tiết. Đánh giá mới sẽ hiện ở đây.</p>`}</div>
+    ${x&&x.n>log.length&&log.length?`<p style="font-size:12px;opacity:.7">Hiện ${log.length} đánh giá gần nhất</p>`:""}
+    <div class="actions"><button class="btn brown" data-act="resume">Đóng</button></div>`);
+}
 function rateHTML(v){ const k=Math.round(v); return `<span class="rate" aria-label="${k} sao">${IMG("ui-star").repeat(k)}${IMG("ui-star-off").repeat(5-k)}</span>`; }
 function saveLocal(){ store.set(pkey("progress"),progress); store.set(pkey("best"),best); }
 let soundOn = store.get("sound",true);   // hiệu ứng âm thanh + rung
@@ -1128,14 +1152,14 @@ function finishWin(D,q,pay){
   const wasDone=G.wasDone, C=G.customer||rnd(CUSTOMERS);
   const {r,notes}=rateOrder(q,G.lost,pay);
   const rv=reviews(); rv[D.id]=rv[D.id]||{n:0,sum:0}; rv[D.id].n++; rv[D.id].sum+=r;
+  const entry={c:C.id,r,n:notes,t:Date.now()};
+  rv[D.id].log=(rv[D.id].log||[]).concat(entry).slice(-REVIEW_LOG_MAX);
   progress.stars[D.id]=Math.max(progress.stars[D.id]||0,r);
   progress.earned=earned()+pay.total; saveLocal(); syncMyScore();
   r>=4?sfx.win():sfx.bad();
   const pop=dishRating(D.id);
   modal(`<h2>Khách đã thanh toán!</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
-    <div class="review"><div class="who"><span style="font-size:34px">${custE(C)}</span><span>${C.n}</span></div>
-      <div>${rateHTML(r)}</div><div style="font-weight:600;margin-top:2px">“${REVIEW_SAY[r]}”</div>
-      <ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul></div>
+    ${reviewHTML({...entry,t:0})}
     <p style="font-size:14px">Độ ưa chuộng món: ${rateHTML(pop.avg)}<span class="rate-num">${pop.avg.toFixed(1)} · ${pop.n} đánh giá</span></p>
     <p class="money">${IMG("ui-money")} Thu về <b>${fmtVND(pay.total)}</b>${pay.tip?` (boa ${fmtVND(pay.tip)})`:""}<br><small>Tổng doanh thu: ${fmtVND(earned())}</small></p>
     <p class="fact">${D.d}</p>
@@ -1215,12 +1239,13 @@ function renderBook(){
   $("#bookList").innerHTML=DISHES.map((d,i)=>{
     const ok=i<u, x=dishRating(d.id);
     return `<div class="recipe-card ${ok?"":"locked"}"><div class="big">${dishE(d)}</div><div style="min-width:0">
-      <h3>${ok?d.n:IMG("ui-lock")+" Món sắp ra mắt"}${ok?`<span class="price-tag">${fmtVND(PRICE[d.id]||30000)}</span>`:""}</h3>
-      ${ok?(x?`<div>${rateHTML(x.avg)}<span class="rate-num">${x.avg.toFixed(1)} · ${x.n} đánh giá</span></div>`:`<div class="rate-num" style="margin:0">Chưa có đánh giá</div>`):""}
+      <h3>${ok?d.n:IMG("ui-lock")+" Món sắp ra mắt"}</h3>${ok?`<span class="price-tag">${fmtVND(PRICE[d.id]||30000)}</span>`:""}
+      ${ok?(x?`<button class="rate-btn" data-rv="${d.id}" aria-label="Xem đánh giá ${d.n}">${rateHTML(x.avg)}<span class="rate-num" style="margin:0">${x.avg.toFixed(1)} · ${x.n} đánh giá</span><span class="more">Xem ›</span></button>`:`<div class="rate-num" style="margin:4px 0">Chưa có đánh giá</div>`):""}
       ${ok?`<p>${d.d}</p>`:`<p><i>Phục vụ thêm khách để mở món này.</i></p>`}
       <div class="ings">${Object.entries(d.need).map(([k,v])=>`<span>${ingE(k)} ${ING[k].n} ×${v}</span>`).join("")}</div></div></div>`;
   }).join("");
 }
+$("#bookList").addEventListener("click",e=>{ const b=e.target.closest("[data-rv]"); if(b){ sfx.pick(); showReviews(b.dataset.rv); } });
 function show(id){
   if(id!=="kitchen") stopKitchen();
   setTimeout(syncMusic,0);
@@ -1295,7 +1320,7 @@ async function syncMyScore(){
     stars:Object.values(prog).reduce((a,b)=>a+b,0), dishes:Object.keys(prog).length,
     earned:Math.max(earned(),cur.earned||0)};
   const rv={...(cur.rv||{})};
-  Object.entries(reviews()).forEach(([k,v])=>{ if(!rv[k]||(v.n||0)>(rv[k].n||0)) rv[k]={n:v.n,sum:v.sum}; });
+  Object.entries(reviews()).forEach(([k,v])=>{ if(!rv[k]||(v.n||0)>(rv[k].n||0)) rv[k]={n:v.n,sum:v.sum,log:(v.log||[]).slice(-REVIEW_LOG_MAX)}; });
   next.rv=rv; next.rcount=Object.values(rv).reduce((a,b)=>a+(b.n||0),0); next.rsum=Object.values(rv).reduce((a,b)=>a+(b.sum||0),0);
   if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})&&JSON.stringify(rv)===JSON.stringify(cur.rv||{})) return;
   next.at=Date.now();
@@ -1320,7 +1345,7 @@ function mergeCloud(){
   best=Math.max(best,+mine.endless||0);
   progress.earned=Math.max(earned(),+mine.earned||0);
   const rv=reviews();
-  Object.entries(mine.rv||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)&&(!rv[k]||(+v.n||0)>(rv[k].n||0))) rv[k]={n:+v.n||0,sum:+v.sum||0}; });
+  Object.entries(mine.rv||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)&&(!rv[k]||(+v.n||0)>(rv[k].n||0))) rv[k]={n:+v.n||0,sum:+v.sum||0,log:Array.isArray(v.log)?v.log.filter(e=>e&&+e.r>=1&&+e.r<=5).slice(-REVIEW_LOG_MAX):[]}; });
   saveLocal();
 }
 async function showAccount(user){

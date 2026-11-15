@@ -344,6 +344,10 @@ button{font:inherit;cursor:pointer;border:0}
 .review .when{font-size:12px;opacity:.6;font-weight:600;margin-left:auto}
 .rv-sum{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:800;margin:4px 0 8px}
 #modalCard{max-height:92vh;overflow-y:auto}
+.pills{display:flex;gap:8px;align-items:stretch;flex:1;min-width:0}
+.pills .pill{flex:1 1 0;min-width:0;padding:6px 8px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pill .pv{display:flex;align-items:center;justify-content:center;gap:4px;font-variant-numeric:tabular-nums;line-height:1.1}
+.pill .pv .ic{width:.95em;height:.95em}
 </style>
 </head>
 <body>
@@ -765,10 +769,14 @@ function starsHTML(n){ return [1,2,3].map(k=>IMG(k<=n?"ui-star":"ui-star-off")).
 function renderHUD(){
   const center=$("#hudCenter"), sub=$("#hudSub");
   if(G.mode==="endless"){
-    center.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div class="pill"><small>KỶ LỤC</small>${IMG("ui-crown")} ${best}</div><div class="pill score"><small>ĐIỂM</small>${G.score}</div></div>`;
+    // cỡ chữ co theo số chữ số để không tràn ô
+    center.style.flex="1"; center.style.minWidth="0";
+    const fit=n=>{ const d=String(n).length; return d<=3?26:d===4?22:d===5?19:16; };
+    center.innerHTML=`<div class="pills"><div class="pill"><small>KỶ LỤC</small><span class="pv" style="font-size:${fit(best)}px">${IMG("ui-crown")}${best}</span></div><div class="pill score"><small>ĐIỂM</small><span class="pv" style="font-size:${fit(G.score)+2}px">${G.score}</span></div></div>`;
     sub.innerHTML=`<div class="recipe">${G.pool.map(k=>`<div class="chip" style="min-width:40px;padding:3px 5px"><div class="ce">${ingE(k)}</div></div>`).join("")}</div>`;
   } else {
     const D=DISHES[G.level];
+    center.style.flex=""; center.style.minWidth="";
     center.innerHTML=`${G.customer?`<span class="e" title="${G.customer.n}">${custE(G.customer)}</span>`:""}<span class="e">${dishE(D)}</span><span>${D.n}</span>`;
     sub.innerHTML=`<div class="hud-row" style="margin-bottom:6px"><span class="moves">${IMG("ui-order")} ${G.customer?G.customer.n:"Order"}</span><span class="moves">Điểm: ${G.score}</span><span class="emoji" style="font-size:14px" title="Số đĩa còn lại" aria-label="Còn ${G.lives} đĩa">${heartsHTML()}</span></div>
       <div class="recipe">${Object.keys(G.need).map(k=>{

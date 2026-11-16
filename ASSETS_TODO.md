@@ -1,81 +1,56 @@
-# Hình cần vẽ thêm – Đợt 2
+# Hình cần vẽ – Đợt 3 (bản quốc tế)
 
-> ✅ **Đã nhận đợt 2:** đủ 10 nguyên liệu, tờ 10k, món khét, nút chơi lại, 4 nút trơn. Toàn bộ mục A, B1–B3 và C (cách 1) đã xong.
-> Còn lại là phần **tùy chọn**: B4–B8 (biểu cảm khách, đồng xu, đồng hồ cát, hơi nóng) và mục D (khung, nền).
+Game đã chuyển sang **món ăn quốc tế, tiền xu, 6 ngôn ngữ**. Những hình dưới đây cần vẽ mới hoặc vẽ lại để bỏ hết chi tiết đặc trưng Việt Nam. Trong lúc chờ, game tạm dùng emoji, hình cũ có dáng chung chung, hoặc đồng xu vẽ bằng CSS.
 
-Đợt 1 đã ghép **66 hình** vào game: 14 nguyên liệu, 12 món ăn, 8 khách, 5 đồ nấu, 6 tờ tiền, 21 icon, cùng logo, 4 nút trang chủ, nền gian bếp và 5 món trang trí.
-Dưới đây là những thứ **còn thiếu**. Chỗ nào chưa có hình, game tạm dùng emoji hoặc nút vẽ bằng CSS.
+**Quy cách:** giống đợt 1 và 2 (hoạt hình, viền nâu, nền trắng). **Không vẽ chữ vào hình**, vì game có 6 ngôn ngữ và chữ được chèn bằng code.
 
-**Quy cách:** cùng phong cách hoạt hình viền nâu. Gửi dạng **bảng hình** như đợt 1 là được: mỗi hình một ô, nền kem hoặc trắng, có chữ chú thích bên dưới. Mình dùng `tools/cut_sheet.py` cắt ra từng hình.
+## A. 12 món ăn (ưu tiên cao nhất)
+| # | Tên file | Món | Gợi ý hình | Đang tạm dùng |
+|---|---|---|---|---|
+| 1 | dish-omelette | Green Onion Omelette | Đĩa trứng chiên vàng có hành lá | Tranh trứng chiên cũ |
+| 2 | dish-eggfriedrice | Egg Fried Rice | Đĩa cơm chiên trứng, hành lá | Tranh cơm chiên cũ |
+| 3 | dish-sandwich | Grilled Meat Sandwich | Bánh baguette kẹp thịt nướng, dưa leo | Tranh bánh mì cũ |
+| 4 | dish-ramen | Ramen | Tô mì, lát thịt, trứng lòng đào, hành, rong biển | Tranh tô phở cũ |
+| 5 | dish-padthai | Pad Thai | Đĩa sợi gạo xào, tôm, giá, lát chanh | 🥡 |
+| 6 | dish-tacos | Tacos | 2–3 cái tacos kẹp thịt, cà chua, xà lách | 🌮 |
+| 7 | dish-tomyum | Tom Yum Soup | Tô súp đỏ cam, tôm, nấm, lá chanh | Tranh canh chua cũ |
+| 8 | dish-spaghetti | Spaghetti with Meat Sauce | Đĩa mì Ý sốt thịt cà chua | 🍝 |
+| 9 | dish-teriyaki | Teriyaki Fish | Miếng cá phủ sốt bóng, chén cơm | 🍱 |
+| 10 | dish-sweetsour | Sweet & Sour Stir-fry | Đĩa sườn xào với thơm, cà chua, hành | 🍖 |
+| 11 | dish-mapotofu | Mapo Tofu | Đĩa đậu hũ sốt đỏ cay, thịt băm | 🥘 |
+| 12 | dish-bibimbap | Bibimbap | Tô cơm có trứng, thịt, giá, rau xếp theo ô màu | 🥗 |
 
----
-
-## A. Nguyên liệu còn thiếu (10 hình), ưu tiên cao nhất
-Hiện trên ô thớt cỡ nhỏ, nên vẽ dáng đơn giản, màu rõ.
-
-| # | Đang dùng | Nguyên liệu | Gợi ý |
-|---|---|---|---|
-| 1 | 🍖 | Sườn nướng | Miếng sườn cốt lết nướng vàng |
-| 2 | 🥩 | Thịt | Miếng thịt bò hoặc heo tươi, thớ đỏ hồng |
-| 3 | 🍝 | Bún | Vắt bún trắng, sợi tròn nhỏ (khác vắt bánh phở dẹt) |
-| 4 | 🥬 | Rau sống | Bó xà lách và rau thơm |
-| 5 | 🐟 | Cá | Con cá lóc hoặc cá basa |
-| 6 | 🍅 | Cà chua | Quả cà chua đỏ, có cuống |
-| 7 | 🌱 | Giá đỗ | Nắm giá trắng, mầm vàng |
-| 8 | 🧄 | Tỏi | Củ tỏi trắng |
-| 9 | 🍄 | Nấm | Cụm nấm rơm hoặc nấm đông cô |
-| 10 | 🧈 | Đậu hũ | Miếng đậu hũ trắng hoặc vàng |
-
-## B. Tiền và icon còn thiếu (8 hình)
-
-| # | Đang dùng | Hình | Ghi chú |
-|---|---|---|---|
-| 1 | ô màu vàng | **Tờ 10.000đ** | Màu vàng nâu, ghi "10k". Tờ trong đợt 1 bị ghi "100k" |
-| 2 | 😅 | **Món hơi khét** | Mặt cười méo hoặc chảo bốc khói đen |
-| 3 | ↻ | **Nút chơi lại** | Icon gỗ vuông, mũi tên xoay tròn, cùng kiểu nút nhạc |
-| 4 | — | **Mặt khách vui** | Không bắt buộc. 8 khách × biểu cảm vui, dùng khi khách chấm 5★ |
-| 5 | — | **Mặt khách buồn** | Không bắt buộc. 8 khách × biểu cảm buồn, dùng khi khách chấm 1–2★ |
-| 6 | — | **Đồng xu / tiền boa** | Bay lên khi khách boa |
-| 7 | — | **Đồng hồ cát** | Cho thanh kiên nhẫn của khách |
-| 8 | — | **Hơi nóng bốc lên** | Làn khói trắng, dùng khi món nấu xong |
-
-## C. Nút chức năng (nút chữ trong các hộp thoại)
-Hiện là nút vẽ bằng CSS. Có **2 cách** làm hình:
-
-**Cách 1 (nên dùng): 4 nút trơn không chữ.** Mình tự chèn chữ lên, nên dùng được cho mọi nút và sau này đổi chữ cũng không cần vẽ lại.
-
-| Nút trơn | Màu | Dùng cho |
+## B. Nguyên liệu (3 hình)
+| Tên file | Nguyên liệu | Ghi chú |
 |---|---|---|
-| btn-plain-green | Xanh lá (giống nút Chợ vô tận nhưng không chữ, không ∞) | Hành động chính: Nhận order, Mang ra cho khách, Đưa tiền thối, Mời khách tiếp theo, Dọn thớt nấu tiếp, Nấu tiếp, Chơi lại, Nấu lại từ đầu |
-| btn-plain-orange | Cam đỏ (giống nút Mở quán, không chữ) | Chạm!, Giữ để tăng lửa, Bảng xếp hạng, Mời khách khác |
-| btn-plain-brown | Nâu gỗ (giống nút Menu quán, không chữ) | Về quán, Thoát, Đếm lại, Bỏ order về quán |
-| btn-plain-gold | Vàng (giống nút Bảng xếp hạng, không chữ) | Tab đang chọn trên bảng xếp hạng |
+| ing-tortilla | Tortilla | Chồng bánh tortilla vàng nhạt có đốm nướng. Đang tạm dùng hình bánh tráng |
+| ing-spaghetti | Spaghetti | Bó mì Ý vàng (khác mì ramen trắng). Đang dùng 🍝 |
+| ing-flour | Flour | Bao bột **không có chữ "RICE"** (không bắt buộc, chỉ dùng ở Chợ vô tận) |
 
-**Cách 2: nút có chữ sẵn** (như 4 nút trang chủ). Cần vẽ đủ **17 nút**:
-
-| Màu | Nút |
+## C. Tiền xu (5–7 hình)
+Đang vẽ bằng CSS: xu đồng (5), xu bạc (10), xu vàng (20, 50), thỏi vàng (100, 200, 500).
+| Tên file | Hình |
 |---|---|
-| Xanh lá | Nhận order › · Mang ra cho khách › · Đưa tiền thối · Mời khách tiếp theo › · Dọn thớt, nấu tiếp · Nấu tiếp · Chơi lại · Nấu lại từ đầu · Chơi tạm, đồng bộ sau |
-| Cam | Chạm! · Giữ để tăng lửa · Mời khách khác · Xem bảng xếp hạng |
-| Nâu | Về quán · Thoát · Đếm lại · Bỏ order, về quán |
+| coin-5, coin-10, coin-20, coin-50 | Đồng xu đồng, bạc, vàng, vàng lớn. **Để trống giữa**, game tự ghi số |
+| coin-bar | Thỏi vàng, dùng chung cho 100/200/500 |
+| ui-coin | Icon 1 đồng xu nhỏ, thay cho 🪙 cạnh giá tiền |
+| ui-coinbag | Túi xu **không có ký hiệu $**, thay hình túi tiền hiện tại |
 
-## D. Khung và nền (6 hình, không bắt buộc nhưng giúp game đồng bộ)
-
-| # | Hình | Dùng ở đâu |
+## D. Khách hàng (vẽ lại 3 hình)
+| Tên file | Khách mới | Vấn đề hình cũ |
 |---|---|---|
-| 1 | **Thớt gỗ vuông** (mặt thớt tròn góc, có vân gỗ, không kẻ ô) | Bàn chơi 8×8. Mình tự kẻ ô lên |
-| 2 | **Thẻ giấy kem có viền gỗ** (đứng dọc, trống) | Thẻ khách gọi món, màn nấu, màn tính tiền, các hộp thoại |
-| 3 | **Bong bóng hội thoại** (trống, có đuôi chỉ sang trái) | Lời khách nói |
-| 4 | **Ô nguyên liệu trên thanh công thức** (ô vuông nhỏ giấy kem) | Thanh đếm nguyên liệu ở đầu màn chơi |
-| 5 | **Tab gỗ** (một tấm sáng và một tấm tối) | Tab Chợ vô tận / Đánh giá / Doanh thu |
-| 6 | **Bảng điểm** (2 khung: tím cho Kỷ lục, nâu viền vàng cho Điểm) | Đầu màn Chợ vô tận |
+| cus-sv | Student | Đang mặc đồng phục, quàng khăn đỏ kiểu Việt Nam. Vẽ áo hoodie, balo |
+| cus-ba | Grandma | Áo bà ba. Vẽ áo len, kính |
+| cus-chuba | Farmer | Nón lá. Vẽ mũ rơm, áo yếm |
+| cus-xeom | Delivery rider | Có thể giữ hình (mũ bảo hiểm, áo khoác giao hàng) |
 
----
-
-### Tổng cộng
-| Nhóm | Số hình | Ưu tiên |
+## E. Trang chủ
+| Tên file | Hình | Ghi chú |
 |---|---|---|
-| A. Nguyên liệu | 10 | ⭐⭐⭐ |
-| B. Tiền và icon | 4 bắt buộc + 4 tùy chọn | ⭐⭐ |
-| C. Nút chức năng | 4 nút trơn (hoặc 17 nút có chữ) | ⭐⭐ |
-| D. Khung và nền | 6 | ⭐ |
+| tray | Khay gỗ bày 5 món quốc tế | Mẹt tre hiện tại có tô phở và bánh mì |
+| food-* (5 hình bay) | Ví dụ ramen, tacos, sandwich, spaghetti, sushi… | Đang dùng phở, bánh mì, tôm, ớt, cơm |
+| bg-kitchen | Nền bếp (không bắt buộc) | Bếp quê hiện tại khá chung chung, có thể giữ |
+
+## Đã xử lý bằng code, không cần vẽ
+- Logo đã bỏ dòng chữ tiếng Việt. Dòng giới thiệu nằm trên tấm ván riêng và đổi theo ngôn ngữ.
+- 4 nút trang chủ dùng nút trơn, chữ đổi theo ngôn ngữ.

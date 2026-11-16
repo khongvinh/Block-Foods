@@ -1,4 +1,4 @@
-# Block Foods – Bếp Việt 🍜
+# Block Foods 🍜
 
 Game xếp khối (block puzzle 8×8). Mỗi khối là một **nguyên liệu** của món ăn Việt. Lấp đầy hàng hoặc cột để "sơ chế" và gom nguyên liệu, gom đủ thì nấu xong món.
 
@@ -15,20 +15,20 @@ Cách chơi: mở `index.html` bằng trình duyệt (điện thoại hoặc má
 ### Chế độ 🍳 Mở quán
 Không có màn chọn món. Mỗi lượt có một khách vào quán gọi món. Món mới mở khóa thì khách sẽ gọi món đó trước, sau đó khách ưu tiên gọi những món còn ít sao. Có thể bấm "Mời khách khác" để đổi order. Cùng một vị khách sẽ gọi món và trả tiền. Mỗi món cần gom đủ số lượng từng nguyên liệu:
 
-| # | Món | Nguyên liệu cần |
+| # | Món (EN) | Nguyên liệu cần |
 |---|-----|-----------------|
-| 1 | Trứng chiên hành | 🥚16 · 🧅12 |
-| 2 | Cơm tấm sườn | 🍚20 · 🍖16 · 🥚12 |
-| 3 | Bánh mì thịt | 🥖20 · 🥩16 · 🥒12 · 🌶️10 |
-| 4 | Phở bò | 🍜24 · 🥩20 · 🧅16 · 🌿16 |
-| 5 | Bún chả 🍢 | 🍝24 · 🍖20 · 🥬16 · 🌶️12 |
-| 6 | Gỏi cuốn | 🫓20 · 🦐20 · 🍝16 · 🥬16 |
-| 7 | Canh chua cá | 🐟24 · 🍅20 · 🍍16 · 🌿16 |
-| 8 | Bánh xèo | 🌾24 · 🦐20 · 🥩16 · 🌱20 |
-| 9 | Cá kho tộ | 🐟28 · 🍯20 · 🧄16 · 🌶️16 |
-| 10 | Bún bò Huế 🍜🌶️ | 🍝28 · 🥩24 · 🌶️20 · 🍋16 · 🥬16 |
-| 11 | Canh nấm đậu hũ | 🍄24 · 🧈24 · 🧅20 · 🍅16 |
-| 12 | Cơm chiên dương châu | 🍚32 · 🥚24 · 🦐20 · 🧅20 · 🥩16 |
+| 1 | Green Onion Omelette | Trứng 16 · Hành lá 12 |
+| 2 | Egg Fried Rice | Cơm 20 · Trứng 16 · Hành lá 12 |
+| 3 | Grilled Meat Sandwich | Baguette 20 · Thịt 16 · Dưa leo 12 · Ớt 10 |
+| 4 | Ramen | Mì 24 · Thịt 20 · Trứng 16 · Hành lá 16 |
+| 5 | Pad Thai | Sợi gạo 24 · Tôm 20 · Giá 16 · Đậu hũ 16 · Chanh 12 |
+| 6 | Tacos | Tortilla 20 · Thịt 20 · Cà chua 16 · Xà lách 16 · Ớt 12 |
+| 7 | Tom Yum Soup | Tôm 24 · Nấm 20 · Chanh 16 · Ớt 16 · Cà chua 12 |
+| 8 | Spaghetti with Meat Sauce | Mì Ý 28 · Thịt 20 · Cà chua 20 · Hành lá 16 · Tỏi 12 |
+| 9 | Teriyaki Fish | Cá 28 · Nước tương 20 · Tỏi 16 · Cơm 16 |
+| 10 | Sweet & Sour Stir-fry | Sườn 28 · Thơm 20 · Cà chua 20 · Hành lá 16 |
+| 11 | Mapo Tofu | Đậu hũ 28 · Thịt 20 · Ớt 20 · Tỏi 16 · Hành lá 12 |
+| 12 | Bibimbap | Cơm 32 · Trứng 24 · Giá 20 · Thịt 20 · Xà lách 16 · Ớt 12 |
 
 - **Nguyên liệu nhiễu:** khoảng 30% khối là nguyên liệu không thuộc món (càng về sau càng nhiều loại). Chúng vẫn xóa được nhưng không được tính vào công thức.
 - Khối mới ưu tiên những nguyên liệu còn thiếu nhiều nhất.
@@ -41,9 +41,15 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 ### Chế độ ♾️ Chợ vô tận
 - Chơi kiểu cổ điển: có 7 nguyên liệu ngẫu nhiên, chơi đến khi hết chỗ, lưu kỷ lục.
 
+### Ngôn ngữ và tiền
+- 6 ngôn ngữ: English (mặc định), Español, Português (Brasil), Bahasa Indonesia, हिन्दी, Tiếng Việt. Lần đầu mở, game tự chọn theo ngôn ngữ của máy. Đổi bằng nút 🌐 ở trang chủ.
+- Toàn bộ chữ nằm trong `i18n.js`. Muốn thêm ngôn ngữ thì thêm một cột vào file này.
+- Tiền là **xu 🪙** (5, 10, 20, 50 xu và thỏi 100, 200, 500). Game không dùng tiền thật của quốc gia nào.
+- Game **không phát hành tại Việt Nam**. Nội dung không dùng món ăn, tiền hay hình ảnh đặc trưng Việt Nam (hình còn sót xem `ASSETS_TODO.md`).
+
 ### Âm thanh
 - **Hiệu ứng và rung (🔊):** đặt khối, xóa hàng, vỡ đĩa, chiên xèo xèo, dao chặt, chuông cửa khi khách vào, đếm tờ tiền, "ka-ching" khi thối đúng, còi báo khi thối sai. Điện thoại Android rung kèm, iPhone không hỗ trợ rung.
-- **Nhạc nền (🎵):** giai điệu dân ca ngũ cung sôi động (nhịp 132) với tiếng đàn bầu luyến láy, sáo trúc, trống và mõ, tạo trực tiếp trong trình duyệt. Phát ở trang chủ, Menu và Bảng xếp hạng, tắt khi vào bếp.
+- **Nhạc nền (🎵):** nhạc bếp vui nhộn (Đô trưởng, nhịp 150, có trống, vỗ tay, hi-hat, hợp âm nảy), tạo trực tiếp trong trình duyệt.
 
 ### Tính điểm
 - Đặt khối: +1 điểm mỗi ô.

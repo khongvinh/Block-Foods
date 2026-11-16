@@ -1,0 +1,7 @@
+{
+  "appId": "com.blockfoods.game",
+  "appName": "Block Foods",
+  "webDir": "www",
+  "backgroundColor": "#fdf3e1",
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Block Foods</string>
+    <string name="title_activity_main">Block Foods</string>
+    <string name="package_name">com.blockfoods.game</string>
+    <string name="custom_url_scheme">com.blockfoods.game</string>
+</resources>

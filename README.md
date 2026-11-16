@@ -64,3 +64,7 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 
 ## Hướng phát triển
 Xem [ROADMAP.md](ROADMAP.md).
+
+## Bản Android (Google Play)
+- Thư mục `app/` đóng gói `index.html` thành app Android bằng Capacitor. Bản app chơi như khách (không cần đăng nhập), bảng xếp hạng chạy bằng Firebase.
+- Hướng dẫn đầy đủ: [PLAYSTORE.md](PLAYSTORE.md). Nội dung trang cửa hàng: [STORE_LISTING.md](STORE_LISTING.md). Chính sách quyền riêng tư: `privacy.html`.

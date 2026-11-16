@@ -155,6 +155,16 @@ const STR = {
   slowTitle:    ["Slow connection","Conexión lenta","Conexão lenta","Koneksi lambat","धीमा कनेक्शन","Mạng chậm"],
   slowBody:     ["Couldn't load your progress yet.","Aún no se pudo cargar tu progreso.","Ainda não foi possível carregar seu progresso.","Progres belum bisa dimuat.","आपकी प्रगति अभी लोड नहीं हो सकी।","Chưa tải được tiến trình từ tài khoản của bạn."],
   playOffline:  ["Play now, sync later","Jugar ahora, sincronizar luego","Jogar agora, sincronizar depois","Main dulu, sinkron nanti","अभी खेलें, बाद में सिंक","Chơi tạm, đồng bộ sau"],
+  // ---- bản app (khách, không cần đăng nhập) ----
+  lbOffline:    ["The leaderboard needs an internet connection. Your progress is still saved on this device.","La clasificación necesita conexión a internet. Tu progreso se guarda en este dispositivo.","A classificação precisa de internet. Seu progresso continua salvo neste aparelho.","Papan peringkat butuh koneksi internet. Progresmu tetap tersimpan di perangkat ini.","लीडरबोर्ड के लिए इंटरनेट चाहिए। आपकी प्रगति इस डिवाइस पर सेव रहती है।","Bảng xếp hạng cần có mạng. Tiến trình vẫn được lưu trên máy này."],
+  chefName:     ["Chef {f} #{n}","Chef {f} #{n}","Chef {f} #{n}","Koki {f} #{n}","शेफ़ {f} #{n}","Bếp {f} #{n}"],
+  nickChange:   ["change","cambiar","trocar","ganti","बदलें","đổi"],
+  nickTitle:    ["Your chef name","Tu nombre de chef","Seu nome de chef","Nama kokimu","आपका शेफ़ नाम","Tên đầu bếp của bạn"],
+  nickNew:      ["Another name","Otro nombre","Outro nome","Nama lain","दूसरा नाम","Tên khác"],
+  guestNote:    ["This name appears on the leaderboard. Your progress is saved on this device.","Este nombre aparece en la clasificación. Tu progreso se guarda en este dispositivo.","Este nome aparece na classificação. Seu progresso fica salvo neste aparelho.","Nama ini tampil di papan peringkat. Progresmu tersimpan di perangkat ini.","यह नाम लीडरबोर्ड पर दिखता है। आपकी प्रगति इस डिवाइस पर सेव रहती है।","Tên này hiện trên bảng xếp hạng. Tiến trình được lưu trên máy này."],
+  lbLeave:      ["Remove me from the leaderboard","Quitarme de la clasificación","Remover-me da classificação","Hapus saya dari papan peringkat","मुझे लीडरबोर्ड से हटाएँ","Xóa tôi khỏi bảng xếp hạng"],
+  lbJoin:       ["Show me on the leaderboard","Mostrarme en la clasificación","Mostrar-me na classificação","Tampilkan saya di papan peringkat","मुझे लीडरबोर्ड पर दिखाएँ","Hiện tôi trên bảng xếp hạng"],
+  done:         ["Done","Listo","Pronto","Selesai","हो गया","Xong"],
 };
 
 // Nguyên liệu (khóa nội bộ giữ nguyên để tương thích hình)

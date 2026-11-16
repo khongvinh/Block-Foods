@@ -378,6 +378,10 @@ button{font:inherit;cursor:pointer;border:0}
 .billrow .tok.bar b{width:70px;height:60px;font-size:16px}
 .tok b{text-shadow:0 1px 0 rgba(255,255,255,.7),0 0 4px rgba(255,255,255,.6)}
 .coin-ic{width:1.05em;height:1.05em;vertical-align:-.18em}
+.acct[role=button]{cursor:pointer}
+.acct u{text-decoration:underline;text-underline-offset:2px}
+.nk-name{font-size:22px;font-weight:900;margin:4px 0}
+.linkbtn{background:none;border:0;color:#7a4a22;text-decoration:underline;font:inherit;font-size:13px;cursor:pointer;margin-top:6px}
 </style>
 </head>
 <body>
@@ -528,7 +532,7 @@ const DISH_ART={omelette:"dish-omelette",eggFriedRice:"dish-eggfriedrice",sandwi
 const dishE = D => DISH_ART[D.id] ? IMG(DISH_ART[D.id],"dish",D.n) : `<span class="emoji dish-emo" role="img" aria-label="${D.n}">${D.e}</span>`;
 // Nguyên liệu đã có hình vẽ; còn lại dùng emoji
 const ING_IMG={trung:"ing-trung",hanh:"ing-hanh",com:"food-com",duaLeo:"ing-dualeo",banhMi:"ing-banhmi",ot:"food-ot",
-  pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-tortilla",tom:"ing-tom2",thom:"ing-thom",botGao:"ing-botgao",
+  pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-tortilla",tom:"ing-tom2",thom:"ing-thom",
   nuocMau:"ing-nuocmau",chanh:"ing-chanh",spaghetti:"ing-spaghetti",botGao:"ing-flour",suon:"ing-suon",thit:"ing-thit",bun:"ing-bun",rauSong:"ing-rausong",ca:"ing-ca",
   caChua:"ing-cachua",gia:"ing-gia",toi:"ing-toi",nam:"ing-nam",dauHu:"ing-dauhu"};
 const ingE = k => ING_IMG[k] ? IMG(ING_IMG[k],"",ING[k].n) : `<span class="emoji">${ING[k].e}</span>`;
@@ -1332,7 +1336,14 @@ applyI18n(); syncSound(); show("home");
 /* =========================================================
    BẢNG XẾP HẠNG CHUNG (db: scores/<userId>)
    ========================================================= */
-const LB={db:null,user:null,myId:null,rows:[],state:"loading",canWrite:true,tab:"endless",writing:false};
+const LB={db:null,user:null,myId:null,rows:[],state:"loading",canWrite:true,tab:"endless",writing:false,kind:null,nick:null};
+/* Tên đầu bếp cho bản app (Firebase): ghép từ tên nguyên liệu + 4 số, không cho gõ tên tự do
+   nên bảng xếp hạng không có nội dung do người chơi viết. Lưu dạng mã "thit:4821", hiển thị theo ngôn ngữ. */
+const NICK_FOODS=Object.keys(ING_IMG).filter(k=>ING[k]);
+function newNick(){ return rnd(NICK_FOODS)+":"+(1000+Math.floor(Math.random()*9000)); }
+function nickParts(c){ const [k,n]=String(c||"").split(":"); return ING[k]&&ING_IMG[k]&&/^\d{4}$/.test(n||"")?{k,n}:null; }
+function nickName(c){ const p=nickParts(c); return p?T("chefName",{f:ING[p.k].n,n:p.n}):""; }
+function nickAv(c){ const p=nickParts(c); return p?`assets/${ING_IMG[p.k]}.webp`:""; }
 function totalStars(){ return Object.values(progress.stars).reduce((a,b)=>a+b,0); }
 function myRow(){ return LB.rows.find(r=>r.id===LB.myId); }
 function sortedRows(tab){
@@ -1344,7 +1355,7 @@ function myRank(tab){ const i=sortedRows(tab).findIndex(r=>r.id===LB.myId); retu
 async function renderRank(){
   const box=$("#rankList"); if(!$("#rank").classList.contains("on")) return;
   document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.tab===LB.tab));
-  if(LB.state==="off"){ box.innerHTML=`<div class="lb-note">${T("lbOff")}</div>`; return; }
+  if(LB.state==="off"){ box.innerHTML=`<div class="lb-note">${T(LB.kind&&LB.kind!=="claude"?"lbOffline":"lbOff")}</div>`; return; }
   if(LB.state==="loading"){ box.innerHTML=`<div class="lb-note">${T("lbLoading")}</div>`; return; }
   const rows=sortedRows(LB.tab);
   let note = LB.state==="slow" ? `<div class="lb-note">${T("lbSlow")}</div>` : "";
@@ -1362,15 +1373,15 @@ async function renderRank(){
       <img class="lb-av" alt="" data-av="${i}">
       <div class="lb-name" data-n="${i}"></div><div class="lb-val">${val}</div></div>`;
   }).join("");
-  rows.forEach((r,i)=>{ const el=box.querySelector(`[data-n="${i}"]`); const nm=(ps[r.id]&&ps[r.id].name)||T("anon");
-    const av=box.querySelector(`[data-av="${i}"]`); if(ps[r.id]&&ps[r.id].avatarUrl) av.src=ps[r.id].avatarUrl; else av.removeAttribute("src");
+  rows.forEach((r,i)=>{ const el=box.querySelector(`[data-n="${i}"]`); const nm=(ps[r.id]&&ps[r.id].name)||nickName(r.nk)||T("anon");
+    const av=box.querySelector(`[data-av="${i}"]`); const au=(ps[r.id]&&ps[r.id].avatarUrl)||nickAv(r.nk); if(au) av.src=au; else av.removeAttribute("src");
     el.textContent=nm; if(r.id===LB.myId){ const s=document.createElement("small"); s.textContent=T("you"); el.appendChild(s);} });
 }
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ LB.tab=t.dataset.tab; renderRank(); }));
 
 // Ghi điểm của mình nếu tốt hơn bản đang lưu (gọi sau mỗi ván)
 async function syncMyScore(){
-  if(!LB.db||!LB.myId||!LB.canWrite||LB.writing) return;
+  if(!LB.db||!LB.myId||!LB.canWrite||LB.writing||(LB.kind==="firebase"&&store.get("lbHidden",false))) return;
   const cur=myRow()||{};
   const prog={...(cur.prog||{})};
   Object.entries(progress.stars).forEach(([k,v])=>{ prog[k]=Math.max(prog[k]||0,v); });
@@ -1379,8 +1390,9 @@ async function syncMyScore(){
     earned:Math.max(earned(),cur.earned||0)};
   const rv={...(cur.rv||{})};
   Object.entries(reviews()).forEach(([k,v])=>{ if(!rv[k]||(v.n||0)>(rv[k].n||0)) rv[k]={n:v.n,sum:v.sum,log:(v.log||[]).slice(-REVIEW_LOG_MAX)}; });
+  if(LB.kind==="firebase") next.nk=LB.nick;
   next.rv=rv; next.rcount=Object.values(rv).reduce((a,b)=>a+(b.n||0),0); next.rsum=Object.values(rv).reduce((a,b)=>a+(b.sum||0),0);
-  if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})&&JSON.stringify(rv)===JSON.stringify(cur.rv||{})) return;
+  if(next.endless===(cur.endless||0)&&next.earned===(cur.earned||0)&&JSON.stringify(prog)===JSON.stringify(cur.prog||{})&&JSON.stringify(rv)===JSON.stringify(cur.rv||{})&&(next.nk||"")===(cur.nk||"")) return;
   next.at=Date.now();
   LB.writing=true;
   try{ await LB.db.collection("scores").doc(LB.myId).set(next); }
@@ -1411,8 +1423,31 @@ async function showAccount(user){
     if(me.avatarUrl) $("#acctAv").src=me.avatarUrl; $("#acct").hidden=false; }catch(e){}
 }
 
+function showGuest(){
+  const a=$("#acct"); $("#acctAv").src=nickAv(LB.nick); $("#acctName").textContent=nickName(LB.nick)+" · ";
+  $("#acctName").insertAdjacentHTML("beforeend",`<u>${T("nickChange")}</u>`);
+  a.hidden=false; a.setAttribute("role","button"); a.tabIndex=0; a.onclick=()=>{ sfx.pick(); nickModal(); };
+}
+function nickModal(){
+  modal(`<h2>${T("nickTitle")}</h2><div class="bigE"><img class="ic" id="nkAv" alt=""></div><p class="nk-name" id="nkName"></p>
+    <p class="fact">${T("guestNote")}</p>
+    <div class="actions"><button class="btn brown" id="nkNew">🎲 ${T("nickNew")}</button><button class="btn green" data-act="resume">${T("done")}</button></div>
+    <p><button class="linkbtn" id="nkHide"></button></p>`);
+  const draw=()=>{ $("#nkAv").src=nickAv(LB.nick); $("#nkName").textContent=nickName(LB.nick); };
+  draw();
+  const hideTxt=()=>{ $("#nkHide").textContent=T(store.get("lbHidden",false)?"lbJoin":"lbLeave"); };
+  hideTxt();
+  $("#nkHide").onclick=async()=>{ sfx.pick(); const h=!store.get("lbHidden",false); store.set("lbHidden",h); hideTxt();
+    if(h){ try{ if(LB.db&&LB.myId) await LB.db.collection("scores").doc(LB.myId).delete(); }catch(e){} } else syncMyScore(); };
+  $("#nkNew").onclick=()=>{ sfx.pick(); LB.nick=newNick(); store.set("nick",LB.nick); draw(); showGuest(); syncMyScore(); };
+}
+
 (async()=>{
-  if(!window.claude||typeof window.claude.use!=="function"){ LB.state="off"; $("#gate").classList.remove("on"); return; } // mở file trực tiếp: chơi offline
+  // Chọn nơi lưu: claude.ai (bản web) → Firebase (bản app) → không có (chơi offline, không có bảng xếp hạng)
+  const BE = window.claude&&typeof window.claude.use==="function" ? {kind:"claude"} : (window.BF_BACKEND||null);
+  if(!BE){ LB.state="off"; if("BF_BACKEND" in window) LB.kind="local"; $("#gate").classList.remove("on"); return; }
+  LB.kind=BE.kind;
+  if(BE.kind!=="claude") return startAppBackend(BE);
   try{
     const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
     LB.user=user;
@@ -1441,6 +1476,42 @@ async function showAccount(user){
       renderRank();
     },err=>{ clearTimeout(timer); LB.state="slow"; renderRank(); if(!opened){ opened=true; openGame(); } });
   }catch(e){ LB.state="off"; needLogin(); }
+})();
+
+// Bản app: chơi ngay như khách, không cần đăng nhập. Bảng xếp hạng chạy khi có mạng.
+async function startAppBackend(BE){
+  $("#gate").classList.remove("on");
+  LB.nick=store.get("nick",null); if(!nickParts(LB.nick)){ LB.nick=newNick(); store.set("nick",LB.nick); }
+  showGuest();
+  try{
+    setTimeout(()=>{ if(LB.state==="loading"){ LB.state="off"; renderRank(); } },12000);
+    const {db,user}=await BE.init();
+    LB.user=user; LB.myId=await user.id(); LB.db=db;
+    if(!LB.myId) throw new Error("no id");
+    db.collection("scores").limit(1000).onSnapshot(snap=>{
+      LB.rows=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(LB.state!=="ready"){ LB.state="ready"; mergeCloud(); setTimeout(syncMyScore,0); }
+      renderRank();
+    },()=>{ LB.state="off"; renderRank(); });
+  }catch(e){ LB.state="off"; renderRank(); }
+}
+
+/* ---------- Bản Android (Capacitor): nút Back, tạm dừng âm thanh khi ẩn app ---------- */
+document.addEventListener("visibilitychange",()=>{
+  if(!actx) return;
+  if(document.hidden) actx.suspend().catch(()=>{}); else if(musicOn||soundOn) actx.resume().catch(()=>{});
+});
+(()=>{
+  const C=window.Capacitor; if(!C||!C.isNativePlatform||!C.isNativePlatform()) return;
+  const App=window.BF_CapApp||(C.Plugins&&C.Plugins.App); if(!App) return;
+  App.addListener("backButton",()=>{
+    if($("#gate").classList.contains("on")) return;
+    if($("#modal").classList.contains("on")){ const r=$("#modalCard [data-act=resume]"); if(r) r.click(); return; }
+    const cur=document.querySelector(".screen.on")?.id;
+    if(cur==="game") $("#btnBack").click();
+    else if(cur==="book"||cur==="rank") show("home");
+    else if(cur==="home") App.exitApp();
+  });
 })();
 
 // hook cho test tự động

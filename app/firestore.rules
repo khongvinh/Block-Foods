@@ -1,0 +1,21 @@
+rules_version = '2';
+// Luật bảo mật cho bảng điểm Block Foods.
+// Ai cũng đọc được bảng điểm; mỗi người chỉ ghi/xóa được dòng của chính mình (uid đăng nhập ẩn danh).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /scores/{uid} {
+      allow read: if true;
+      allow delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid && validScore(request.resource.data);
+    }
+    function validScore(d) {
+      return d.keys().hasOnly(['endless','prog','stars','dishes','earned','rv','rcount','rsum','at','nk'])
+        && d.endless is number && d.endless >= 0 && d.endless < 10000000
+        && d.earned is number && d.earned >= 0 && d.earned < 100000000000
+        && d.stars is number && d.dishes is number && d.dishes <= 50
+        && d.rcount is number && d.rsum is number && d.rsum <= d.rcount * 5
+        && d.prog is map && d.rv is map && d.at is number
+        && (!('nk' in d) || (d.nk is string && d.nk.matches('^[A-Za-z]{1,16}:[0-9]{4}$')));
+    }
+  }
+}

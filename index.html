@@ -356,8 +356,8 @@ button{font:inherit;cursor:pointer;border:0}
   text-shadow:0 2px 0 #7a4a10,1px 0 0 #7a4a10,-1px 0 0 #7a4a10,0 -1px 0 #7a4a10}
 .tagline{margin-top:-6px;padding:9px 30px 11px;max-width:min(86vw,340px);text-align:center;font-weight:800;font-size:15px;color:#5a341c;
   background:url("assets/plank-sub.webp") center/100% 100% no-repeat;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));animation:trayIn .5s .1s both}
-.langbtn{width:auto;padding:0 10px;gap:4px;display:flex;align-items:center;font-size:15px;font-weight:900;height:52px;border-radius:14px}
-.langbtn .emoji{font-size:20px}
+.langbtn .langcode{position:absolute;right:-6px;bottom:-4px;min-width:24px;padding:3px 5px;border-radius:9px;background:#3f8f4a;color:#fff;
+  font:900 11px/1 system-ui,sans-serif;letter-spacing:.3px;box-shadow:0 0 0 2px #fff,0 2px 3px rgba(0,0,0,.3)}
 .lang-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .lang-list .btn{min-width:0;font-size:16px;padding:10px 12px}
 .dish-emo{display:inline-block;line-height:1}
@@ -393,7 +393,7 @@ button{font:inherit;cursor:pointer;border:0}
     <img src="assets/food-sushi.webp" alt="" class="f3"><img src="assets/food-donut.webp" alt="" class="f4"><img src="assets/food-burger.webp" alt="" class="f5">
   </div>
   <div class="home-bar">
-    <button class="icon-btn langbtn" id="btnLang" data-i18n-aria="language"><span class="emoji">🌐</span><span id="langCode">EN</span></button>
+    <button class="woodicon langbtn" id="btnLang" data-i18n-aria="language"><img src="assets/icon-lang.webp" alt=""><span class="langcode" id="langCode">EN</span></button>
     <button class="woodicon" id="btnMusic" data-i18n-aria="musicToggle"><img src="assets/icon-music.webp" alt=""></button>
     <button class="woodicon" id="btnSound" data-i18n-aria="soundToggle"><img src="assets/icon-sound.webp" alt=""></button>
   </div>
@@ -1137,7 +1137,7 @@ function startCheckout(D,q,done){
   $("#kGiven").onclick=e=>{ const b=e.target.closest("[data-i]"); if(!b||over) return; given.splice(+b.dataset.i,1); draw(); };
   $("#kReset").onclick=()=>{ if(over) return; given=[]; draw(); };
   const close=(tip,msg,slow)=>{ over=true; stopKitchen(); $("#kSay").textContent=msg;
-    $("#kFeed").textContent=tip?`+ ${fmtVND(price)} · boa ${fmtVND(tip)}`:`+ ${fmtVND(price)}`;
+    $("#kFeed").innerHTML=tip?`+ ${fmtVND(price)} · ${T("tip",{v:fmtVND(tip)})}`:`+ ${fmtVND(price)}`;
     setTimeout(()=>done({price,tip,total:price+tip,wrong,slow:!!slow}),1400); };
   $("#kGive").onclick=()=>{
     if(over) return;
@@ -1314,7 +1314,7 @@ function applyI18n(){
   const lc=$("#langCode"); if(lc) lc.textContent=LANG.toUpperCase();
 }
 function setLang(code){
-  LANG=code; store.set("lang",code); applyI18n();
+  LANG=code; store.set("lang",code); applyI18n(); renderAcct();
   const cur=document.querySelector(".screen.on")?.id;
   if(cur==="game") renderHUD(); else if(cur&&cur!=="kitchen") show(cur);
 }
@@ -1418,8 +1418,12 @@ function mergeCloud(){
   Object.entries(mine.rv||{}).forEach(([k,v])=>{ if(DISHES.some(d=>d.id===k)&&(!rv[k]||(+v.n||0)>(rv[k].n||0))) rv[k]={n:+v.n||0,sum:+v.sum||0,log:Array.isArray(v.log)?v.log.filter(e=>e&&+e.r>=1&&+e.r<=5).slice(-REVIEW_LOG_MAX):[]}; });
   saveLocal();
 }
+function renderAcct(){
+  if(LB.kind==="claude"&&LB.me){ $("#acctName").textContent=(LB.me.name||T("player")); $("#acctName").insertAdjacentHTML("beforeend",` · ${IMG("ui-cloud")} ${T("savedAccount")}`); }
+  else if(LB.kind&&LB.kind!=="claude"&&LB.nick) showGuest();
+}
 async function showAccount(user){
-  try{ const me=await user.me(); $("#acctName").textContent=(me.name||T("player")); $("#acctName").insertAdjacentHTML("beforeend",` · ${IMG("ui-cloud")} ${T("savedAccount")}`);
+  try{ const me=await user.me(); LB.me=me; $("#acctName").textContent=(me.name||T("player")); $("#acctName").insertAdjacentHTML("beforeend",` · ${IMG("ui-cloud")} ${T("savedAccount")}`);
     if(me.avatarUrl) $("#acctAv").src=me.avatarUrl; $("#acct").hidden=false; }catch(e){}
 }
 

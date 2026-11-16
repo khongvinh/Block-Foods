@@ -367,18 +367,17 @@ button{font:inherit;cursor:pointer;border:0}
 /* đồng xu & thỏi vàng */
 .bill.tok{background:none!important;box-shadow:none!important;padding:0;min-width:0;height:auto!important;line-height:1;display:inline-grid;place-items:center;justify-self:center}
 .tok b{display:grid;place-items:center;font-weight:900;color:#5a3a00;text-shadow:0 1px 0 rgba(255,255,255,.6);font-variant-numeric:tabular-nums}
-.tok.coin b{width:56px;height:56px;border-radius:50%;font-size:19px;
-  background:radial-gradient(circle at 35% 30%,#fff7c2,#f7c948 45%,#c98a12);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 0 0 3px #b07a0e,0 4px 4px rgba(0,0,0,.3)}
-.tok.t5 b{background:radial-gradient(circle at 35% 30%,#ffd9b0,#d98a4a 45%,#8a4a1a);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 0 0 3px #7a3e12,0 4px 4px rgba(0,0,0,.3);color:#3a1a00}
-.tok.t10 b{background:radial-gradient(circle at 35% 30%,#ffffff,#cfd8dc 45%,#8a9aa2);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 0 0 3px #78868e,0 4px 4px rgba(0,0,0,.3);color:#2a3438}
-.tok.t50 b{width:62px;height:62px;font-size:21px}
-.tok.bar b{width:88px;height:46px;border-radius:8px;font-size:19px;
-  background:linear-gradient(160deg,#fff3b0 0%,#f5c542 35%,#d99a10 70%,#b77c06);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.5),0 0 0 3px #a8700a,0 4px 4px rgba(0,0,0,.3)}
-.tok.bar b::after{content:" 🪙";font-size:.8em}
+.tok.coin b{width:58px;height:58px;font-size:19px;background:url("assets/coin-20.webp") center/contain no-repeat}
+.tok.t5 b{background-image:url("assets/coin-5.webp");color:#4a1e00}
+.tok.t10 b{background-image:url("assets/coin-10.webp");color:#26323a}
+.tok.t50 b{width:64px;height:64px;font-size:21px;background-image:url("assets/coin-50.webp")}
+.tok.bar b{width:84px;height:72px;font-size:18px;padding-top:6px;background:url("assets/coin-bar.webp") center/contain no-repeat;color:#6a4200}
 .given .tok.coin b{width:36px;height:36px;font-size:13px}
-.given .tok.bar b{width:56px;height:30px;font-size:13px}
+.given .tok.bar b{width:50px;height:42px;font-size:12px}
 .billrow .tok.coin b{width:44px;height:44px;font-size:16px}
-.billrow .tok.bar b{width:74px;height:38px;font-size:16px}
+.billrow .tok.bar b{width:70px;height:60px;font-size:16px}
+.tok b{text-shadow:0 1px 0 rgba(255,255,255,.7),0 0 4px rgba(255,255,255,.6)}
+.coin-ic{width:1.05em;height:1.05em;vertical-align:-.18em}
 </style>
 </head>
 <body>
@@ -386,8 +385,8 @@ button{font:inherit;cursor:pointer;border:0}
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on">
   <div class="home-float" aria-hidden="true">
-    <img src="assets/food-pho.webp" alt="" class="f1"><img src="assets/food-banhmi.webp" alt="" class="f2">
-    <img src="assets/food-tom.webp" alt="" class="f3"><img src="assets/food-ot.webp" alt="" class="f4"><img src="assets/food-com.webp" alt="" class="f5">
+    <img src="assets/food-ramen.webp" alt="" class="f1"><img src="assets/food-taco.webp" alt="" class="f2">
+    <img src="assets/food-sushi.webp" alt="" class="f3"><img src="assets/food-donut.webp" alt="" class="f4"><img src="assets/food-burger.webp" alt="" class="f5">
   </div>
   <div class="home-bar">
     <button class="icon-btn langbtn" id="btnLang" data-i18n-aria="language"><span class="emoji">🌐</span><span id="langCode">EN</span></button>
@@ -422,7 +421,7 @@ button{font:inherit;cursor:pointer;border:0}
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tabEndless" aria-selected="true" data-tab="endless"><img class="ic" src="assets/ui-infinity.webp" alt=""> <span data-i18n="endless"></span></button>
     <button class="tab" role="tab" id="tabChef" aria-selected="false" data-tab="chef"><img class="ic" src="assets/ui-star.webp" alt=""> <span data-i18n="tabRatings"></span></button>
-    <button class="tab" role="tab" id="tabMoney" aria-selected="false" data-tab="money"><span class="emoji">🪙</span> <span data-i18n="tabMoney"></span></button>
+    <button class="tab" role="tab" id="tabMoney" aria-selected="false" data-tab="money"><img class="ic" src="assets/ui-coinbag.webp" alt=""> <span data-i18n="tabMoney"></span></button>
   </div>
   <div class="scroll" id="rankList"></div>
 </section>
@@ -524,12 +523,13 @@ const SHAPE_DEFS = [
 // Biểu tượng món: emoji chính + emoji nhỏ ở góc (nếu có)
 const IMG = (n,cls="",alt="") => `<img class="ic ${cls}" src="assets/${n}.webp" alt="${alt}" draggable="false">`;
 // Tranh món đã có (tạm dùng tranh cũ có hình dáng chung chung); món chưa có tranh hiện emoji
-const DISH_ART={omelette:"dish-trungchien",eggFriedRice:"dish-comchien",sandwich:"dish-banhmi",ramen:"dish-pho",tomYum:"dish-canhchua"};
+const DISH_ART={omelette:"dish-omelette",eggFriedRice:"dish-eggfriedrice",sandwich:"dish-sandwich",ramen:"dish-ramen",padThai:"dish-padthai",
+  tacos:"dish-tacos",tomYum:"dish-tomyum",meatSpaghetti:"dish-spaghetti",teriyakiFish:"dish-teriyaki",sweetSour:"dish-sweetsour",mapoTofu:"dish-mapotofu",bibimbap:"dish-bibimbap"};
 const dishE = D => DISH_ART[D.id] ? IMG(DISH_ART[D.id],"dish",D.n) : `<span class="emoji dish-emo" role="img" aria-label="${D.n}">${D.e}</span>`;
 // Nguyên liệu đã có hình vẽ; còn lại dùng emoji
 const ING_IMG={trung:"ing-trung",hanh:"ing-hanh",com:"food-com",duaLeo:"ing-dualeo",banhMi:"ing-banhmi",ot:"food-ot",
-  pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-banhtrang",tom:"ing-tom2",thom:"ing-thom",botGao:"ing-botgao",
-  nuocMau:"ing-nuocmau",chanh:"ing-chanh",suon:"ing-suon",thit:"ing-thit",bun:"ing-bun",rauSong:"ing-rausong",ca:"ing-ca",
+  pho:"ing-banhpho",rauThom:"ing-rauthom",banhTrang:"ing-tortilla",tom:"ing-tom2",thom:"ing-thom",botGao:"ing-botgao",
+  nuocMau:"ing-nuocmau",chanh:"ing-chanh",spaghetti:"ing-spaghetti",botGao:"ing-flour",suon:"ing-suon",thit:"ing-thit",bun:"ing-bun",rauSong:"ing-rausong",ca:"ing-ca",
   caChua:"ing-cachua",gia:"ing-gia",toi:"ing-toi",nam:"ing-nam",dauHu:"ing-dauhu"};
 const ingE = k => ING_IMG[k] ? IMG(ING_IMG[k],"",ING[k].n) : `<span class="emoji">${ING[k].e}</span>`;
 const custE = C => C&&C.id ? IMG("cus-"+C.id,"cus",C.n) : `<span class="emoji">${C?C.e:""}</span>`;
@@ -561,8 +561,8 @@ LANG = store.get("lang",null) || (()=>{ const n=(navigator.language||"en").slice
 let progress = store.get("progress",{stars:{}}); // stars[dishId] = 1..3
 let best = store.get("best",0);
 // Tiền xu: bên trong vẫn lưu theo đơn vị cũ (×1000) để không phải đổi dữ liệu; hiển thị = n/1000 xu
-const COIN='<span class="emoji coin-ic">🪙</span>';
-const fmtVND=n=>(Math.round((n||0)/1000)).toLocaleString(LANG)+" 🪙";
+const COIN='<img class="ic coin-ic" src="assets/ui-coin.webp" alt="">';
+const fmtVND=n=>`${(Math.round((n||0)/1000)).toLocaleString(LANG)}&nbsp;${COIN}`;
 function earned(){ return progress.earned||0; }
 // Đánh giá của khách: progress.reviews[dishId] = {n: số đánh giá, sum: tổng sao}
 function reviews(){ return progress.reviews||(progress.reviews={}); }
@@ -993,7 +993,7 @@ function startCooking(D,done){
     $("#kNext").onclick=()=>done(q);
   };
   const head=`<span class="kstep">${T("cookStep")}</span><h2>${cfg.t}</h2><p class="khint">${cfg.h}</p>`;
-  const PAN_IMG={sandwich:"ing-banhmi",tacos:"ing-banhtrang",bibimbap:"cook-dia"};
+  const PAN_IMG={sandwich:"ing-banhmi",tacos:"ing-tortilla",bibimbap:"cook-dia"};
   cfg = {...cfg, pan: cfg.type==="hold" ? `<span class="pan-hold"><img class="chao" src="assets/cook-chao.webp" alt=""><img class="flame" src="assets/cook-lua.webp" alt=""></span>`
     : PAN_IMG[D.id] ? IMG(PAN_IMG[D.id]) : dishE(D)};
   if(cfg.type==="timing") cookTiming(head,cfg,finish);
@@ -1126,7 +1126,7 @@ function startCheckout(D,q,done){
   const ri=Math.floor(Math.random()*REACT[q.k].length);
   $("#kSay").textContent=REACT[q.k][ri]+" "+L(SAY_TXT.payAsk);
   const sum=()=>given.reduce((a,b)=>a+b,0);
-  const draw=()=>{ $("#kSum").textContent=fmtVND(sum());
+  const draw=()=>{ $("#kSum").innerHTML=fmtVND(sum());
     $("#kGiven").innerHTML=given.length?given.map((v,i)=>billHTML(v,`data-i="${i}" aria-label="${T("removeCoin",{v:v/1000})}"`)).join(""):`<span class="empty">${T("tapCoins")}</span>`; };
   draw();
   document.querySelectorAll(".bills .bill").forEach(b=>b.onclick=()=>{ if(over) return; given.push(+b.dataset.v); given.sort((a,b)=>b-a); sfx.paper(); draw(); });
@@ -1146,7 +1146,7 @@ function startCheckout(D,q,done){
     } else {
       wrong++; left=Math.max(0,left-3); sfx.buzz();
       $("#kSay").textContent=s<change?VL.wless:VL.wmore;
-      $("#kFeed").textContent= s<change?T("short",{v:fmtVND(change-s)}):T("over",{v:fmtVND(s-change)});
+      $("#kFeed").innerHTML= s<change?T("short",{v:fmtVND(change-s)}):T("over",{v:fmtVND(s-change)});
       const c=$("#kCard"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
     }
   };
@@ -1201,7 +1201,7 @@ function finishWin(D,q,pay){
   modal(`<h2>${T("paidTitle")}</h2><div class="bigE">${dishE(D)}</div><h3 style="margin:4px 0">${D.n}</h3>
     ${reviewHTML({...entry,t:0})}
     <p style="font-size:14px">${T("popularity")} ${rateHTML(pop.avg)}<span class="rate-num">${pop.avg.toFixed(1)} · ${revN(pop.n)}</span></p>
-    <p class="money">${T("earned",{v:`<b>${fmtVND(pay.total)}</b>`})}${pay.tip?` (${T("tip",{v:fmtVND(pay.tip)})})`:""}<br><small>${T("totalEarned",{v:fmtVND(earned())})}</small></p>
+    <p class="money">${IMG("ui-coinbag")} ${T("earned",{v:`<b>${fmtVND(pay.total)}</b>`})}${pay.tip?` (${T("tip",{v:fmtVND(pay.tip)})})`:""}<br><small>${T("totalEarned",{v:fmtVND(earned())})}</small></p>
     <p class="fact">${D.d}</p>
     ${unlockedCount()>DISHES.indexOf(D)+1&&!wasDone?`<p class="rank-badge">${IMG("ui-unlock")} ${T("unlocked",{d:DISHES[DISHES.indexOf(D)+1].n})}</p>`:""}
     <div class="actions"><button class="btn green" data-act="next">${T("nextCustomer")}</button>
@@ -1293,7 +1293,7 @@ function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
   if(id==="book") renderBook();
   if(id==="rank") renderRank();
-  if(id==="home"){ const a=allRatings(); $("#bestLine").innerHTML = `${IMG("ui-crown")} ${T("homeBest",{v:+best||0})} · ${IMG("ui-star")} ${a.n?a.avg.toFixed(1)+" ("+revN(a.n)+")":T("noRatings")} · ${fmtVND(earned())}`; }
+  if(id==="home"){ const a=allRatings(); $("#bestLine").innerHTML = `${IMG("ui-crown")} ${T("homeBest",{v:+best||0})} · ${IMG("ui-star")} ${a.n?a.avg.toFixed(1)+" ("+revN(a.n)+")":T("noRatings")} · ${IMG("ui-coinbag")} ${fmtVND(earned())}`; }
 }
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 $("#btnEndless").addEventListener("click",startEndless);

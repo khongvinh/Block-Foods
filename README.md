@@ -44,8 +44,8 @@ Không có màn chọn món. Mỗi lượt có một khách vào quán gọi mó
 ### Ngôn ngữ và tiền
 - 6 ngôn ngữ: English (mặc định), Español, Português (Brasil), Bahasa Indonesia, हिन्दी, Tiếng Việt. Lần đầu mở, game tự chọn theo ngôn ngữ của máy. Đổi bằng nút 🌐 ở trang chủ.
 - Toàn bộ chữ nằm trong `i18n.js`. Muốn thêm ngôn ngữ thì thêm một cột vào file này.
-- Tiền là **xu 🪙** (5, 10, 20, 50 xu và thỏi 100, 200, 500). Game không dùng tiền thật của quốc gia nào.
-- Game **không phát hành tại Việt Nam**. Nội dung không dùng món ăn, tiền hay hình ảnh đặc trưng Việt Nam (hình còn sót xem `ASSETS_TODO.md`).
+- Tiền là **xu** (có hình đồng xu, thỏi vàng) (5, 10, 20, 50 xu và thỏi 100, 200, 500). Game không dùng tiền thật của quốc gia nào.
+- Game **không phát hành tại Việt Nam**. Nội dung không dùng món ăn, tiền hay hình ảnh đặc trưng Việt Nam (hình đã vẽ lại toàn bộ ở đợt 3, xem `ASSETS_TODO.md`).
 
 ### Âm thanh
 - **Hiệu ứng và rung (🔊):** đặt khối, xóa hàng, vỡ đĩa, chiên xèo xèo, dao chặt, chuông cửa khi khách vào, đếm tờ tiền, "ka-ching" khi thối đúng, còi báo khi thối sai. Điện thoại Android rung kèm, iPhone không hỗ trợ rung.
